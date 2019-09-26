@@ -1,4 +1,3 @@
-import {Action} from "redux";
 import {IAction} from "../actions/action-type";
 
 export default (state = {}, action: IAction) => {

@@ -16,6 +16,11 @@ ReactDOM.render(
             <div>
                 <div>
                     <Route exact path="/" component={App} />
+                    <Route exact path="/sign-up" component={App} />
+                    <Route exact path="/chat" component={App} />
+                    <Route exact path="/chat/:id" component={App} />
+                    <Route exact path="/event" component={App} />
+                    <Route exact path="/events" component={App} />
                 </div>
             </div>
         </Router>
