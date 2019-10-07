@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import simpleReducer from './simpleReducer';
+import messagesReducer from './messagesReducer';
 export default combineReducers({
-    simpleReducer
+    messagesReducer
 });
