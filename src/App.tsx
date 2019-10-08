@@ -3,6 +3,11 @@ import './App.css';
 import { createBrowserHistory } from 'history';
 import {connect} from "react-redux";
 import {getMessagesAction, sendMessageAction} from "./store/actions/message-actions";
+import { Router, Route, Redirect } from 'react-router';
+import ChatsPage from "./components/ChatsPage";
+import ChatPage from "./components/ChatPage";
+import EventsPage from "./components/EventsPage";
+import EventPage from "./components/EventPage";
 
 const history = createBrowserHistory();
 
@@ -23,29 +28,16 @@ class App extends React.Component<any, any> {
 
   render() {
     return (
-      <div>
-        <div>
-          <p>{JSON.stringify(this.props.messages)}</p>
-          <p>asd2</p>
-          <p>asd3</p>
-          <p>asd4</p>
-        </div>
-        <input type="text"/>
-      
-      </div>
-      /*
-      <Provider store={configureStore()}>
-        <Router history={history}>
-            <div>
-                <Route exact path="/" component={App} />
-                <Route exact path="/sign-up" component={App} />
-                <Route exact path="/chat" component={App} />
-                <Route exact path="/chat/:id" component={App} />
-                <Route exact path="/event" component={App} />
-                <Route exact path="/events" component={App} />
-            </div>
-        </Router>
-    </Provider>*/
+      <Router history={history}>
+          <Route exact path="/">
+            <Redirect to="/chat" />
+          </Route>
+          <Route exact path="/sign-up" component={App} />
+          <Route exact path="/chat" component={ChatsPage} />
+          <Route exact path="/chat/:id" component={ChatPage} />
+          <Route exact path="/event" component={EventsPage} />
+          <Route exact path="/event/:id" component={EventPage} />
+      </Router>
     );
   }
 }
