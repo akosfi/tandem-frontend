@@ -17,7 +17,7 @@ interface MessagesState {
 
 const initialState: MessagesState = { data: [], status: FetchStatus.Initial };
 
-export default function messagesReducer(state = initialState, action: any) {
+export default function messages(state = initialState, action: any) {
   switch (action.type) {
     case MESSAGES_GET_REQUEST: 
       state = Object.assign({}, state, {status: FetchStatus.Waiting});

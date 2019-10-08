@@ -1,40 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Dispatch} from 'react';
 import './App.css';
-import {sendMessage} from './api';
+import { createBrowserHistory } from 'history';
+import {connect} from "react-redux";
+import {getMessagesAction, sendMessageAction} from "./store/actions/message-actions";
+
+const history = createBrowserHistory();
 
 class App extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
 
-    this.state = {
-      timestamp: 'no timestamp yet'
-    };
 
-    sendMessage("HI SERVER");
+
+    //this.props.sendMessage();
+    //this.props.getMessages();
+  }
+
+  componentDidMount(): void {
+    console.log("MOUNTED");
   }
 
 
   render() {
     return (
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-              Edit <code>src/App.tsx</code> and save to reload.
-            </p>
-            <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-              {this.state.timestamp}
-            </a>
-          </header>
+      <div>
+        <div>
+          <p>{JSON.stringify(this.props.messages)}</p>
+          <p>asd2</p>
+          <p>asd3</p>
+          <p>asd4</p>
         </div>
+        <input type="text"/>
+      
+      </div>
+      /*
+      <Provider store={configureStore()}>
+        <Router history={history}>
+            <div>
+                <Route exact path="/" component={App} />
+                <Route exact path="/sign-up" component={App} />
+                <Route exact path="/chat" component={App} />
+                <Route exact path="/chat/:id" component={App} />
+                <Route exact path="/event" component={App} />
+                <Route exact path="/events" component={App} />
+            </div>
+        </Router>
+    </Provider>*/
     );
   }
 }
 
-export default App;
+
+const mapStateToProps = (state: any) => {
+  return {
+    messages: state.messages
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    getMessages: () => dispatch(getMessagesAction()),
+    sendMessage: () => dispatch(sendMessageAction({
+      id: "2",
+      senderId: "10",
+      targetId: "12",
+      message: "HI!",
+      sendDate: new Date()
+    })),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
