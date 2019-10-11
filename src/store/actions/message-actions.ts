@@ -21,8 +21,9 @@ export const messageSendAction = (message: any) => {
     };
 };
 
-export const messageSentAction = () => {
+export const messageSentAction = (message: any) => {
     return {
-        type: MESSAGE_SENT
+        type: MESSAGE_SENT,
+        message: message
     };
 };

@@ -1,6 +1,6 @@
 import {CONNECT_SOCKET, CONNECTION_CHANGED, DISCONNECT_SOCKET, PORT_CHANGED} from "./action-consts";
 
-export const connectionChanged = (isConnected: boolean) => {
+export const connectionChangedAction = (isConnected: boolean) => {
     return {
         type: CONNECTION_CHANGED,
         connected: isConnected,
@@ -8,20 +8,20 @@ export const connectionChanged = (isConnected: boolean) => {
     };
 };
 
-export const portChanged = (port: number) => {
+export const portChangedAction = (port: number) => {
     return {
         type: PORT_CHANGED,
         port: port
     };
 };
 
-export const connectSocket = (user: any, port: number) => {
+export const connectSocketAction = (user: any, port: number) => {
     return {
         type: CONNECT_SOCKET
     };
 };
 
-export const disconnectSocket = () => {
+export const disconnectSocketAction = () => {
     return {
         type: DISCONNECT_SOCKET
     };

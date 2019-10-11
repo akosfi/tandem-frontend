@@ -15,7 +15,7 @@ function messageReducer(state = INITIAL_STATE, action: any) {
         messages: action.messages
       });
       break;
-    case MESSAGE_SEND:
+    case MESSAGE_SENT:
       let _messagesToRecipient = state.messages;
 
       if(!_messagesToRecipient[action.message.to]){
