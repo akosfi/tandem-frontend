@@ -18,6 +18,4 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-socket.connect('http://localhost:8000');
-
 serviceWorker.unregister();

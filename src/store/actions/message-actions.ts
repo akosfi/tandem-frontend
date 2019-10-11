@@ -1,37 +1,28 @@
-import {MESSAGE_SEND_REQUEST, MESSAGE_SEND_FAILURE, MESSAGES_GET_REQUEST, MESSAGES_GET_SUCCESS, MESSAGES_GET_FAILURE, MESSAGE_SEND_SUCCESS} from "./action-consts";
-import { Dispatch } from "react";
-import {Message} from '../models/Message'
-import * as socket from '../../socket'
+import {MESSAGE_RECEIVED, MESSAGE_SEND, MESSAGE_SENT, MESSAGES_GET} from "./action-consts";
 
-export function getMessagesAction() {
-  return function(dispatch: Dispatch<any>) {
-    dispatch({
-      type: MESSAGES_GET_REQUEST
-    });
-    
-  fetch("http://localhost:8000/messages")
-    .then(response => response.json())
-    .then(data => dispatch({
-        type: MESSAGES_GET_SUCCESS,
-        payload: data
-      }))
-    .catch(error => dispatch({
-        type: MESSAGES_GET_FAILURE,
-        payload: error
-      })
-    );
-  }
+export const messageReceivedAction = (message: any) => {
+    return {
+        type: MESSAGE_RECEIVED,
+        message: message
+    };
+};
+
+export const messagesGetAction = (messages: any) => {
+    return {
+        type: MESSAGES_GET,
+        messages: messages
+    }
 }
 
+export const messageSendAction = (message: any) => {
+    return {
+        type: MESSAGE_SEND,
+        message: message
+    };
+};
 
-export function sendMessageAction(message: Message) {
-  return function(dispatch: Dispatch<any>) {
-    dispatch({
-      type: MESSAGE_SEND_SUCCESS,
-      message
-    });
-
-    socket.socket().emit(MESSAGE_SEND_REQUEST, message);
-
-  }
-}
+export const messageSentAction = () => {
+    return {
+        type: MESSAGE_SENT
+    };
+};

@@ -2,27 +2,39 @@ import React, {Dispatch} from 'react';
 import './App.css';
 import { createBrowserHistory } from 'history';
 import {connect} from "react-redux";
-import {getMessagesAction, sendMessageAction} from "./store/actions/message-actions";
+import {messageSendAction} from "./store/actions/message-actions";
 import { Router, Route, Redirect } from 'react-router';
 import ChatsPage from "./components/ChatsPage";
 import ChatPage from "./components/ChatPage";
 import EventsPage from "./components/EventsPage";
 import EventPage from "./components/EventPage";
+import Socket from "./store/middlewares/socket";
 
 const history = createBrowserHistory();
 
 class App extends React.Component<any, any> {
+
+    //mySocket: Socket;
   constructor(props: any) {
     super(props);
+/*
+    this.mySocket = new Socket(
+        (connected: Boolean) => {console.log("CONNECTION CHANGED: " + connected)},
+        (error: any) => {console.log("SOCKET ERROR:" + error)},
+        (message: any) => {console.log("MESSAGE RECEIVED" + message)},
+        (message: any) => {console.log("MESSAGE RECEIVED" + message)},
+    );
 
-
+    this.mySocket.connect(2, 8000);*/
 
     //this.props.sendMessage();
     //this.props.getMessages();
+      this.props.sendMessage();
   }
 
   componentDidMount(): void {
     console.log("MOUNTED");
+
   }
 
 
@@ -51,8 +63,16 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
+      sendMessage: () => dispatch(messageSendAction({
+          from: 1,
+          to: 2,
+          text: "asd"
+      }))
+  };
+};
+      /*
     getMessages: () => dispatch(getMessagesAction()),
-    sendMessage: () => dispatch(sendMessageAction({
+    sendMessage: () => dispatch(messageSendAction({
       id: "2",
       senderId: "10",
       targetId: "12",
@@ -61,6 +81,5 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     })),
   }
 };
-
+*/
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-

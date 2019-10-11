@@ -1,7 +1,5 @@
 export interface Message {
-    id: string;
-    message: string;
-    targetId: string;
-    senderId: string;
-    sendDate: Date;
+    from: number;
+    to: number;
+    text: string;
 }
