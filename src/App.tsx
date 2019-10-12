@@ -18,32 +18,17 @@ class App extends React.Component<any, any> {
     //mySocket: Socket;
     constructor(props: any) {
         super(props);
-        /*
-            this.mySocket = new Socket(
-                (connected: Boolean) => {console.log("CONNECTION CHANGED: " + connected)},
-                (error: any) => {console.log("SOCKET ERROR:" + error)},
-                (message: any) => {console.log("MESSAGE RECEIVED" + message)},
-                (message: any) => {console.log("MESSAGE RECEIVED" + message)},
-            );
-
-            this.mySocket.connect(2, 8000);*/
-
-        //this.props.sendMessage();
-        //this.props.getMessages();
-        // this.props.sendMessage();
         this.props.connectToSocket();
     }
 
     componentDidMount(): void {
-        console.log("MOUNTED");
-
     }
 
 
     render() {
         return (
             <div>
-                <a onClick={this.props.sendMessage}>SEND MESSAGE</a>
+
                 <Router history={history}>
                     <Route exact path="/">
                         <Redirect to="/chat"/>
@@ -69,7 +54,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        connectToSocket: () => dispatch(connectSocketAction(1, 8000)),
+        connectToSocket: () => dispatch(connectSocketAction()),
         sendMessage: () => dispatch(messageSendAction({
             from: 1,
             to: 2,

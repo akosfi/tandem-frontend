@@ -15,7 +15,7 @@ export const portChangedAction = (port: number) => {
     };
 };
 
-export const connectSocketAction = (user: any, port: number) => {
+export const connectSocketAction = () => {
     return {
         type: CONNECT_SOCKET
     };

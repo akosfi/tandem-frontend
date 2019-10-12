@@ -34,18 +34,14 @@ export default class Socket {
         this.onMessage = onMessage;
         this.onUpdateClient = onUpdateClient;
         this.socket = null;
-        this.user = null;
+        this.user = Math.round(Math.random() * 1000000); //<---------------------------------------
         this.port = 8000; //default
     }
 
     // User clicked connect button
-    connect = (user: any, port: number) => {
-
-        this.user = user;
-        this.port = port;
-
+    connect = () => {
         // Connect
-        const host = `http://localhost:${port}`;
+        const host = `http://localhost:${this.port}`;
         this.socket = io.connect(host);
 
         // Set listeners
@@ -56,6 +52,7 @@ export default class Socket {
     };
 
     onConnected = () => {
+        console.log("asd");
         this.sendIdent();
         this.socket.on(IM, this.onMessage);
         this.socket.on(UPDATE_CLIENT, this.onUpdateClient);

@@ -23,7 +23,9 @@ const socketMiddleware = store => {
 
     //const onIncomingMessage = message => store.dispatch(messageReceived(message));
 
-
+    /*const onUpdateClient = message => {
+        store.dispatch()
+    };*/
     /*const onUpdateClient = message => {
 
         const messageState = store.getState().messageState;
@@ -65,7 +67,7 @@ const socketMiddleware = store => {
         switch (action.type){
 
             case CONNECT_SOCKET:
-                socket.connect(1, 8000); //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                socket.connect(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 break;
 
             case DISCONNECT_SOCKET:
