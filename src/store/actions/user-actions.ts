@@ -27,10 +27,12 @@ export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
         fetch('http://localhost:8000/getActiveUsers')
             .then(response => response.json())
-            .then(data => dispatch({
-                type: USERS_ACTIVE_RECEIVED,
-                users: data
-            }))
+            .then(data => {
+                console.log(data);
+                return dispatch({
+                    type: USERS_ACTIVE_RECEIVED,
+                    users: data
+                })})
             .catch(error => console.log("ERROR ACTIVE USERS FETCH"));
     }
 }

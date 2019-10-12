@@ -13,7 +13,6 @@ class ChatsPage extends React.Component<any, any> {
     }
 
     componentDidMount(): void {
-        this.props.fetchActiveUsers();
     }
 
     render() {

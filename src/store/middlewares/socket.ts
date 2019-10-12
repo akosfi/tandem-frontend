@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import {Message} from "../models/Message";
 
 
 export const IM            = 'IM';
@@ -34,7 +35,13 @@ export default class Socket {
         this.onMessage = onMessage;
         this.onUpdateClient = onUpdateClient;
         this.socket = null;
-        this.user = Math.round(Math.random() * 1000000); //<---------------------------------------
+
+
+
+        const temporaryID = Math.round(Math.random() * 1000000); //<---------------------------------------
+
+        console.log("ID: " + temporaryID);
+        this.user = temporaryID;
         this.port = 8000; //default
     }
 
@@ -52,7 +59,6 @@ export default class Socket {
     };
 
     onConnected = () => {
-        console.log("asd");
         this.sendIdent();
         this.socket.on(IM, this.onMessage);
         this.socket.on(UPDATE_CLIENT, this.onUpdateClient);
@@ -63,7 +69,7 @@ export default class Socket {
 
     sendIdent = () => this.socket.emit(IDENT, this.user);
 
-    sendIm = (message: string) => this.socket.emit(IM, message);
+    sendIm = (message: Message) => this.socket.emit(IM, message);
 
     disconnect = () => this.socket.close();
 

@@ -2,10 +2,15 @@ import {connectionChangedAction} from "../actions/socket-actions";
 import Socket from "./socket";
 import {messageReceivedAction, messageSentAction} from "../actions/message-actions";
 import {CONNECT_SOCKET, DISCONNECT_SOCKET, MESSAGE_SEND} from "../actions/action-consts";
+import {getActiveUsersList} from "../actions/user-actions";
 
 const socketMiddleware = store => {
     const onConnectionChange = isConnected => {
         store.dispatch(connectionChangedAction(isConnected));
+
+
+
+        store.dispatch(getActiveUsersList());
         //store.dispatch(statusChanged(isConnected ? 'Connected' : 'Disconnected'));
     };
 
