@@ -9,7 +9,7 @@ import {Dispatch} from "redux";
 
 export function getCurrentUserAction() {
     return function(dispatch: Dispatch<any>) {
-        fetch("/getUser")
+        fetch("http://localhost:8000/getUser")
           .then(response => response.json())
           .then(data => dispatch({
               type: USER_CURRENT_RECEIVED,
@@ -25,11 +25,11 @@ export function getCurrentUserAction() {
 
 export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('/getActiveUsers')
+        fetch('http://localhost:8000/getActiveUsers')
             .then(response => response.json())
             .then(data => dispatch({
                 type: USERS_ACTIVE_RECEIVED,
-                payload: data
+                users: data
             }))
             .catch(error => console.log("ERROR ACTIVE USERS FETCH"));
     }
@@ -37,11 +37,11 @@ export function getActiveUsersList() {
 
 export function getKnownUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('/getKnowUsers')
+        fetch('http://localhost:8000/getKnowUsers')
             .then(response => response.json())
             .then(data => dispatch({
                 type: USERS_KNOWN_RECEIVED,
-                payload: data
+                users: data
             }))
             .catch(error => console.log("ERROR KNOWN USERS FETCH"));
     }
@@ -49,11 +49,11 @@ export function getKnownUsersList() {
 
 export function getRecommendedUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('/getRecommendedUsers')
+        fetch('http://localhost:8000/getRecommendedUsers')
             .then(response => response.json())
             .then(data => dispatch({
                 type: USERS_RECOMMENDED_RECEIVED,
-                payload: data
+                users: data
             }))
             .catch(error => console.log("ERROR RECOMMENDED USERS FETCH"));
     }

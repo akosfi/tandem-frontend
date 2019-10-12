@@ -10,15 +10,16 @@ import EventsPage from "./components/EventsPage";
 import EventPage from "./components/EventPage";
 import Socket from "./store/middlewares/socket";
 import {connectSocketAction} from "./store/actions/socket-actions";
+import {getActiveUsersList} from "./store/actions/user-actions";
 
 const history = createBrowserHistory();
 
 class App extends React.Component<any, any> {
 
-    //mySocket: Socket;
     constructor(props: any) {
         super(props);
         this.props.connectToSocket();
+        this.props.fetchActiveUsers();
     }
 
     componentDidMount(): void {
@@ -28,7 +29,6 @@ class App extends React.Component<any, any> {
     render() {
         return (
             <div>
-
                 <Router history={history}>
                     <Route exact path="/">
                         <Redirect to="/chat"/>
@@ -48,13 +48,15 @@ class App extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        messages: state.messages
+        messages: state.messages,
+        activeUsers: state.users.activeUsers
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         connectToSocket: () => dispatch(connectSocketAction()),
+        fetchActiveUsers: () => dispatch(getActiveUsersList()),
         sendMessage: () => dispatch(messageSendAction({
             from: 1,
             to: 2,
@@ -62,16 +64,4 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
         })),
     };
 };
-/*
-getMessages: () => dispatch(getMessagesAction()),
-sendMessage: () => dispatch(messageSendAction({
-id: "2",
-senderId: "10",
-targetId: "12",
-message: "HI!",
-sendDate: new Date()
-})),
-}
-};
-*/
 export default connect(mapStateToProps, mapDispatchToProps)(App);
