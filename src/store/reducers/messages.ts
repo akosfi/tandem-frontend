@@ -1,8 +1,9 @@
 import {MESSAGE_RECEIVED, MESSAGE_SEND, MESSAGE_SENT, MESSAGES_GET} from "../actions/action-consts";
+import {Message} from "../models/Message";
 
 
 const INITIAL_STATE = {
-  messages: { } as { [key: string]: Array<any> }
+  messages: { } as { [key: string]: Array<Message> }
 };
 
 

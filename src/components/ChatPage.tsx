@@ -1,8 +1,71 @@
-import React from "react";
+import React, {Dispatch} from "react";
+import {connect} from "react-redux";
+import {messageSendAction, messageSentAction} from "../store/actions/message-actions";
+import {Message} from "../store/models/Message";
 
 class ChatPage extends React.Component<any, any> {
+
     constructor(props: any){
         super(props);
+
+        this.state = {
+            recipient: this.props.match.params.id,
+            inputMessage: '',
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event: any) {
+        this.setState({inputMessage: event.target.value});
+    }
+
+    handleSubmit(event: any) {
+        this.props.sendMessage(1, this.state.recipient, this.state.inputMessage); ///SENDER IDIDIDIDIDIDID
+        this.setState({inputMessage: ''});
+        event.preventDefault();
+    }
+
+    getMessagesOfRecipient(){
+
+    }
+
+    render() {
+        return (
+           <div>
+               {this.state.recipient}
+
+               {/*this.props.getMessagesOfRecipient(this.state.recipient).messages.map((msg: Message) => {
+                   return (<h5>{msg.text}</h5>)
+               })*/}
+
+               <form onSubmit={this.handleSubmit}>
+                    <input type="text" value={this.state.inputMessage} onChange={this.handleChange} />
+                   <input type="submit" value="Submit" />
+               </form>
+           </div>
+        );
     }
 }
-export default ChatPage;
+
+
+const mapStateToProps = (state: any) => {
+    return {
+        getMessagesOfRecipient: (id: string) => {
+            return state.messages[id];
+        },
+        messages: state.messages,
+    }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+    return {
+        sendMessage: (from: string, to: string, text: string) => dispatch(messageSendAction({
+            from,
+            to,
+            text,
+        })),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ChatPage);
+

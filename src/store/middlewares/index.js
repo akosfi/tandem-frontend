@@ -67,7 +67,7 @@ const socketMiddleware = store => {
         switch (action.type){
 
             case CONNECT_SOCKET:
-                socket.connect(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                socket.connect();
                 break;
 
             case DISCONNECT_SOCKET:
@@ -75,16 +75,8 @@ const socketMiddleware = store => {
                 break;
 
             case MESSAGE_SEND:
-                console.log("AAAA");
-                console.log(action);
-                socket.sendIm("asd");
+                socket.sendIm(action.message);
                 store.dispatch(messageSentAction(action.message));
-                /*socket.sendIm({
-                    'from': 1,
-                    'to': 2,
-                    'text': action.message
-                });*/
-                //store.dispatch(messageSent());
                 break;
 
             default:

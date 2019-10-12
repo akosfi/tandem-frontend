@@ -5,5 +5,5 @@ import userReducer from "./user";
 export default combineReducers({
     messages: messagesReducer,
     socket: socketReducer,
-    user: userReducer,
+    users: userReducer,
 });
