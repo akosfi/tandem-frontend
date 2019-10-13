@@ -1,5 +1,5 @@
 import io from 'socket.io-client';
-import {Message} from "../models/Message";
+import {Message} from "../../message/models/Message";
 
 
 export const IM            = 'IM';

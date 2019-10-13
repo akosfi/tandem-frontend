@@ -1,4 +1,7 @@
-import {CONNECT_SOCKET, CONNECTION_CHANGED, DISCONNECT_SOCKET, PORT_CHANGED} from "./action-consts";
+export const CONNECTION_CHANGED = 'CONNECTION_CHANGED';
+export const PORT_CHANGED = 'PORT_CHANGED';
+export const CONNECT_SOCKET = 'CONNECT_SOCKET';
+export const DISCONNECT_SOCKET = 'DISCONNECT_SOCKET';
 
 export const connectionChangedAction = (isConnected: boolean) => {
     return {

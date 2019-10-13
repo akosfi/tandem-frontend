@@ -1,7 +1,7 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
-import {messageSendAction, messageSentAction} from "../store/actions/message-actions";
-import {Message} from "../store/models/Message";
+import {messageSendAction, messageSentAction} from "../store/message/actions";
+import {Message} from "../store/message/models/Message";
 
 class ChatPage extends React.Component<any, any> {
 

@@ -1,5 +1,6 @@
-import {MESSAGE_RECEIVED, MESSAGE_SEND, MESSAGE_SENT, MESSAGES_GET} from "../actions/action-consts";
+
 import {Message} from "../models/Message";
+import {MESSAGE_RECEIVED, MESSAGE_SENT, MESSAGES_GET} from "../actions";
 
 
 const INITIAL_STATE = {

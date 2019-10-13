@@ -1,7 +1,8 @@
 // ACTIONS
-import { CONNECTION_CHANGED, PORT_CHANGED } from '../actions/action-consts';
 
 // Initial state
+import {CONNECTION_CHANGED, PORT_CHANGED} from "../actions";
+
 const INITIAL_STATE = {
     connected: false,
     port: 8000

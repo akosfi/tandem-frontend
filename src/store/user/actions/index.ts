@@ -1,11 +1,11 @@
-import {
-    USER_CURRENT_RECEIVED,
-    USER_CURRENT_FAILED,
-    USERS_ACTIVE_RECEIVED,
-    USERS_KNOWN_RECEIVED,
-    USERS_RECOMMENDED_RECEIVED
-} from "./action-consts";
 import {Dispatch} from "redux";
+
+
+export const USER_CURRENT_RECEIVED = 'USER_CURRENT_RECEIVED';
+export const USER_CURRENT_FAILED = 'USER_CURRENT_FAILED';
+export const USERS_ACTIVE_RECEIVED = 'USERS_ACTIVE_RECEIVED';
+export const USERS_KNOWN_RECEIVED = 'USERS_KNOWN_RECEIVED';
+export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';
 
 export function getCurrentUserAction() {
     return function(dispatch: Dispatch<any>) {

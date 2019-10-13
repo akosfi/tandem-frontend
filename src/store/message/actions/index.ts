@@ -1,4 +1,7 @@
-import {MESSAGE_RECEIVED, MESSAGE_SEND, MESSAGE_SENT, MESSAGES_GET} from "./action-consts";
+export const MESSAGES_GET = 'MESSAGES_GET';
+export const MESSAGE_SEND = 'MESSAGE_SEND';
+export const MESSAGE_SENT = 'MESSAGE_SENT';
+export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 
 export const messageReceivedAction = (message: any) => {
     return {

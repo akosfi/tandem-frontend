@@ -1,9 +1,9 @@
 import React, {Dispatch} from "react";
-import {connectSocketAction} from "../store/actions/socket-actions";
-import {getActiveUsersList} from "../store/actions/user-actions";
-import {messageSentAction} from "../store/actions/message-actions";
+import {connectSocketAction} from "../store/socket/actions";
+import {getActiveUsersList} from "../store/user/actions";
+import {messageSentAction} from "../store/message/actions";
 import {connect} from "react-redux";
-import {User} from "../store/models/User";
+import {User} from "../store/user/models/User";
 import {Link} from "react-router-dom";
 
 class ChatsPage extends React.Component<any, any> {

@@ -1,8 +1,8 @@
-import {connectionChangedAction} from "../actions/socket-actions";
+import {CONNECT_SOCKET, connectionChangedAction, DISCONNECT_SOCKET} from "../actions";
 import Socket from "./socket";
-import {messageReceivedAction, messageSentAction} from "../actions/message-actions";
-import {CONNECT_SOCKET, DISCONNECT_SOCKET, MESSAGE_SEND} from "../actions/action-consts";
-import {getActiveUsersList} from "../actions/user-actions";
+import {MESSAGE_SEND, messageReceivedAction, messageSentAction} from "../../message/actions";
+
+import {getActiveUsersList} from "../../user/actions";
 
 const socketMiddleware = store => {
     const onConnectionChange = isConnected => {

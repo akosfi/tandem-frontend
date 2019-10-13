@@ -1,11 +1,12 @@
 // Initial state
-import {
-    USER_CURRENT_RECEIVED,
-    USER_CURRENT_FAILED,
-    USERS_ACTIVE_RECEIVED,
-    USERS_KNOWN_RECEIVED, USERS_RECOMMENDED_RECEIVED
-} from "../actions/action-consts";
 import {CurrentUser, User} from "../models/User";
+import {
+    USER_CURRENT_FAILED,
+    USER_CURRENT_RECEIVED,
+    USERS_ACTIVE_RECEIVED,
+    USERS_KNOWN_RECEIVED,
+    USERS_RECOMMENDED_RECEIVED
+} from "../actions";
 
 const INITIAL_STATE = {
     currentUserSignedIn: false as boolean,
@@ -15,11 +16,6 @@ const INITIAL_STATE = {
     recommendedUsers: [] as Array<User>,
 };
 
-/*export const USER_CURRENT_RECEIVED = 'USER_CURRENT_RECEIVED';
-export const USER_CURRENT_FAILED = 'USER_CURRENT_FAILED';
-export const USERS_ACTIVE_RECEIVED = 'USERS_ACTIVE_RECEIVED';
-export const USERS_KNOWN_RECEIVED = 'USERS_KNOWN_RECEIVED';
-export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';*/
 // USER reducer
 function userReducer(state=INITIAL_STATE, action: any) {
     let reduced;
