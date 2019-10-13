@@ -1,8 +1,6 @@
 import React, {Dispatch} from 'react';
-import './App.css';
 import {createBrowserHistory} from 'history';
 import {connect} from "react-redux";
-import {messageSendAction, messageSentAction} from "./store/message/actions";
 import {Router, Route, Redirect} from 'react-router';
 import ChatsPage from "./components/ChatsPage";
 import ChatPage from "./components/ChatPage";
