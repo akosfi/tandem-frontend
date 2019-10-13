@@ -2,7 +2,7 @@ import {CONNECT_SOCKET, connectionChangedAction, DISCONNECT_SOCKET} from "../act
 import Socket from "./socket";
 import {MESSAGE_SEND, messageReceivedAction, messageSentAction} from "../../message/actions";
 
-import {getActiveUsersList} from "../../user/actions";
+import {getActiveUsersList, USER_CURRENT_AUTHENTICATED} from "../../user/actions";
 
 const socketMiddleware = store => {
     const onConnectionChange = isConnected => {
@@ -61,19 +61,18 @@ const socketMiddleware = store => {
     };*/
 
 
-    const temporaryID = Math.round(Math.random() * 1000000); //<---------------------------------------
-
-    console.log("ID: " + temporaryID);
 
     const socket = new Socket(
         onConnectionChange,
         onSocketError,
         onIncomingMessage,
         onUpdateClient,
-        temporaryID
     );
 
     return next => action => {
+        socket.user = store.getState().users.current.id;
+
+
 
         switch (action.type){
 
@@ -86,7 +85,7 @@ const socketMiddleware = store => {
                 break;
 
             case MESSAGE_SEND:
-                action.message.from = temporaryID; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4
+                action.message.from = store.getState().users.current.id; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4
                 socket.sendIm(action.message);
                 store.dispatch(messageSentAction(action.message));
                 break;

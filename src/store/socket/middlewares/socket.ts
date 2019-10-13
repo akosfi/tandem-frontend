@@ -13,7 +13,7 @@ export const UPDATE_CLIENT = 'UPDATE_CLIENT';
 
 export default class Socket {
     private port: number;
-    private user: any;
+    user: any;
 
     private socket: any;
 
@@ -29,15 +29,13 @@ export default class Socket {
     //ACTIVE USERS LIST RECEIVED
     private readonly onUpdateClient: any;
 
-    constructor(onChange: any, onSocketError: any, onMessage: any, onUpdateClient: any, user: any) {
+    constructor(onChange: any, onSocketError: any, onMessage: any, onUpdateClient: any) {
         this.onChange = onChange;
         this.onSocketError = onSocketError;
         this.onMessage = onMessage;
         this.onUpdateClient = onUpdateClient;
         this.socket = null;
 
-
-        this.user = user;
         this.port = 8000; //default
     }
 

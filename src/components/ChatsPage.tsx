@@ -9,7 +9,6 @@ import {Link} from "react-router-dom";
 class ChatsPage extends React.Component<any, any> {
     constructor(props: any){
         super(props);
-
     }
 
     componentDidMount(): void {
@@ -24,9 +23,10 @@ class ChatsPage extends React.Component<any, any> {
 
                 {this.props.activeUsers.map((user: User)=>{
                     return (
-                        <p>
-                            <Link key={user.id} to={'/chat/' + user.id}>{user.userName}</Link>
-                        </p>
+                        <h1>
+                            asd
+                            <Link key={user.id} to={'/chat/' + user.id}>{user.username}</Link>
+                        </h1>
                     );
                 })}
             </div>
@@ -36,6 +36,7 @@ class ChatsPage extends React.Component<any, any> {
 
 
 const mapStateToProps = (state: any) => {
+    console.log(state.users.activeUsers);
     return {
         activeUsers: state.users.activeUsers
     };

@@ -18,29 +18,44 @@ function messageReducer(state = INITIAL_STATE, action: any) {
       });
       break;
     case MESSAGE_SENT:
-      let _messagesToRecipient = state.messages;
+      let _messagesToRecipient = state.messages[action.message.to];
 
-      if(!_messagesToRecipient[action.message.to]){
-        _messagesToRecipient[action.message.to] = [];
+      if(!_messagesToRecipient){
+        _messagesToRecipient = [];
       }
-      _messagesToRecipient[action.message.to].push(action.message);
+      _messagesToRecipient.push(action.message);
 
 
-      reduced = Object.assign({}, state, {
-        messages: _messagesToRecipient
-      });
+      reduced =
+          {
+            ...state,
+            messages:
+                {
+                  ...state.messages,
+                  [action.message.to]: _messagesToRecipient
+                }
+          };
       break;
     case MESSAGE_RECEIVED:
-      let _messagesFromRecipient = state.messages;
 
-      if(!_messagesFromRecipient[action.message.from]){
-        _messagesFromRecipient[action.message.from] = [];
+      console.log("A");
+
+      let _messagesFromRecipient = state.messages[action.message.from];
+
+      if(!_messagesFromRecipient){
+        _messagesFromRecipient = [];
       }
-      _messagesFromRecipient[action.message.from].push(action.message);
+      _messagesFromRecipient.push(action.message);
 
-      reduced = Object.assign({}, state, {
-        messages: _messagesFromRecipient
-      });
+      reduced =
+          {
+            ...state,
+            messages:
+                {
+                  ...state.messages,
+                  [action.message.from]: _messagesFromRecipient
+                }
+          };
       break;
 
     default:

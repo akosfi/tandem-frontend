@@ -25,7 +25,6 @@ class ChatPage extends React.Component<any, any> {
     handleSubmit(event: any) {
         this.props.sendMessage(1, this.state.recipient, this.state.inputMessage); ///SENDER IDIDIDIDIDIDID
         this.setState({inputMessage: ''});
-        event.preventDefault();
     }
 
     getMessagesOfRecipient() {
@@ -41,17 +40,15 @@ class ChatPage extends React.Component<any, any> {
                {this.state.recipient}
 
                {this.getMessagesOfRecipient().map((msg: Message) => {
-                   return (<p>{msg.text}</p>)
+                   return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
                })}
 
                {/*this.props.getMessagesOfRecipient(this.state.recipient).messages.map((msg: Message) => {
                    return (<h5>{msg.text}</h5>)
                })*/}
 
-               <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.inputMessage} onChange={this.handleChange} />
-                   <input type="submit" value="Submit" />
-               </form>
+               <input type="text" value={this.state.inputMessage} onChange={this.handleChange} />
+               <p onClick={this.handleSubmit}>SUBMIT</p>
            </div>
         );
     }
