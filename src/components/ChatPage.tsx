@@ -14,6 +14,8 @@ class ChatPage extends React.Component<any, any> {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        console.log(this.props.messages);
     }
 
     handleChange(event: any) {
@@ -26,14 +28,21 @@ class ChatPage extends React.Component<any, any> {
         event.preventDefault();
     }
 
-    getMessagesOfRecipient(){
-
+    getMessagesOfRecipient() {
+        if(this.props.messages[this.state.recipient]){
+            return this.props.messages[this.state.recipient];
+        }
+        return [];
     }
 
     render() {
         return (
            <div>
                {this.state.recipient}
+
+               {this.getMessagesOfRecipient().map((msg: Message) => {
+                   return (<p>{msg.text}</p>)
+               })}
 
                {/*this.props.getMessagesOfRecipient(this.state.recipient).messages.map((msg: Message) => {
                    return (<h5>{msg.text}</h5>)
@@ -51,10 +60,7 @@ class ChatPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        getMessagesOfRecipient: (id: string) => {
-            return state.messages[id];
-        },
-        messages: state.messages,
+        messages: state.messages.messages,
     }
 };
 

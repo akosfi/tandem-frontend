@@ -29,7 +29,7 @@ export default class Socket {
     //ACTIVE USERS LIST RECEIVED
     private readonly onUpdateClient: any;
 
-    constructor(onChange: any, onSocketError: any, onMessage: any, onUpdateClient: any) {
+    constructor(onChange: any, onSocketError: any, onMessage: any, onUpdateClient: any, user: any) {
         this.onChange = onChange;
         this.onSocketError = onSocketError;
         this.onMessage = onMessage;
@@ -37,11 +37,7 @@ export default class Socket {
         this.socket = null;
 
 
-
-        const temporaryID = Math.round(Math.random() * 1000000); //<---------------------------------------
-
-        console.log("ID: " + temporaryID);
-        this.user = temporaryID;
+        this.user = user;
         this.port = 8000; //default
     }
 

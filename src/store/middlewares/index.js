@@ -60,11 +60,17 @@ const socketMiddleware = store => {
         }
     };*/
 
+
+    const temporaryID = Math.round(Math.random() * 1000000); //<---------------------------------------
+
+    console.log("ID: " + temporaryID);
+
     const socket = new Socket(
         onConnectionChange,
         onSocketError,
         onIncomingMessage,
-        onUpdateClient
+        onUpdateClient,
+        temporaryID
     );
 
     return next => action => {
@@ -80,6 +86,7 @@ const socketMiddleware = store => {
                 break;
 
             case MESSAGE_SEND:
+                action.message.from = temporaryID; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4
                 socket.sendIm(action.message);
                 store.dispatch(messageSentAction(action.message));
                 break;
