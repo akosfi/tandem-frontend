@@ -12,10 +12,10 @@ export const messageReceivedAction = (message: Message) => {
     };
 };
 
-export const messagesGetAction = (messages: Message) => {
+export const messagesGetAction = (messages: Array<Message>) => {
     return {
         type: MESSAGES_GET,
-        messages: messages as Message
+        messages: messages as Array<Message>
     }
 };
 
