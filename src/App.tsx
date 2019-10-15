@@ -6,7 +6,6 @@ import ChatsPage from "./components/ChatsPage";
 import ChatPage from "./components/ChatPage";
 import EventsPage from "./components/EventsPage";
 import EventPage from "./components/EventPage";
-import {connectSocketAction} from "./store/socket/actions";
 import {getCurrentUserAction, loginUserAction} from "./store/user/actions";
 import LoginPage from "./components/LoginPage";
 

@@ -1,11 +1,10 @@
 import {CONNECT_SOCKET, connectionChangedAction, DISCONNECT_SOCKET} from "../actions";
 import Socket from "./socket";
 import {MESSAGE_SEND, messageReceivedAction, messageSentAction} from "../../message/actions";
+import {getActiveUsersList} from "../../user/actions";
 
-import {getActiveUsersList, USER_CURRENT_AUTHENTICATED} from "../../user/actions";
-
-const socketMiddleware = store => {
-    const onConnectionChange = isConnected => {
+const socketMiddleware = (store: any)  => {
+    const onConnectionChange = (isConnected: boolean) => {
         store.dispatch(connectionChangedAction(isConnected));
 
         if (isConnected) {
@@ -14,11 +13,11 @@ const socketMiddleware = store => {
     };
 
 
-    const onIncomingMessage = (message) => {
+    const onIncomingMessage = (message: any) => {
         store.dispatch(messageReceivedAction(message));
     };
 
-    const onSocketError = (status) => console.log("SOCKET ERROR" + status);
+    const onSocketError = (status: any) => console.log("SOCKET ERROR" + status);
 
 
     const onUpdateClient = () => {
@@ -69,7 +68,7 @@ const socketMiddleware = store => {
         onUpdateClient,
     );
 
-    return next => action => {
+    return (next: any) => (action: any) => {
         socket.user = store.getState().users.current.id;
 
         switch (action.type) {

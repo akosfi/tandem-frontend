@@ -1,7 +1,5 @@
 import React, {Dispatch} from "react";
-import {connectSocketAction} from "../store/socket/actions";
 import {getActiveUsersList} from "../store/user/actions";
-import {messageSentAction} from "../store/message/actions";
 import {connect} from "react-redux";
 import {User} from "../store/user/models/User";
 import {Link} from "react-router-dom";
@@ -9,36 +7,28 @@ import {Link} from "react-router-dom";
 class ChatsPage extends React.Component<any, any> {
     constructor(props: any){
         super(props);
+        console.log("ChatsPage");
     }
 
     componentDidMount(): void {
-
-        //this.props.getActiveUsersList();
-
-
-        //store.dispatch(getActiveUsersList());
     }
 
-
+    renderActiveUsers() {
+        return this.props
+            .activeUsers
+            .filter((u: User) => u.id.toString() !== this.props.currentUser.id.toString())
+            .map((u: User) => {
+                return <Link key={u.id} to={'/chat/' + u.id}>{u.username}</Link>
+            });
+    }
 
     render() {
-
-
 
         return (
             <div>
                 <h1>ChatsPage</h1>
 
-                {this.props.activeUsers.map((user: User) => {
-                    if(this.props.currentUser.id.toString() !== user.id.toString() ) {
-                        return (
-                            <h1>
-                                asd
-                                <Link key={user.id} to={'/chat/' + user.id}>{user.username}</Link>
-                            </h1>
-                        );
-                    }
-                })}
+                {this.renderActiveUsers()}
             </div>
         );
     }

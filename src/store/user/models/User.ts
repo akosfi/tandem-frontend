@@ -3,8 +3,3 @@ export interface User {
     profilePicUrl: string;
     username: string;
 }
-
-
-export interface CurrentUser extends User{
-    signedIn: boolean;
-}

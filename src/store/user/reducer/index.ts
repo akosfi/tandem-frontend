@@ -1,5 +1,5 @@
 // Initial state
-import {CurrentUser, User} from "../models/User";
+import {User} from "../models/User";
 import {
     USER_CURRENT_NOT_AUTHENTICATED,
     USER_CURRENT_AUTHENTICATED,

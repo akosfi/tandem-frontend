@@ -1,6 +1,6 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
-import {messageSendAction, messageSentAction} from "../store/message/actions";
+import {messageSendAction} from "../store/message/actions";
 import {Message} from "../store/message/models/Message";
 
 class ChatPage extends React.Component<any, any> {
@@ -42,10 +42,6 @@ class ChatPage extends React.Component<any, any> {
                {this.getMessagesOfRecipient().map((msg: Message) => {
                    return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
                })}
-
-               {/*this.props.getMessagesOfRecipient(this.state.recipient).messages.map((msg: Message) => {
-                   return (<h5>{msg.text}</h5>)
-               })*/}
 
                <input type="text" value={this.state.inputMessage} onChange={this.handleChange} />
                <p onClick={this.handleSubmit}>SUBMIT</p>
