@@ -15,7 +15,7 @@ export function getCurrentUserAction() {
             return dispatch(connectSocketAction());
         }
 
-        makeRequest('/user', {credentials: "include"})
+        makeRequest('/user', {})
             .then(data => {
                 dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
@@ -42,7 +42,6 @@ export function loginUserAction(name: string) {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    credentials: "include",
                     body: JSON.stringify({name})
             })
             .then(data => {
@@ -59,44 +58,42 @@ export function loginUserAction(name: string) {
 
 export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('http://localhost:8000/getActiveUsers')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
+        makeRequest('/getActiveUsers', {})
+            .then(users => {
                 return dispatch({
                     type: USERS_ACTIVE_RECEIVED,
-                    users: data
-                })})
-            .catch(error => console.log("ERROR ACTIVE USERS FETCH"));
+                    users
+                })
+            })
+            .catch(err => console.log("Err fetching active users"));
     }
 }
 
 export function getKnownUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('http://localhost:8000/getKnowUsers')
-            .then(response => response.json())
-            .then(data => dispatch({
-                type: USERS_KNOWN_RECEIVED,
-                users: data
-            }))
-            .catch(error => console.log("ERROR KNOWN USERS FETCH"));
+        makeRequest('/getKnowUsers', {})
+            .then(users => {
+                return dispatch({
+                    type: USERS_KNOWN_RECEIVED,
+                    users
+                })
+            })
+            .catch(err => console.log("Err fetching known users"));
     }
 }
 
 export function getRecommendedUsersList() {
     return function(dispatch: Dispatch<any>) {
-        fetch('http://localhost:8000/getRecommendedUsers')
-            .then(response => response.json())
-            .then(data => dispatch({
-                type: USERS_RECOMMENDED_RECEIVED,
-                users: data
-            }))
-            .catch(error => console.log("ERROR RECOMMENDED USERS FETCH"));
+        makeRequest('/getRecommendedUsers', {})
+            .then(users => {
+                return dispatch({
+                    type: USERS_KNOWN_RECEIVED,
+                    users
+                })
+            })
+            .catch(err => console.log("Err fetching recommended users"));
     }
 }
-
-
-
 
 export const USER_CURRENT_AUTHENTICATED = 'USER_CURRENT_AUTHENTICATED';
 export const USER_CURRENT_NOT_AUTHENTICATED = 'USER_CURRENT_NOT_AUTHENTICATED';
