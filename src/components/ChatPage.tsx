@@ -2,6 +2,7 @@ import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {messageSendAction} from "../store/message/actions";
 import {Message} from "../store/message/models/Message";
+import _ from 'lodash';
 
 class ChatPage extends React.Component<any, any> {
 
@@ -30,8 +31,11 @@ class ChatPage extends React.Component<any, any> {
     }
 
     getMessagesWithRecipient() {
-        if(this.props.messages[this.state.chatRecipient]){
-            return this.props.messages[this.state.chatRecipient];
+        let messagesWithRecipient = this.props.messages[this.state.chatRecipient];
+        if(messagesWithRecipient){
+            return _.sortBy(
+                messagesWithRecipient,
+                (message: Message) => new Date(message.time));
         }
         return [];
     }
@@ -42,7 +46,13 @@ class ChatPage extends React.Component<any, any> {
                {this.state.chatRecipient}
 
                {this.getMessagesWithRecipient().map((msg: Message) => {
-                   return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
+                   if(msg.from === this.props.currentUser.id) {
+                       return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
+                   }
+                   else {
+                       return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
+                   }
+
                })}
 
                <input type="text" value={this.state.inputMessage} onChange={this.handleInputMessageChange} />
