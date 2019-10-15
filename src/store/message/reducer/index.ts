@@ -1,4 +1,3 @@
-
 import {Message} from "../models/Message";
 import {MESSAGE_RECEIVED, MESSAGE_SENT, MESSAGES_GET} from "../actions";
 
@@ -17,6 +16,7 @@ function messageReducer(state = INITIAL_STATE, action: any) {
         messages: action.messages
       });
       break;
+
     case MESSAGE_SENT:
       let _messagesToRecipient = state.messages[action.message.to];
 
@@ -24,7 +24,6 @@ function messageReducer(state = INITIAL_STATE, action: any) {
         _messagesToRecipient = [];
       }
       _messagesToRecipient.push(action.message);
-
 
       reduced =
           {
@@ -36,10 +35,8 @@ function messageReducer(state = INITIAL_STATE, action: any) {
                 }
           };
       break;
+
     case MESSAGE_RECEIVED:
-
-      console.log("A");
-
       let _messagesFromRecipient = state.messages[action.message.from];
 
       if(!_messagesFromRecipient){

@@ -12,21 +12,17 @@ export const UPDATE_CLIENT = 'UPDATE_CLIENT';
 
 
 export default class Socket {
-    private port: number;
+    private readonly port: number;
     user: any;
 
     private socket: any;
 
-    //CONNECTION CHANGED EVENT
     private readonly onChange: any;
 
-    //SOCKET ERROR EVENT
     private readonly onSocketError: any;
 
-    //MESSAGE RECEIVED EVENT
     private readonly onMessage: any;
 
-    //ACTIVE USERS LIST RECEIVED
     private readonly onUpdateClient: any;
 
     constructor(onChange: any, onSocketError: any, onMessage: any, onUpdateClient: any) {
@@ -36,16 +32,13 @@ export default class Socket {
         this.onUpdateClient = onUpdateClient;
         this.socket = null;
 
-        this.port = 8000; //default
+        this.port = 8000;
     }
 
-    // User clicked connect button
     connect = () => {
-        // Connect
         const host = `http://localhost:${this.port}`;
         this.socket = io.connect(host);
 
-        // Set listeners
         this.socket.on(CONNECT, this.onConnected);
         this.socket.on(DISCONNECT, this.onDisconnected);
         this.socket.on(CONNECT_ERR, this.onError);

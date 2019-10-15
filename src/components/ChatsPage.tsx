@@ -1,5 +1,4 @@
 import React, {Dispatch} from "react";
-import {getActiveUsersList} from "../store/user/actions";
 import {connect} from "react-redux";
 import {User} from "../store/user/models/User";
 import {Link} from "react-router-dom";
@@ -7,7 +6,7 @@ import {Link} from "react-router-dom";
 class ChatsPage extends React.Component<any, any> {
     constructor(props: any){
         super(props);
-        console.log("ChatsPage");
+        this.state = {};
     }
 
     componentDidMount(): void {
@@ -23,11 +22,9 @@ class ChatsPage extends React.Component<any, any> {
     }
 
     render() {
-
         return (
             <div>
                 <h1>ChatsPage</h1>
-
                 {this.renderActiveUsers()}
             </div>
         );
@@ -44,7 +41,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        getActiveUsersList: () => dispatch(getActiveUsersList())
+
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ChatsPage);

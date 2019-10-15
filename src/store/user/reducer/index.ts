@@ -1,4 +1,3 @@
-// Initial state
 import {User} from "../models/User";
 import {
     USER_CURRENT_NOT_AUTHENTICATED,
@@ -16,7 +15,6 @@ const INITIAL_STATE = {
     recommendedUsers: [] as Array<User>,
 };
 
-// USER reducer
 function userReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type){
@@ -24,7 +22,7 @@ function userReducer(state=INITIAL_STATE, action: any) {
             reduced = {...state, current: action.user, currentUserAuthenticated: true};
             break;
         case USER_CURRENT_NOT_AUTHENTICATED:
-            reduced = {...state, currentUserAuthenticated: false }
+            reduced = {...state, currentUserAuthenticated: false };
             break;
         case USERS_ACTIVE_RECEIVED:
             reduced = {...state, activeUsers: action.users};

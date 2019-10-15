@@ -4,6 +4,7 @@ export default interface Event {
     date: Date;
     coverPicUrl: string;
     numberOfPeopleGoing: number;
+    eventType: EventType;
 }
 
 

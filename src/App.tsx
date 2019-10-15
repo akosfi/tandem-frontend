@@ -6,7 +6,7 @@ import ChatsPage from "./components/ChatsPage";
 import ChatPage from "./components/ChatPage";
 import EventsPage from "./components/EventsPage";
 import EventPage from "./components/EventPage";
-import {getCurrentUserAction, loginUserAction} from "./store/user/actions";
+import {getCurrentUserAction} from "./store/user/actions";
 import LoginPage from "./components/LoginPage";
 
 const history = createBrowserHistory();
@@ -15,9 +15,7 @@ class App extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
-
         this.props.getCurrentUser();
-
     }
 
     componentDidMount(): void {
@@ -25,7 +23,7 @@ class App extends React.Component<any, any> {
 
 
     renderBasedOnUserAuthentication() {
-        if(this.props.isUserLoggedIn){
+        if (this.props.isUserLoggedIn) {
             return (
                 <Router history={history}>
                     <Route exact path="/">
@@ -38,10 +36,9 @@ class App extends React.Component<any, any> {
                     <Route exact path="/event/:id" component={EventPage}/>
                 </Router>
             );
-        }
-        else {
+        } else {
             return (
-                <LoginPage />
+                <LoginPage/>
             );
         }
     }
@@ -63,7 +60,6 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         getCurrentUser: () => dispatch(getCurrentUserAction()),
-        loginUser: (name: string) => dispatch(loginUserAction(name))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

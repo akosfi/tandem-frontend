@@ -9,27 +9,29 @@ class ChatPage extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            recipient: this.props.match.params.id,
+            chatRecipient: this.props.match.params.id,
             inputMessage: '',
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
-        console.log(this.props.messages);
+        this.handleInputMessageChange = this.handleInputMessageChange.bind(this);
+        this.handleInputMessageSubmit = this.handleInputMessageSubmit.bind(this);
     }
 
-    handleChange(event: any) {
+    handleInputMessageChange(event: any) {
         this.setState({inputMessage: event.target.value});
     }
 
-    handleSubmit(event: any) {
-        this.props.sendMessage(this.props.currentUser.id, this.state.recipient, this.state.inputMessage); ///SENDER IDIDIDIDIDIDID
+    handleInputMessageSubmit(event: any) {
+        this.props.sendMessage(
+            this.props.currentUser.id,
+            this.state.chatRecipient,
+            this.state.inputMessage
+        );
         this.setState({inputMessage: ''});
     }
 
-    getMessagesOfRecipient() {
-        if(this.props.messages[this.state.recipient]){
-            return this.props.messages[this.state.recipient];
+    getMessagesWithRecipient() {
+        if(this.props.messages[this.state.chatRecipient]){
+            return this.props.messages[this.state.chatRecipient];
         }
         return [];
     }
@@ -37,14 +39,14 @@ class ChatPage extends React.Component<any, any> {
     render() {
         return (
            <div>
-               {this.state.recipient}
+               {this.state.chatRecipient}
 
-               {this.getMessagesOfRecipient().map((msg: Message) => {
+               {this.getMessagesWithRecipient().map((msg: Message) => {
                    return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
                })}
 
-               <input type="text" value={this.state.inputMessage} onChange={this.handleChange} />
-               <p onClick={this.handleSubmit}>SUBMIT</p>
+               <input type="text" value={this.state.inputMessage} onChange={this.handleInputMessageChange} />
+               <p onClick={this.handleInputMessageSubmit}>SUBMIT</p>
            </div>
         );
     }

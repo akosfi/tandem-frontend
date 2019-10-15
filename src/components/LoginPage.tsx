@@ -6,32 +6,31 @@ class LoginPage extends React.Component<any, any> {
     constructor(props: any){
         super(props);
 
-
         this.state = {
-            value: ''
+            nameInput: ''
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleNameInputChange = this.handleNameInputChange.bind(this);
+        this.handleNameInputSubmit = this.handleNameInputSubmit.bind(this);
     }
 
 
-    handleChange(event: any) {
-        this.setState({value: event.target.value});
+    handleNameInputChange(event: any) {
+        this.setState({nameInput: event.target.value});
     }
 
-    handleSubmit(event: any) {
-        this.props.loginUser(this.state.value);
+    handleNameInputSubmit(event: any) {
+        this.props.loginUser(this.state.nameInput);
         event.preventDefault();
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleNameInputSubmit}>
                     <label>
                         Name:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        <input type="text" value={this.state.nameInput} onChange={this.handleNameInputChange} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
@@ -49,7 +48,6 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-
         loginUser: (name: string) => dispatch(loginUserAction(name))
     };
 };

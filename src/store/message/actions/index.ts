@@ -15,7 +15,7 @@ export const messagesGetAction = (messages: any) => {
         type: MESSAGES_GET,
         messages: messages
     }
-}
+};
 
 export const messageSendAction = (message: any) => {
     return {
