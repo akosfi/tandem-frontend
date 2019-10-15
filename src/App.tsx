@@ -9,6 +9,9 @@ import EventPage from "./components/EventPage";
 import {getCurrentUserAction} from "./store/user/actions";
 import LoginPage from "./components/LoginPage";
 
+import "./App.scss";
+
+
 const history = createBrowserHistory();
 
 class App extends React.Component<any, any> {
@@ -45,7 +48,10 @@ class App extends React.Component<any, any> {
 
     render() {
         return (
-            this.renderBasedOnUserAuthentication()
+            <div className="container">
+                {this.renderBasedOnUserAuthentication()}
+            </div>
+
         );
     }
 }
