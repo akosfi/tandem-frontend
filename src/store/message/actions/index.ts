@@ -1,32 +1,34 @@
+import {Message} from "../models/Message";
+
 export const MESSAGES_GET = 'MESSAGES_GET';
 export const MESSAGE_SEND = 'MESSAGE_SEND';
 export const MESSAGE_SENT = 'MESSAGE_SENT';
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 
-export const messageReceivedAction = (message: any) => {
+export const messageReceivedAction = (message: Message) => {
     return {
         type: MESSAGE_RECEIVED,
-        message: message
+        message: message as Message
     };
 };
 
-export const messagesGetAction = (messages: any) => {
+export const messagesGetAction = (messages: Message) => {
     return {
         type: MESSAGES_GET,
-        messages: messages
+        messages: messages as Message
     }
 };
 
-export const messageSendAction = (message: any) => {
+export const messageSendAction = (message: Message) => {
     return {
         type: MESSAGE_SEND,
-        message: message
+        message: message as Message
     };
 };
 
-export const messageSentAction = (message: any) => {
+export const messageSentAction = (message: Message) => {
     return {
         type: MESSAGE_SENT,
-        message: message
+        message: message as Message
     };
 };

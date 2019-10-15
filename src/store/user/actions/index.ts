@@ -8,9 +8,12 @@ export function getCurrentUserAction() {
         const jwt_user = Cookies.get('jwt_user');
 
         if(jwt_user) {
+            let parsedUser = JSON.parse(jwt_user as string);
+            parsedUser.id = parsedUser.id.toString();
+
             dispatch({
                 type: USER_CURRENT_AUTHENTICATED,
-                user: JSON.parse((jwt_user as string))
+                user: parsedUser
             });
             return dispatch(connectSocketAction());
         }

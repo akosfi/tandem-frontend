@@ -66,6 +66,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
             from,
             to,
             text,
+            time: new Date()
         })),
     };
 };
