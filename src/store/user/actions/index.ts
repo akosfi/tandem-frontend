@@ -46,10 +46,11 @@ export function loginUserAction(name: string) {
                     body: JSON.stringify({name})
             })
             .then(data => {
-                return dispatch({
+                dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
+                return dispatch(connectSocketAction());
             });
     };
 }

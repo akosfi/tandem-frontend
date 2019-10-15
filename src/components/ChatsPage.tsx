@@ -12,22 +12,32 @@ class ChatsPage extends React.Component<any, any> {
     }
 
     componentDidMount(): void {
+
+        //this.props.getActiveUsersList();
+
+
+        //store.dispatch(getActiveUsersList());
     }
 
+
+
     render() {
+
+
+
         return (
             <div>
                 <h1>ChatsPage</h1>
 
-                <h2>{JSON.stringify(this.props.activeUsers, null, 4)}</h2>
-
-                {this.props.activeUsers.map((user: User)=>{
-                    return (
-                        <h1>
-                            asd
-                            <Link key={user.id} to={'/chat/' + user.id}>{user.username}</Link>
-                        </h1>
-                    );
+                {this.props.activeUsers.map((user: User) => {
+                    if(this.props.currentUser.id.toString() !== user.id.toString() ) {
+                        return (
+                            <h1>
+                                asd
+                                <Link key={user.id} to={'/chat/' + user.id}>{user.username}</Link>
+                            </h1>
+                        );
+                    }
                 })}
             </div>
         );
@@ -36,16 +46,15 @@ class ChatsPage extends React.Component<any, any> {
 
 
 const mapStateToProps = (state: any) => {
-    console.log(state.users.activeUsers);
     return {
+        currentUser: state.users.current,
         activeUsers: state.users.activeUsers
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        connectToSocket: () => dispatch(connectSocketAction()),
-        fetchActiveUsers: () => dispatch(getActiveUsersList()),
+        getActiveUsersList: () => dispatch(getActiveUsersList())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ChatsPage);

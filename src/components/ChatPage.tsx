@@ -23,7 +23,7 @@ class ChatPage extends React.Component<any, any> {
     }
 
     handleSubmit(event: any) {
-        this.props.sendMessage(1, this.state.recipient, this.state.inputMessage); ///SENDER IDIDIDIDIDIDID
+        this.props.sendMessage(this.props.currentUser.id, this.state.recipient, this.state.inputMessage); ///SENDER IDIDIDIDIDIDID
         this.setState({inputMessage: ''});
     }
 
@@ -57,6 +57,7 @@ class ChatPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
+        currentUser: state.users.current,
         messages: state.messages.messages,
     }
 };

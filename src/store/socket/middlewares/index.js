@@ -8,10 +8,9 @@ const socketMiddleware = store => {
     const onConnectionChange = isConnected => {
         store.dispatch(connectionChangedAction(isConnected));
 
-
-
-        store.dispatch(getActiveUsersList());
-        //store.dispatch(statusChanged(isConnected ? 'Connected' : 'Disconnected'));
+        if (isConnected) {
+            store.dispatch(getActiveUsersList());
+        }
     };
 
 
@@ -22,7 +21,9 @@ const socketMiddleware = store => {
     const onSocketError = (status) => console.log("SOCKET ERROR" + status);
 
 
-    const onUpdateClient = (message) => console.log("CLIENT UPDATE MESSAGE" + message);
+    const onUpdateClient = () => {
+
+    };
 
     //const onSocketError = (status) => store.dispatch(statusChanged(status, true));
 
@@ -61,7 +62,6 @@ const socketMiddleware = store => {
     };*/
 
 
-
     const socket = new Socket(
         onConnectionChange,
         onSocketError,
@@ -72,9 +72,7 @@ const socketMiddleware = store => {
     return next => action => {
         socket.user = store.getState().users.current.id;
 
-
-
-        switch (action.type){
+        switch (action.type) {
 
             case CONNECT_SOCKET:
                 socket.connect();
@@ -85,7 +83,6 @@ const socketMiddleware = store => {
                 break;
 
             case MESSAGE_SEND:
-                action.message.from = store.getState().users.current.id; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4
                 socket.sendIm(action.message);
                 store.dispatch(messageSentAction(action.message));
                 break;
