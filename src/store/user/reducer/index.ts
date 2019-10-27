@@ -4,8 +4,13 @@ import {
     USER_CURRENT_AUTHENTICATED,
     USERS_ACTIVE_RECEIVED,
     USERS_KNOWN_RECEIVED,
-    USERS_RECOMMENDED_RECEIVED
+    USERS_RECOMMENDED_RECEIVED, USER_LOGIN_STATUS_CHANGED, USER_REGISTRATION_STATUS_CHANGED
 } from "../actions";
+
+export interface UserStatus {
+    status: string,
+    message: string
+}
 
 const INITIAL_STATE = {
     currentUserAuthenticated: false as boolean,
@@ -13,6 +18,8 @@ const INITIAL_STATE = {
     activeUsers: [] as Array<User>,
     knownUsers: [] as Array<User>,
     recommendedUsers: [] as Array<User>,
+    newUserCreationStatus: {} as UserStatus,
+    userLoginStatus: {} as UserStatus,
 };
 
 function userReducer(state=INITIAL_STATE, action: any) {
@@ -32,6 +39,12 @@ function userReducer(state=INITIAL_STATE, action: any) {
             break;
         case USERS_RECOMMENDED_RECEIVED:
             reduced = {...state, recommendedUsers: action.users};
+            break;
+        case USER_LOGIN_STATUS_CHANGED:
+            reduced = {...state, userLoginStatus: action.status};
+            break;
+        case USER_REGISTRATION_STATUS_CHANGED:
+            reduced = {...state, newUserCreationStatus: action.status};
             break;
         default:
             reduced = state;

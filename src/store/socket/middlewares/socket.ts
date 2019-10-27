@@ -32,7 +32,7 @@ export default class Socket {
         this.onUpdateClient = onUpdateClient;
         this.socket = null;
 
-        this.port = 8000;
+        this.port = 5000;
     }
 
     connect = () => {

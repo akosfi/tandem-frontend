@@ -18,7 +18,7 @@ export function getCurrentUserAction() {
             return dispatch(connectSocketAction());
         }
 
-        makeRequest('/user', {})
+        makeRequest('/user/me', {})
             .then(data => {
                 dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
@@ -26,33 +26,60 @@ export function getCurrentUserAction() {
                 });
                 return dispatch(connectSocketAction());
             })
-            .catch(err => {
-                if(err.message === '403'){
-                    return dispatch({
-                        type: USER_CURRENT_NOT_AUTHENTICATED,
-                    });
-                }
+            .catch(() => {
+                return dispatch({
+                    type: USER_CURRENT_NOT_AUTHENTICATED,
+                });
             });
     }
 }
 
-
-export function loginUserAction(name: string) {
+export function registerUserAction(username: string, email: string, password: string){
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/login',
-        {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({name})
+        makeRequest('/user/',
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, email, password, id: ''})
             })
             .then(data => {
-                dispatch({
+                return dispatch({
+                    type: USER_REGISTRATION_STATUS_CHANGED,
+                    status: data
+                });
+            })
+            .catch(data => {
+                return dispatch({
+                    type: USER_REGISTRATION_STATUS_CHANGED,
+                    status: data
+                });
+            });
+    };
+}
+
+export function loginUserAction(email: string, password: string) {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/user/login',
+        {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email, password})
+            })
+            .then(data => {
+                /*dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
-                return dispatch(connectSocketAction());
+                return dispatch(connectSocketAction());*/
+                console.log(data);
+            })
+            .catch(err => {
+                console.log("REJECTED")
+                console.log(err)
             });
     };
 }
@@ -61,7 +88,7 @@ export function loginUserAction(name: string) {
 
 export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/getActiveUsers', {})
+        makeRequest('/getActiveUsers/', {})
             .then(users => {
                 return dispatch({
                     type: USERS_ACTIVE_RECEIVED,
@@ -74,7 +101,7 @@ export function getActiveUsersList() {
 
 export function getKnownUsersList() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/getKnowUsers', {})
+        makeRequest('/getKnowUsers/', {})
             .then(users => {
                 return dispatch({
                     type: USERS_KNOWN_RECEIVED,
@@ -87,7 +114,7 @@ export function getKnownUsersList() {
 
 export function getRecommendedUsersList() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/getRecommendedUsers', {})
+        makeRequest('/getRecommendedUsers/', {})
             .then(users => {
                 return dispatch({
                     type: USERS_KNOWN_RECEIVED,
@@ -103,3 +130,5 @@ export const USER_CURRENT_NOT_AUTHENTICATED = 'USER_CURRENT_NOT_AUTHENTICATED';
 export const USERS_ACTIVE_RECEIVED = 'USERS_ACTIVE_RECEIVED';
 export const USERS_KNOWN_RECEIVED = 'USERS_KNOWN_RECEIVED';
 export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';
+export const USER_REGISTRATION_STATUS_CHANGED = 'USER_REGISTRATION_STATUS_CHANGED';
+export const USER_LOGIN_STATUS_CHANGED = 'USER_LOGIN_STATUS_CHANGED';

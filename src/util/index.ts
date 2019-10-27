@@ -1,9 +1,9 @@
 export function makeRequest(url: string, options: any) {
-    return fetch( `http://localhost:8000${url}`, {...options, credentials: "include"})
+    return fetch( `http://127.0.0.1:5000/api${url}`, {...options, credentials: "include"})
         .then(response => {
             if(response.status.toString().split('')[0] === '4') {
-                throw new Error(response.status.toString());
+                return Promise.reject(response);
             }
-            return response.json()
+            return response.json();
         });
 }

@@ -7,30 +7,40 @@ class LoginPage extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            nameInput: ''
+            emailInput: '',
+            passwordInput: '',
         };
 
-        this.handleNameInputChange = this.handleNameInputChange.bind(this);
-        this.handleNameInputSubmit = this.handleNameInputSubmit.bind(this);
+        this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
+        this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
+        this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
     }
 
 
-    handleNameInputChange(event: any) {
-        this.setState({nameInput: event.target.value});
+    handleEmailInputChange(event: any) {
+        this.setState({emailInput: event.target.value});
     }
 
-    handleNameInputSubmit(event: any) {
-        this.props.loginUser(this.state.nameInput);
+    handlePasswordInputChange(event: any) {
+        this.setState({passwordInput: event.target.value});
+    }
+
+    handleLoginSubmit(event: any) {
         event.preventDefault();
+        this.props.loginUser(this.state.emailInput, this.state.passwordInput);
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleNameInputSubmit}>
+                <form onSubmit={this.handleLoginSubmit}>
                     <label>
-                        Name:
-                        <input type="text" value={this.state.nameInput} onChange={this.handleNameInputChange} />
+                        Email:
+                        <input type="email" value={this.state.emailInput} onChange={this.handleEmailInputChange} />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="password" value={this.state.passwordInput} onChange={this.handlePasswordInputChange} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
@@ -48,7 +58,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        loginUser: (name: string) => dispatch(loginUserAction(name))
+        loginUser: (email: string, password: string) => dispatch(loginUserAction(email, password))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

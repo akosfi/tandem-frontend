@@ -10,6 +10,7 @@ import {getCurrentUserAction} from "./store/user/actions";
 import LoginPage from "./components/LoginPage";
 
 import "./App.scss";
+import RegisterPage from "./components/RegisterPage";
 
 
 const history = createBrowserHistory();
