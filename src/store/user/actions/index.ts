@@ -6,7 +6,6 @@ import {connectSocketAction} from "../../socket/actions";
 export function getCurrentUserAction() {
     return function(dispatch: Dispatch<any>) {
         const jwt_user = Cookies.get('jwt_user');
-
         if(jwt_user) {
             let parsedUser = JSON.parse(jwt_user as string);
             parsedUser.id = parsedUser.id.toString();
@@ -22,7 +21,7 @@ export function getCurrentUserAction() {
             .then(data => {
                 dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
-                    user: data
+                    user: data.user
                 });
                 return dispatch(connectSocketAction());
             })
@@ -71,11 +70,11 @@ export function loginUserAction(email: string, password: string) {
                 body: JSON.stringify({email, password})
             })
             .then(data => {
-                return dispatch({
+                dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
-                //return dispatch(connectSocketAction());
+                return dispatch(connectSocketAction());
             })
             .catch(err => {
                 console.log(err)

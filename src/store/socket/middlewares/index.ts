@@ -8,7 +8,7 @@ const socketMiddleware = (store: any)  => {
         store.dispatch(connectionChangedAction(isConnected));
 
         if (isConnected) {
-            store.dispatch(getActiveUsersList());
+            //store.dispatch(getActiveUsersList());
         }
     };
 
