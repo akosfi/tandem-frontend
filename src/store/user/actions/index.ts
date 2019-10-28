@@ -26,7 +26,8 @@ export function getCurrentUserAction() {
                 });
                 return dispatch(connectSocketAction());
             })
-            .catch(() => {
+            .catch((res) => {
+                console.log(res);
                 return dispatch({
                     type: USER_CURRENT_NOT_AUTHENTICATED,
                 });
@@ -78,7 +79,6 @@ export function loginUserAction(email: string, password: string) {
                 console.log(data);
             })
             .catch(err => {
-                console.log("REJECTED")
                 console.log(err)
             });
     };
