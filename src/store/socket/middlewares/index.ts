@@ -1,6 +1,6 @@
 import {CONNECT_SOCKET, connectionChangedAction, DISCONNECT_SOCKET} from "../actions";
 import Socket from "./socket";
-import {MESSAGE_SEND, messageReceivedAction, messageSentAction} from "../../message/actions";
+import {getMessagesAction, MESSAGE_SEND, messageReceivedAction, messageSentAction} from "../../message/actions";
 import {getActiveUsersList} from "../../user/actions";
 
 const socketMiddleware = (store: any)  => {
@@ -9,6 +9,7 @@ const socketMiddleware = (store: any)  => {
 
         if (isConnected) {
             store.dispatch(getActiveUsersList());
+            store.dispatch(getMessagesAction());
         }
     };
 

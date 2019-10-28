@@ -1,6 +1,6 @@
 export interface Message {
-    from: string;
-    to: string;
-    text: string;
-    time: Date;
+    sender_id: string;
+    target_id: string;
+    message: string;
+    sent_at: Date;
 }

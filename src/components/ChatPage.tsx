@@ -35,7 +35,7 @@ class ChatPage extends React.Component<any, any> {
         if(messagesWithRecipient){
             return _.sortBy(
                 messagesWithRecipient,
-                (message: Message) => new Date(message.time));
+                (message: Message) => new Date(message.sent_at));
         }
         return [];
     }
@@ -46,11 +46,11 @@ class ChatPage extends React.Component<any, any> {
                {this.state.chatRecipient}
 
                {this.getMessagesWithRecipient().map((msg: Message) => {
-                   if(msg.from === this.props.currentUser.id) {
-                       return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
+                   if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
+                       return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
                    }
                    else {
-                       return (<p key={Math.round(Math.random() * 1000)}>{msg.text}</p>)
+                       return (<p key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
                    }
 
                })}
@@ -73,10 +73,10 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         sendMessage: (from: string, to: string, text: string) => dispatch(messageSendAction({
-            from,
-            to,
-            text,
-            time: new Date()
+            sender_id: from,
+            target_id: to,
+            message: text,
+            sent_at: new Date()
         })),
     };
 };

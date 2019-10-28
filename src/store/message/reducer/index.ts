@@ -18,7 +18,7 @@ function messageReducer(state = INITIAL_STATE, action: any) {
       break;
 
     case MESSAGE_SENT:
-      let _messagesToRecipient = state.messages[action.message.to];
+      let _messagesToRecipient = state.messages[action.message.target_id];
 
       if(!_messagesToRecipient){
         _messagesToRecipient = [];
@@ -31,13 +31,13 @@ function messageReducer(state = INITIAL_STATE, action: any) {
             messages:
                 {
                   ...state.messages,
-                  [action.message.to]: _messagesToRecipient
+                  [action.message.target_id]: _messagesToRecipient
                 }
           };
       break;
 
     case MESSAGE_RECEIVED:
-      let _messagesFromRecipient = state.messages[action.message.from];
+      let _messagesFromRecipient = state.messages[action.message.sender_id];
 
       if(!_messagesFromRecipient){
         _messagesFromRecipient = [];
@@ -50,7 +50,7 @@ function messageReducer(state = INITIAL_STATE, action: any) {
             messages:
                 {
                   ...state.messages,
-                  [action.message.from]: _messagesFromRecipient
+                  [action.message.sender_id]: _messagesFromRecipient
                 }
           };
       break;
