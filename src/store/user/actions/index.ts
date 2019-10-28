@@ -71,12 +71,11 @@ export function loginUserAction(email: string, password: string) {
                 body: JSON.stringify({email, password})
             })
             .then(data => {
-                /*dispatch({
+                return dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
-                return dispatch(connectSocketAction());*/
-                console.log(data);
+                //return dispatch(connectSocketAction());
             })
             .catch(err => {
                 console.log(err)

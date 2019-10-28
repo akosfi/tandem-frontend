@@ -17,7 +17,7 @@ class ChatsPage extends React.Component<any, any> {
             .activeUsers
             .filter((u: User) => u.id.toString() !== this.props.currentUser.id.toString())
             .map((u: User) => {
-                return <Link key={u.id} to={'/chat/' + u.id}>{u.username}</Link>
+                return <Link key={u.id} to={'/chat/' + u.id}>{u.full_name}</Link>
             });
     }
 
