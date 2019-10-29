@@ -1,3 +1,5 @@
+import React, {Component} from "react";
+
 export function makeRequest(url: string, options: any) {
     return fetch( `http://127.0.0.1:5000/api${url}`, {...options, credentials: "include"})
         .then(response => {
@@ -7,3 +9,4 @@ export function makeRequest(url: string, options: any) {
             return response.json();
         });
 }
+

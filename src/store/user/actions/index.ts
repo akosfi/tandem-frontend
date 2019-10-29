@@ -34,7 +34,7 @@ export function getCurrentUserAction() {
     }
 }
 
-export function registerUserAction(username: string, email: string, password: string){
+export function registerUserAction(full_name: string, email: string, password: string){
     return function(dispatch: Dispatch<any>) {
         makeRequest('/user/',
             {
@@ -42,7 +42,7 @@ export function registerUserAction(username: string, email: string, password: st
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({username, email, password, id: ''})
+                body: JSON.stringify({full_name, email, password})
             })
             .then(data => {
                 return dispatch({
@@ -51,6 +51,7 @@ export function registerUserAction(username: string, email: string, password: st
                 });
             })
             .catch(data => {
+                console.log(data)
                 return dispatch({
                     type: USER_REGISTRATION_STATUS_CHANGED,
                     status: data

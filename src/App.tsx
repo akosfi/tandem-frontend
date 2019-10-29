@@ -11,6 +11,7 @@ import LoginPage from "./components/LoginPage";
 
 import "./App.scss";
 import RegisterPage from "./components/RegisterPage";
+import {ProtectedRoute} from "./util/ProtectedRoute";
 
 
 const history = createBrowserHistory();
@@ -27,24 +28,55 @@ class App extends React.Component<any, any> {
 
 
     renderBasedOnUserAuthentication() {
-        if (this.props.isUserLoggedIn) {
-            return (
-                <Router history={history}>
-                    <Route exact path="/">
-                        <Redirect to="/chat"/>
-                    </Route>
-                    <Route exact path="/sign-up" component={App}/>
-                    <Route exact path="/chat" component={ChatsPage}/>
-                    <Route exact path="/chat/:id" component={ChatPage}/>
-                    <Route exact path="/event" component={EventsPage}/>
-                    <Route exact path="/event/:id" component={EventPage}/>
-                </Router>
-            );
-        } else {
-            return (
-                <LoginPage/>
-            );
-        }
+        return (
+            <Router history={history}>
+                <Route exact path="/">
+                    <Redirect to="/chat"/>
+                </Route>
+
+                <ProtectedRoute
+                    exact path="/chat"
+                    component={ChatsPage}
+                    condition={this.props.isUserLoggedIn}
+                    redirectUrl={'/sign-in'}
+                />
+
+                <ProtectedRoute
+                    exact path="/chat/:id"
+                    component={ChatsPage}
+                    condition={this.props.isUserLoggedIn}
+                    redirectUrl={'/sign-in'}
+                />
+
+                <ProtectedRoute
+                    exact path="/event"
+                    component={ChatsPage}
+                    condition={this.props.isUserLoggedIn}
+                    redirectUrl={'/sign-in'}
+                />
+
+                <ProtectedRoute
+                    exact path="/event/:id"
+                    component={ChatsPage}
+                    condition={this.props.isUserLoggedIn}
+                    redirectUrl={'/sign-in'}
+                />
+
+                <ProtectedRoute
+                    exact path="/sign-in"
+                    component={LoginPage}
+                    condition={!this.props.isUserLoggedIn}
+                    redirectUrl={'/chat'}
+                />
+
+                <ProtectedRoute
+                    exact path="/sign-up"
+                    component={RegisterPage}
+                    condition={!this.props.isUserLoggedIn}
+                    redirectUrl={'/chat'}
+                />
+            </Router>
+        );
     }
 
     render() {
