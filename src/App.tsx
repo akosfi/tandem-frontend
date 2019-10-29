@@ -3,15 +3,15 @@ import {createBrowserHistory} from 'history';
 import {connect} from "react-redux";
 import {Router, Route, Redirect} from 'react-router';
 import ChatsPage from "./components/ChatsPage";
-import ChatPage from "./components/ChatPage";
-import EventsPage from "./components/EventsPage";
-import EventPage from "./components/EventPage";
 import {getCurrentUserAction} from "./store/user/actions";
 import LoginPage from "./components/LoginPage";
 
 import "./App.scss";
 import RegisterPage from "./components/RegisterPage";
 import {ProtectedRoute} from "./util/ProtectedRoute";
+import ChatPage from "./components/ChatPage";
+import EventsPage from "./components/EventsPage";
+import EventPage from "./components/EventPage";
 
 
 const history = createBrowserHistory();
@@ -30,9 +30,6 @@ class App extends React.Component<any, any> {
     renderBasedOnUserAuthentication() {
         return (
             <Router history={history}>
-                <Route exact path="/">
-                    <Redirect to="/chat"/>
-                </Route>
 
                 <ProtectedRoute
                     exact path="/chat"
@@ -43,21 +40,21 @@ class App extends React.Component<any, any> {
 
                 <ProtectedRoute
                     exact path="/chat/:id"
-                    component={ChatsPage}
+                    component={ChatPage}
                     condition={this.props.isUserLoggedIn}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/event"
-                    component={ChatsPage}
+                    component={EventsPage}
                     condition={this.props.isUserLoggedIn}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/event/:id"
-                    component={ChatsPage}
+                    component={EventPage}
                     condition={this.props.isUserLoggedIn}
                     redirectUrl={'/sign-in'}
                 />
@@ -75,6 +72,11 @@ class App extends React.Component<any, any> {
                     condition={!this.props.isUserLoggedIn}
                     redirectUrl={'/chat'}
                 />
+
+
+                <Route exact path="/">
+                    <Redirect to="/chat"/>
+                </Route>
             </Router>
         );
     }
