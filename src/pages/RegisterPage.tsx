@@ -3,6 +3,7 @@ import {loginUserAction, registerUserAction} from "../store/user/actions";
 import {connect} from "react-redux";
 import App from "../App";
 import UserBasicData from "../components/registration/UserBasicData";
+import SignInType from "../components/registration/SignInType";
 
 
 enum RegistrationStep {
@@ -19,52 +20,53 @@ class RegisterPage extends React.Component<any, any> {
         super(props);
 
         this.state = {
-            currentRegistrationStep: RegistrationStep.UserBasicData as RegistrationStep
+            currentRegistrationStep: RegistrationStep.SignInType as RegistrationStep
         };
 
-        this.handleUsernameInputChange = this.handleUsernameInputChange.bind(this);
-        this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
-        this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
-        this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
+        this.handleUserBasicDataSubmission = this.handleUserBasicDataSubmission.bind(this);
     }
 
-    handleUsernameInputChange(event: any) {
-        this.setState({usernameInput: event.target.value});
-    }
-    handlePasswordInputChange(event: any) {
-        this.setState({passwordInput: event.target.value});
-    }
-    handleEmailInputChange(event: any) {
-        this.setState({emailInput: event.target.value});
-    }
-    handleRegistrationSubmit(event: any) {
-        event.preventDefault();
+    handleUserBasicDataSubmission(username: string, email: string, password: string) {
         this.props.registerUser(
-            this.state.usernameInput,
-            this.state.emailInput,
-            this.state.passwordInput,
+            username,
+            email,
+            password,
         );
     }
 
-
+//nextClick={() => {this.setState({currentRegistrationStep: RegistrationStep.UserBasicData})}}
     renderRegistrationComponent() {
         switch(this.state.currentRegistrationStep) {
             case RegistrationStep.SignInType:
-                break;
+                return (
+                    <SignInType
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserBasicData})} />);
+
             case RegistrationStep.UserBasicData:
-                return (<UserBasicData />);
+                return (
+                    <UserBasicData />);
+
             case RegistrationStep.UserNativeLanguages:
                 break;
+
             case RegistrationStep.UserFluentLanguages:
                 break;
+
             case RegistrationStep.UserGoalLanguages:
                 break;
+
             case RegistrationStep.UserTopicsLiked:
                 break;
+
             default:
                 return (<span>asd</span>);
         }
     }
+
+    alertme() {
+        alert("awd)");
+    }
+
 
     render(){
         return this.renderRegistrationComponent();
