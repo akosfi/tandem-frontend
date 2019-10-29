@@ -2,16 +2,16 @@ import React, {Dispatch} from 'react';
 import {createBrowserHistory} from 'history';
 import {connect} from "react-redux";
 import {Router, Route, Redirect} from 'react-router';
-import ChatsPage from "./components/ChatsPage";
+import ChatsPage from "./pages/ChatsPage";
 import {getCurrentUserAction} from "./store/user/actions";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./pages/LoginPage";
 
 import "./App.scss";
-import RegisterPage from "./components/RegisterPage";
+import RegisterPage from "./pages/RegisterPage";
 import {ProtectedRoute} from "./util/ProtectedRoute";
-import ChatPage from "./components/ChatPage";
-import EventsPage from "./components/EventsPage";
-import EventPage from "./components/EventPage";
+import ChatPage from "./pages/ChatPage";
+import EventsPage from "./pages/EventsPage";
+import EventPage from "./pages/EventPage";
 
 
 const history = createBrowserHistory();

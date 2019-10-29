@@ -1,8 +1,6 @@
-import React, {Dispatch} from "react";
-import {loginUserAction, registerUserAction} from "../store/user/actions";
-import {connect} from "react-redux";
+import React from "react";
 
-class RegisterPage extends React.Component<any, any> {
+class UserBasicData extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
@@ -21,15 +19,12 @@ class RegisterPage extends React.Component<any, any> {
     handleUsernameInputChange(event: any) {
         this.setState({usernameInput: event.target.value});
     }
-
     handlePasswordInputChange(event: any) {
         this.setState({passwordInput: event.target.value});
     }
-
     handleEmailInputChange(event: any) {
         this.setState({emailInput: event.target.value});
     }
-
     handleRegistrationSubmit(event: any) {
         event.preventDefault();
         this.props.registerUser(
@@ -39,14 +34,6 @@ class RegisterPage extends React.Component<any, any> {
         );
     }
 
-    renderRegistrationErrors() {
-        if(this.props.registrationStatus && this.props.registrationStatus.status === 'fail') {
-            console.log("igen");
-            return (
-                <span>{this.props.registrationStatus.message}</span>
-            )
-        }
-    }
 
     render() {
         return (
@@ -71,15 +58,4 @@ class RegisterPage extends React.Component<any, any> {
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        registrationStatus: state.newUserCreationStatus
-    };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch<any>) => {
-    return {
-        registerUser: (username: string, email: string, password: string) => dispatch(registerUserAction(username, email, password))
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default UserBasicData;
