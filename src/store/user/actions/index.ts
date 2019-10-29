@@ -87,11 +87,11 @@ export function loginUserAction(email: string, password: string) {
 
 export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/user/', {})
+        makeRequest('/user/active', {})
             .then(users => {
                 return dispatch({
                     type: USERS_ACTIVE_RECEIVED,
-                    users: users.data
+                    users: users.users
                 })
             })
             .catch(err => console.log("Err fetching active users"));
