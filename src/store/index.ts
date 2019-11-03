@@ -5,12 +5,14 @@ import messagesReducer from "./message/reducer";
 import socketReducer from "./socket/reducer";
 import userReducer from "./user/reducer";
 import languageReducer from "./languages/reducer";
+import eventsReducer from "./events/reducer";
 
 const rootReducer = combineReducers({
     messages: messagesReducer,
     socket: socketReducer,
     users: userReducer,
     languages: languageReducer,
+    events: eventsReducer,
 });
 
 

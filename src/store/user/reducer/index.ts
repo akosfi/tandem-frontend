@@ -7,11 +7,11 @@ import {
     USERS_RECOMMENDED_RECEIVED, USER_LOGIN_STATUS_CHANGED, USER_REGISTRATION_STATUS_CHANGED, USER_CREATED
 } from "../actions";
 
-export interface UserStatus {
-    status: string,
-    message: string
+export enum UserStatus {
+    Initial,
+    LoggedIn,
+    NotLoggedIn,
 }
-
 
 export enum UserCreationStatus {
     Initial,
@@ -19,7 +19,7 @@ export enum UserCreationStatus {
 }
 
 const INITIAL_STATE = {
-    currentUserAuthenticated: false as boolean,
+    currentUserAuthenticated: UserStatus.Initial as UserStatus,
     current: {} as User,
     activeUsers: [] as Array<User>,
     knownUsers: [] as Array<User>,
@@ -31,10 +31,10 @@ function userReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type){
         case USER_CURRENT_AUTHENTICATED:
-            reduced = {...state, current: action.user, currentUserAuthenticated: true};
+            reduced = {...state, current: action.user, currentUserAuthenticated: UserStatus.LoggedIn};
             break;
         case USER_CURRENT_NOT_AUTHENTICATED:
-            reduced = {...state, currentUserAuthenticated: false };
+            reduced = {...state, currentUserAuthenticated: UserStatus.NotLoggedIn };
             break;
         case USERS_ACTIVE_RECEIVED:
             reduced = {...state, activeUsers: action.users};

@@ -1,19 +1,34 @@
-import {User} from "../../user/models/User";
-import {MESSAGE_RECEIVED, MESSAGE_SENT, MESSAGES_GET} from "../../message/actions";
-import {EVENTS_ADD} from "../actions";
+import {EVENT_CREATED, EVENTS_GET, EVENTS_USER_CREATED_GET, EVENTS_USER_GOING_GET} from "../actions";
+
 
 const INITIAL_STATE = {
     events: [] as Array<Event>,
+    eventsUserGoing: [] as Array<Event>,
+    eventsUserCreated: [] as Array<Event>
 };
 
 function eventsReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type)
     {
-        case EVENTS_ADD:
-            reduced = Object.assign({}, state, {
-                events: action.events
-            });
+        case EVENTS_GET:
+            reduced = {...state, events: action.events};
+            break;
+
+        case EVENTS_USER_GOING_GET:
+            reduced = {...state, eventsUserGoing: action.events};
+            break;
+
+        case EVENTS_USER_CREATED_GET:
+            reduced = {...state, eventsUserCreated: action.events};
+            break;
+
+        case EVENT_CREATED:
+            reduced = {
+                ...state,
+                eventsUserCreated: [...state.eventsUserCreated, action.event],
+                eventsUserGoing: [...state.eventsUserGoing, action.event]
+            };
             break;
 
         default:
@@ -21,3 +36,5 @@ function eventsReducer(state=INITIAL_STATE, action: any) {
     }
     return reduced;
 }
+
+export default eventsReducer;

@@ -1,15 +1,9 @@
 export default interface Event {
-    id: string;
-    title: string;
-    description: string;
+    id: number;
+    name: string;
     date: Date;
-    coverPicUrl: string;
-    numberOfPeopleGoing: number;
-    eventType: EventType;
-}
-
-
-export enum EventType {
-    Public,
-    InviteOnly
+    public: boolean;
+    location: string;
+    details: string;
+    cover_photo: string;
 }
