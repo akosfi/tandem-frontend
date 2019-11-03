@@ -1,6 +1,6 @@
 import React from "react";
 
-class TopicSelect extends React.Component<any, any> {
+class TagSelect extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
@@ -9,10 +9,10 @@ class TopicSelect extends React.Component<any, any> {
             selectedTopics: []
         };
 
-        this.submitTopics = this.submitTopics.bind(this);
+        this.submit = this.submit.bind(this);
     }
 
-    submitTopics(event: any) {
+    submit(event: any) {
         event.preventDefault();
 
 
@@ -25,7 +25,7 @@ class TopicSelect extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <form onSubmit={this.submitTopics}>
+                <form onSubmit={this.submit}>
                     <span>asd</span>
                     <input type="submit" value="Submit" />
                 </form>
@@ -34,4 +34,4 @@ class TopicSelect extends React.Component<any, any> {
     }
 }
 
-export default TopicSelect;
+export default TagSelect;

@@ -27,10 +27,10 @@ class UserBasicData extends React.Component<any, any> {
     }
     handleRegistrationSubmit(event: any) {
         event.preventDefault();
-        this.props.registerUser(
+        this.props.handleUserBasicDataSubmission(
             this.state.usernameInput,
             this.state.emailInput,
-            this.state.passwordInput,
+            this.state.passwordInput
         );
     }
 

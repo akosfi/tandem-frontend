@@ -19,7 +19,6 @@ const INITIAL_STATE = {
     knownUsers: [] as Array<User>,
     recommendedUsers: [] as Array<User>,
     newUserCreationStatus: {} as UserStatus,
-    userLoginStatus: {} as UserStatus,
 };
 
 function userReducer(state=INITIAL_STATE, action: any) {

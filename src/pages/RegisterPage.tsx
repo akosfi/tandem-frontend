@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import App from "../App";
 import UserBasicData from "../components/registration/UserBasicData";
 import SignInType from "../components/registration/SignInType";
+import LanguageSelect from "../components/registration/LanguageSelect";
+import TagSelect from "../components/registration/TagSelect";
 
 
 enum RegistrationStep {
@@ -13,6 +15,7 @@ enum RegistrationStep {
     UserFluentLanguages,
     UserGoalLanguages,
     UserTopicsLiked,
+    UserGoals,
 }
 
 class RegisterPage extends React.Component<any, any> {
@@ -44,27 +47,40 @@ class RegisterPage extends React.Component<any, any> {
 
             case RegistrationStep.UserBasicData:
                 return (
-                    <UserBasicData />);
+                    <UserBasicData
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserNativeLanguages})}
+                        handleUserBasicDataSubmission={this.handleUserBasicDataSubmission}/>);
 
             case RegistrationStep.UserNativeLanguages:
-                break;
+                return (
+                    <LanguageSelect
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserFluentLanguages})}/>);
 
             case RegistrationStep.UserFluentLanguages:
-                break;
+                return (
+                    <LanguageSelect
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserGoalLanguages})}/>);
+
 
             case RegistrationStep.UserGoalLanguages:
-                break;
+                return (
+                    <LanguageSelect
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserTopicsLiked})}/>);
 
             case RegistrationStep.UserTopicsLiked:
-                break;
+                return (
+                    <TagSelect
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserGoals})}/>);
+
+            case RegistrationStep.UserGoals:
+                return (
+                    <TagSelect
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserTopicsLiked})}/>);
+
 
             default:
                 return (<span>asd</span>);
         }
-    }
-
-    alertme() {
-        alert("awd)");
     }
 
 
