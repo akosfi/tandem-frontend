@@ -46,16 +46,14 @@ export function registerUserAction(full_name: string, email: string, password: s
             })
             .then(data => {
                 return dispatch({
-                    type: USER_REGISTRATION_STATUS_CHANGED,
+                    type: USER_CREATED,
                     status: data
                 });
             })
             .catch(data => {
-                console.log(data)
-                return dispatch({
-                    type: USER_REGISTRATION_STATUS_CHANGED,
-                    status: data
-                });
+
+                ///???
+
             });
     };
 }
@@ -131,3 +129,4 @@ export const USERS_KNOWN_RECEIVED = 'USERS_KNOWN_RECEIVED';
 export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';
 export const USER_REGISTRATION_STATUS_CHANGED = 'USER_REGISTRATION_STATUS_CHANGED';
 export const USER_LOGIN_STATUS_CHANGED = 'USER_LOGIN_STATUS_CHANGED';
+export const USER_CREATED = 'USER_CREATED';

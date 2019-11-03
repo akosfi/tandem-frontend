@@ -1,4 +1,7 @@
-import React from "react";
+import React, {Dispatch} from "react";
+import {connect} from "react-redux";
+import {registerUserAction} from "../../store/user/actions";
+import {UserCreationStatus} from "../../store/user/reducer";
 
 class UserBasicData extends React.Component<any, any> {
     constructor(props: any) {
@@ -25,15 +28,21 @@ class UserBasicData extends React.Component<any, any> {
     handleEmailInputChange(event: any) {
         this.setState({emailInput: event.target.value});
     }
+
     handleRegistrationSubmit(event: any) {
         event.preventDefault();
-        this.props.handleUserBasicDataSubmission(
+        this.props.registerUser(
             this.state.usernameInput,
             this.state.emailInput,
             this.state.passwordInput
         );
     }
 
+    renderNextButton() {
+        if(this.props.userCreationStatus === UserCreationStatus.UserCreated) {
+            return <span onClick={this.props.nextClick}>Continue</span>
+        }
+    }
 
     render() {
         return (
@@ -53,9 +62,21 @@ class UserBasicData extends React.Component<any, any> {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                {this.renderNextButton()}
             </div>
         );
     }
 }
 
-export default UserBasicData;
+const mapStateToProps = (state: any) => {
+    return {
+        userCreationStatus: state.users.userCreationStatus
+    };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+    return {
+        registerUser: (username: string, email: string, password: string) => dispatch(registerUserAction(username, email, password))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UserBasicData);
