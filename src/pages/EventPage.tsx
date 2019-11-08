@@ -1,6 +1,6 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
-import {eventGetAction} from "../store/events/actions";
+import {eventGetAction, userJoinEventAction} from "../store/events/actions";
 import Event from "../store/events/models/Event";
 
 class EventPage extends React.Component<any, any> {
@@ -12,11 +12,15 @@ class EventPage extends React.Component<any, any> {
         };
 
         this.props.loadEvent(Number(this.props.match.params.id));
+//load detailed event here with user_Created boolean user_joined boolean
     }
 
     renderEvent() {
         if(this.props.event) {
-            return <p>{this.props.event.name}</p>
+            return (<div>
+                <p>{this.props.event.name}</p>
+                <h4 onClick={() => this.props.joinEvent(this.props.event.id)}>JOIN</h4>
+            </div>)
         }
         else {
             return <p>Loading...</p>
@@ -41,7 +45,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        loadEvent: (id: number) => dispatch(eventGetAction(id))
+        loadEvent: (id: number) => dispatch(eventGetAction(id)),
+        joinEvent: (eventId: number) => dispatch(userJoinEventAction(eventId))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EventPage);

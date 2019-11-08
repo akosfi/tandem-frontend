@@ -56,7 +56,7 @@ export function eventsUserCreatedGetAction(){
 
 export function eventsUserGoingGetAction() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/event/user_going',{})
+        makeRequest('/event/user_joined',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_USER_GOING_GET,
