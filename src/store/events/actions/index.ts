@@ -2,6 +2,8 @@ import {Dispatch} from "redux";
 import {makeRequest} from "../../../util";
 import Event from "../models/Event";
 
+
+export const EVENT_GET = 'EVENT_GET';
 export const EVENTS_GET = 'EVENTS_GET';
 export const EVENTS_USER_GOING_GET = 'EVENTS_USER_GOING_GET';
 export const EVENTS_USER_CREATED_GET = 'EVENTS_USER_CREATED_GET';
@@ -14,6 +16,21 @@ export function eventsGetAction() {
                 return dispatch({
                     type: EVENTS_GET,
                     events
+                });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
+
+export function eventGetAction(id: number) {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest(`/event/${id}`,{})
+            .then(event => {
+                return dispatch({
+                    type: EVENT_GET,
+                    event
                 });
             })
             .catch(err => {

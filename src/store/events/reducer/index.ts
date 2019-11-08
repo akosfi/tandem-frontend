@@ -1,5 +1,6 @@
-import {EVENT_CREATED, EVENTS_GET, EVENTS_USER_CREATED_GET, EVENTS_USER_GOING_GET} from "../actions";
+import {EVENT_CREATED, EVENT_GET, EVENTS_GET, EVENTS_USER_CREATED_GET, EVENTS_USER_GOING_GET} from "../actions";
 
+import Event from "../models/Event";
 
 const INITIAL_STATE = {
     events: [] as Array<Event>,
@@ -14,6 +15,25 @@ function eventsReducer(state=INITIAL_STATE, action: any) {
     {
         case EVENTS_GET:
             reduced = {...state, events: action.events};
+            break;
+
+        case EVENT_GET:
+            const events = state.events;
+
+            let index = events.findIndex((e: Event) => e.id === action.event.id);
+            if(index === -1) {
+                reduced = {
+                    ...state,
+                    events: [...state.events, action.event]
+                };
+            }
+            else {
+                events[index] = action.event;
+                reduced = {
+                    ...state,
+                    events: [...events]
+                };
+            }
             break;
 
         case EVENTS_USER_GOING_GET:
