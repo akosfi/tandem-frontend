@@ -6,6 +6,10 @@ class EventPage extends React.Component<any, any> {
 
         console.log("EventPage");
     }
+
+    render() {
+        return (<span>AAAA</span>)
+    }
 }
 
 export default EventPage;

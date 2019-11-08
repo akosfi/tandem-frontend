@@ -9,7 +9,7 @@ export const EVENT_CREATED = 'EVENT_CREATED';
 
 export function eventsGetAction() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/events/',{})
+        makeRequest('/event/',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_GET,
@@ -24,7 +24,7 @@ export function eventsGetAction() {
 
 export function userCreatedEventsGetAction(){
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/events/userCreated',{})
+        makeRequest('/event/userCreated',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_USER_CREATED_GET,
@@ -39,7 +39,7 @@ export function userCreatedEventsGetAction(){
 
 export function userGoingEventsGetAction() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/events/userGoing',{})
+        makeRequest('/event/userGoing',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_USER_GOING_GET,
@@ -69,7 +69,7 @@ export function userJoinEventAction(eventId: number) {
 
 export function eventCreateAction(event: Event) {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/events/',
+        makeRequest('/event/',
             {
                 method: "POST",
                 headers: {
@@ -77,12 +77,12 @@ export function eventCreateAction(event: Event) {
                 },
                 body: JSON.stringify(event)
             })
-            .then(event => {
+            .then(response => {
                 return dispatch({
                     type: EVENT_CREATED,
-                    event
+                    event: response.data
                 });
             })
-            .catch(error => console.log("ERROR POSTING EVENT"))
+            .catch(error => console.log(error))
     };
 }

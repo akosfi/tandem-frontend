@@ -26,7 +26,6 @@ export function getCurrentUserAction() {
                 return dispatch(connectSocketAction());
             })
             .catch((res) => {
-                console.log(res);
                 return dispatch({
                     type: USER_CURRENT_NOT_AUTHENTICATED,
                 });

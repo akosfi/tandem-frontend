@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Dispatch} from "react";
+import {Redirect} from 'react-router'
 import {eventCreateAction} from "../store/events/actions";
 import Event from '../store/events/models/Event';
 import {loginUserAction} from "../store/user/actions";
@@ -15,7 +16,8 @@ class EventCreatePage extends React.Component<any, any> {
             public: false as boolean,
             location: "",
             details: "",
-            cover_photo: ""
+            cover_photo: "",
+
         };
 
         this.handleNameInputChange = this.handleNameInputChange.bind(this);
@@ -54,6 +56,14 @@ class EventCreatePage extends React.Component<any, any> {
         });
     }
 
+    redirectIfEventCreated() {
+        console.log(this.props.eventCreationStatus);
+        if(this.props.eventCreationStatus && this.props.eventCreationStatus.created){
+
+            return <Redirect to={`/event/${this.props.eventCreationStatus.event.id}`} />
+        }
+    }
+
     render() {
         return (
             <div>
@@ -76,14 +86,18 @@ class EventCreatePage extends React.Component<any, any> {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+
+                {this.redirectIfEventCreated()}
             </div>
         );
     }
 }
 
+
+
 const mapStateToProps = (state: any) => {
     return {
-
+        eventCreationStatus: state.events.eventCreationStatus
     };
 };
 
