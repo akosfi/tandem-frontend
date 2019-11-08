@@ -15,7 +15,7 @@ export function eventsGetAction() {
             .then(events => {
                 return dispatch({
                     type: EVENTS_GET,
-                    events
+                    events: events.events
                 });
             })
             .catch(err => {
@@ -39,13 +39,13 @@ export function eventGetAction(id: number) {
     };
 }
 
-export function userCreatedEventsGetAction(){
+export function eventsUserCreatedGetAction(){
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/event/userCreated',{})
+        makeRequest('/event/user_created',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_USER_CREATED_GET,
-                    events
+                    events: events.events
                 });
             })
             .catch(err => {
@@ -54,13 +54,13 @@ export function userCreatedEventsGetAction(){
     };
 }
 
-export function userGoingEventsGetAction() {
+export function eventsUserGoingGetAction() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/event/userGoing',{})
+        makeRequest('/event/user_going',{})
             .then(events => {
                 return dispatch({
                     type: EVENTS_USER_GOING_GET,
-                    events
+                    events: events.events
                 });
             })
             .catch(err => {
