@@ -32,7 +32,7 @@ class LoginPage extends React.Component<any, any> {
     }
 
     redirectToSignUp() {
-        if(!this.props.registrationFinished) return <Redirect to={'/sign-up'} />
+        if(this.props.registrationFinished === false) return <Redirect to={'/sign-up'} />
     }
 
     render() {

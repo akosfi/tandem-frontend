@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     learning_goals: [] as Array<LearningGoal>,
 };
 
-function languageReducer(state=INITIAL_STATE, action: any) {
+function staticReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type){
         case LANGUAGES_GET:
@@ -30,4 +30,4 @@ function languageReducer(state=INITIAL_STATE, action: any) {
     return reduced;
 }
 
-export default languageReducer;
+export default staticReducer;

@@ -39,6 +39,7 @@ export function learningGoalsGetAction() {
     return function(dispatch: Dispatch<any>) {
         makeRequest('/static/learning_goals', {})
             .then(response => {
+                console.log(response);
                 return dispatch({
                     type: LEARNING_GOALS_GET,
                     learning_goals: response.learning_goals

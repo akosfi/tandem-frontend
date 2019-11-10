@@ -1,11 +1,27 @@
 import React, {Dispatch} from "react";
-import {loginUserAction, registerUserAction} from "../store/user/actions";
+import {loginUserAction, registerUserAction, userPreferencesPostAction} from "../store/user/actions";
 import {connect} from "react-redux";
 import App from "../App";
 import UserBasicData from "../components/registration/UserBasicData";
 import SignInType from "../components/registration/SignInType";
 import LanguageSelect from "../components/registration/LanguageSelect";
 import TagSelect from "../components/registration/TagSelect";
+import {LanguageDifficulty} from "../store/static/models/LanguageDifficulty";
+import {LearningGoal} from "../store/static/models/LearningGoal";
+import {languagesGetAction, learningGoalsGetAction, topicsGetAction} from "../store/static/actions";
+
+
+export interface SelectedLanguage {
+    id: number;
+}
+
+export interface SelectedLanguageWithDifficulty {
+    d: LanguageDifficulty
+}
+
+export interface SelectedTag {
+    id: number;
+}
 
 
 enum RegistrationStep {
@@ -26,15 +42,25 @@ class RegisterPage extends React.Component<any, any> {
         this.state = {
             currentRegistrationStep: (this.props.registrationFinished === false)
                                         ? RegistrationStep.UserNativeLanguages
-                                        : RegistrationStep.SignInType
+                                        : RegistrationStep.SignInType,
+
+            userPreferences: {
+                nativeLanguages: [] as Array<SelectedLanguage>,
+                fluentLanguages: [] as Array<SelectedLanguage>,
+                goalLanguages: [] as Array<SelectedLanguageWithDifficulty>,
+                topicsLiked: [] as Array<SelectedTag>,
+                learningGoals: [] as Array<LearningGoal>,
+            }
         };
 
-        this.handleUserBasicDataSubmission = this.handleUserBasicDataSubmission.bind(this);
+        this.submitUserBasicData = this.submitUserBasicData.bind(this);
+        this.submitUserPreferences = this.submitUserPreferences.bind(this);
 
 
+        this.props.loadStatic();
     }
 
-    handleUserBasicDataSubmission(username: string, email: string, password: string) {
+    submitUserBasicData(username: string, email: string, password: string) {
         this.props.registerUser(
             username,
             email,
@@ -42,8 +68,13 @@ class RegisterPage extends React.Component<any, any> {
         );
     }
 
+    submitUserPreferences(){
+        this.props.setUserPreferences(this.state.userPreferences);
+    }
+
     renderRegistrationComponent() {
         switch(this.state.currentRegistrationStep) {
+            default:
             case RegistrationStep.SignInType:
                 return (
                     <SignInType
@@ -53,37 +84,48 @@ class RegisterPage extends React.Component<any, any> {
                 return (
                     <UserBasicData
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserNativeLanguages})}
-                        handleUserBasicDataSubmission={this.handleUserBasicDataSubmission}/>);
+                        handleUserBasicDataSubmission={this.submitUserBasicData}/>);
 
             case RegistrationStep.UserNativeLanguages:
                 return (
                     <LanguageSelect
+                        title="Select the languages  you speak natively"
+                        withDifficulty={false}
+                        selectedLanguages={this.state.userPreferences.nativeLanguages}
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserFluentLanguages})}/>);
 
             case RegistrationStep.UserFluentLanguages:
                 return (
                     <LanguageSelect
+                        title="Select the languages  you speak fluently"
+                        withDifficulty={false}
+                        selectedLanguages={this.state.userPreferences.fluentLanguages}
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserGoalLanguages})}/>);
 
 
             case RegistrationStep.UserGoalLanguages:
                 return (
                     <LanguageSelect
+                        title="Select the languages  you want to learn"
+                        withDifficulty={true}
+                        selectedLanguages={this.state.userPreferences.goalLanguages}
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserTopicsLiked})}/>);
 
             case RegistrationStep.UserTopicsLiked:
                 return (
                     <TagSelect
+                        title="Select the topics  you interested in."
+                        tags={this.props.topics}
+                        selectedTags={this.state.userPreferences.topicsLiked}
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserGoals})}/>);
 
             case RegistrationStep.UserGoals:
                 return (
                     <TagSelect
-                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserTopicsLiked})}/>);
-
-
-            default:
-                return (<span>asd</span>);
+                        title="Select your language learning goals."
+                        tags={this.props.learning_goals}
+                        selectedTags={this.state.userPreferences.learningGoals}
+                        nextClick={this.submitUserPreferences}  />);
         }
     }
 
@@ -95,13 +137,22 @@ class RegisterPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        registrationFinished: state.users.current.registration_finished
+        registrationFinished: state.users.current.registration_finished,
+        languages: state.static.languages,
+        topics: state.static.topics,
+        learning_goals: state.static.learning_goals,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        registerUser: (username: string, email: string, password: string) => dispatch(registerUserAction(username, email, password))
+        registerUser: (username: string, email: string, password: string) => dispatch(registerUserAction(username, email, password)),
+        loadStatic: () => {
+            dispatch(languagesGetAction());
+            dispatch(topicsGetAction());
+            return dispatch(learningGoalsGetAction());
+        },
+        setUserPreferences: (preferences: any) => dispatch(userPreferencesPostAction(preferences))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

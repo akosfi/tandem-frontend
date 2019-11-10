@@ -80,6 +80,29 @@ export function loginUserAction(email: string, password: string) {
     };
 }
 
+export function userPreferencesPostAction(preferences: any) {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/user/preferences',
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({...preferences})
+            })
+            .then(data => {
+                dispatch({
+                    type: USER_CURRENT_AUTHENTICATED,
+                    user: data
+                });
+                return dispatch(connectSocketAction());
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
+
 
 
 export function getActiveUsersList() {

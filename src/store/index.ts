@@ -4,14 +4,14 @@ import socketMiddleware from "./socket/middlewares";
 import messagesReducer from "./message/reducer";
 import socketReducer from "./socket/reducer";
 import userReducer from "./user/reducer";
-import languageReducer from "./static/reducer";
+import staticReducer from "./static/reducer";
 import eventsReducer from "./events/reducer";
 
 const rootReducer = combineReducers({
     messages: messagesReducer,
     socket: socketReducer,
     users: userReducer,
-    languages: languageReducer,
+    static: staticReducer,
     events: eventsReducer,
 });
 
