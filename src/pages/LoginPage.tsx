@@ -1,7 +1,7 @@
 import React, {Dispatch} from "react";
 import {loginUserAction} from "../store/user/actions";
 import {connect} from "react-redux";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -31,6 +31,10 @@ class LoginPage extends React.Component<any, any> {
         this.props.loginUser(this.state.emailInput, this.state.passwordInput);
     }
 
+    redirectToSignUp() {
+        if(!this.props.registrationFinished) return <Redirect to={'/sign-up'} />
+    }
+
     render() {
         return (
             <div>
@@ -46,7 +50,7 @@ class LoginPage extends React.Component<any, any> {
                     <input type="submit" value="Submit" />
                 </form>
 
-
+                {this.redirectToSignUp()}
                 <NavLink to="/sign-up"> --Sign up! </NavLink>
             </div>
         );
@@ -56,7 +60,7 @@ class LoginPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-
+        registrationFinished: state.users.current.registration_finished
     };
 };
 

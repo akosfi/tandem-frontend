@@ -22,11 +22,16 @@ class RegisterPage extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
+        //registrationFinished is ready, since we only load this page if we know that the user is registered or not
         this.state = {
-            currentRegistrationStep: RegistrationStep.SignInType as RegistrationStep
+            currentRegistrationStep: (this.props.registrationFinished === false)
+                                        ? RegistrationStep.UserNativeLanguages
+                                        : RegistrationStep.SignInType
         };
 
         this.handleUserBasicDataSubmission = this.handleUserBasicDataSubmission.bind(this);
+
+
     }
 
     handleUserBasicDataSubmission(username: string, email: string, password: string) {
@@ -37,7 +42,6 @@ class RegisterPage extends React.Component<any, any> {
         );
     }
 
-//nextClick={() => {this.setState({currentRegistrationStep: RegistrationStep.UserBasicData})}}
     renderRegistrationComponent() {
         switch(this.state.currentRegistrationStep) {
             case RegistrationStep.SignInType:
@@ -91,7 +95,7 @@ class RegisterPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        registrationStatus: state.newUserCreationStatus
+        registrationFinished: state.users.current.registration_finished
     };
 };
 

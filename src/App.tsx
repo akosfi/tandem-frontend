@@ -28,6 +28,9 @@ class App extends React.Component<any, any> {
     componentDidMount(): void {
     }
 
+    isUserAuthenticated(): boolean {
+        return this.props.isUserLoggedIn === UserStatus.LoggedIn && this.props.registrationFinished;
+    }
 
     renderBasedOnUserAuthentication() {
         if(this.props.isUserLoggedIn === UserStatus.Initial) return;
@@ -38,56 +41,56 @@ class App extends React.Component<any, any> {
                 <ProtectedRoute
                     exact path="/chat"
                     component={ChatsPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/chat/:id"
                     component={ChatPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/event"
                     component={EventsPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/event/:id"
                     component={EventPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/event-create"
                     component={EventCreatePage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
                 <ProtectedRoute
                     exact path="/sign-in"
                     component={LoginPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.NotLoggedIn}
+                    condition={!this.isUserAuthenticated()}
                     redirectUrl={'/chat'}
                 />
 
                 <ProtectedRoute
                     exact path="/sign-up"
                     component={RegisterPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.NotLoggedIn}
+                    condition={!this.isUserAuthenticated()}
                     redirectUrl={'/chat'}
                 />
 
                 <ProtectedRoute
                     exact path="/"
                     component={ChatsPage}
-                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    condition={this.isUserAuthenticated()}
                     redirectUrl={'/sign-in'}
                 />
 
@@ -108,7 +111,8 @@ class App extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        isUserLoggedIn: state.users.currentUserAuthenticated
+        isUserLoggedIn: state.users.currentUserAuthenticated,
+        registrationFinished: state.users.current.registration_finished
     };
 };
 
