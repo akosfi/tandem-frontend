@@ -10,7 +10,6 @@ import {LanguageDifficulty} from "../store/static/models/LanguageDifficulty";
 import {LearningGoal} from "../store/static/models/LearningGoal";
 import {languagesGetAction, learningGoalsGetAction, topicsGetAction} from "../store/static/actions";
 
-
 export interface SelectedLanguage {
     id: number;
 }
