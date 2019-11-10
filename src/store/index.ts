@@ -4,7 +4,7 @@ import socketMiddleware from "./socket/middlewares";
 import messagesReducer from "./message/reducer";
 import socketReducer from "./socket/reducer";
 import userReducer from "./user/reducer";
-import languageReducer from "./languages/reducer";
+import languageReducer from "./static/reducer";
 import eventsReducer from "./events/reducer";
 
 const rootReducer = combineReducers({
