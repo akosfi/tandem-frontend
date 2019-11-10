@@ -1,6 +1,7 @@
 import React, {Dispatch} from "react";
 import {loginUserAction} from "../store/user/actions";
 import {connect} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -44,6 +45,9 @@ class LoginPage extends React.Component<any, any> {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+
+
+                <NavLink to="/sign-up"> --Sign up! </NavLink>
             </div>
         );
     }

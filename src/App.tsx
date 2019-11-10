@@ -84,6 +84,13 @@ class App extends React.Component<any, any> {
                     redirectUrl={'/chat'}
                 />
 
+                <ProtectedRoute
+                    exact path="/"
+                    component={ChatsPage}
+                    condition={this.props.isUserLoggedIn === UserStatus.LoggedIn}
+                    redirectUrl={'/sign-in'}
+                />
+
 
             </Router>
         );

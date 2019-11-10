@@ -2,6 +2,7 @@ import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {eventGetAction, userJoinEventAction} from "../store/events/actions";
 import Event from "../store/events/models/Event";
+import {NavLink} from "react-router-dom";
 
 class EventPage extends React.Component<any, any> {
     constructor(props: any){
@@ -30,7 +31,7 @@ class EventPage extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <span></span>
+                <NavLink to="/event"> --Events </NavLink>
                 {this.renderEvent()}
             </div>
         )

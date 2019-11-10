@@ -1,7 +1,7 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {User} from "../store/user/models/User";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 
 class ChatsPage extends React.Component<any, any> {
     constructor(props: any){
@@ -25,7 +25,12 @@ class ChatsPage extends React.Component<any, any> {
         return (
             <div>
                 <h1>ChatsPage</h1>
+
                 {this.renderActiveUsers()}
+
+
+                <NavLink to="/chat"> --Chats </NavLink>
+                <NavLink to="/event"> --Events </NavLink>
             </div>
         );
     }

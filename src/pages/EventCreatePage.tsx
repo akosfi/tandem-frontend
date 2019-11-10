@@ -5,6 +5,7 @@ import {Redirect} from 'react-router'
 import {eventCreateAction} from "../store/events/actions";
 import Event from '../store/events/models/Event';
 import {loginUserAction} from "../store/user/actions";
+import {NavLink} from "react-router-dom";
 
 class EventCreatePage extends React.Component<any, any> {
     constructor(props: any){
@@ -67,6 +68,7 @@ class EventCreatePage extends React.Component<any, any> {
     render() {
         return (
             <div>
+                <NavLink to="/event"> --Events </NavLink>
                 <form onSubmit={this.handleEventCreationSubmit}>
                     <label>
                         Name:

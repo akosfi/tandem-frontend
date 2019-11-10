@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {messageSendAction} from "../store/message/actions";
 import {Message} from "../store/message/models/Message";
 import _ from 'lodash';
+import {NavLink} from 'react-router-dom'
 
 class ChatPage extends React.Component<any, any> {
 
@@ -43,6 +44,8 @@ class ChatPage extends React.Component<any, any> {
     render() {
         return (
            <div>
+               <NavLink to="/chat"> --Chats </NavLink>
+
                {this.state.chatRecipient}
 
                {this.getMessagesWithRecipient().map((msg: Message) => {
