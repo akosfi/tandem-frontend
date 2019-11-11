@@ -89,7 +89,7 @@ class RegisterPage extends React.Component<any, any> {
                 return (
                     <LanguageSelect
                         title="Select the languages  you speak natively"
-                        withDifficulty={false}
+                        withDifficulty={true}  //############################################
                         selectedLanguages={this.state.userPreferences.nativeLanguages}
                         nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserFluentLanguages})}/>);
 
