@@ -17,12 +17,23 @@ class LanguageSelect extends React.Component<any, any> {
                     ([] as Array<SelectedLanguage>)
         };
 
+        console.log("asd");
+
         this.isLanguageSelected = this.isLanguageSelected.bind(this);
         this.submitLanguages = this.submitLanguages.bind(this);
         this.renderLanguages = this.renderLanguages.bind(this);
         this.removeLanguage = this.removeLanguage.bind(this);
         this.selectLanguage = this.selectLanguage.bind(this);
         this.updateDifficulty = this.updateDifficulty.bind(this);
+    }
+
+    componentWillReceiveProps(): void {
+        this.setState({
+            selectedLanguages:
+                (this.props.withDifficulty) ?
+                    ([] as Array<SelectedLanguageWithDifficulty>) :
+                    ([] as Array<SelectedLanguage>)
+        })
     }
 
     submitLanguages() {
@@ -50,6 +61,7 @@ class LanguageSelect extends React.Component<any, any> {
         return this.state.selectedLanguages.findIndex((l: any) => l.id === language.id) !== -1;
     }
     selectLanguage(language: any) {
+        console.log(language);
         this.setState({
             selectedLanguages: [...this.state.selectedLanguages, {...language}]
         });
