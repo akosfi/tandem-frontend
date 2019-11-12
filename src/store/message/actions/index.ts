@@ -1,8 +1,6 @@
-import {Message} from "../models/Message";
+import {Message, MessageType} from "../models/Message";
 import {Dispatch} from "redux";
 import {makeRequest} from "../../../util";
-import {connectSocketAction} from "../../socket/actions";
-import {USER_CURRENT_AUTHENTICATED} from "../../user/actions";
 
 export const MESSAGES_GET = 'MESSAGES_GET';
 export const MESSAGE_SEND = 'MESSAGE_SEND';
@@ -18,6 +16,31 @@ export function getMessagesAction() {
                     type: MESSAGES_GET,
                     messages: messages
                 });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
+
+export function sendImageMessageAction(file: any, sender_id: number, target_id: number) {
+
+    const data = new FormData();
+    data.append('file', file);
+
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/message/image',{
+            method: "POST",
+            body: data
+            })
+            .then(response => {
+                return dispatch(messageSendAction({
+                    sender_id: sender_id.toString(),
+                    target_id: target_id.toString(),
+                    message: response.data,
+                    sent_at: new Date(),
+                    message_type: MessageType.IMAGE
+                }))
             })
             .catch(err => {
                 console.log(err)

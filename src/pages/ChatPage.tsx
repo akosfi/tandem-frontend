@@ -1,7 +1,7 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
-import {messageSendAction} from "../store/message/actions";
-import {Message} from "../store/message/models/Message";
+import {messageSendAction, sendImageMessageAction} from "../store/message/actions";
+import {Message, MessageType} from "../store/message/models/Message";
 import _ from 'lodash';
 import {NavLink} from 'react-router-dom'
 
@@ -16,6 +16,9 @@ class ChatPage extends React.Component<any, any> {
         };
         this.handleInputMessageChange = this.handleInputMessageChange.bind(this);
         this.handleInputMessageSubmit = this.handleInputMessageSubmit.bind(this);
+        this.handleInputImageSubmit = this.handleInputImageSubmit.bind(this);
+        this.renderTextMessage = this.renderTextMessage.bind(this);
+        this.renderImageMessage = this.renderImageMessage.bind(this);
     }
 
     handleInputMessageChange(event: any) {
@@ -23,12 +26,17 @@ class ChatPage extends React.Component<any, any> {
     }
 
     handleInputMessageSubmit(event: any) {
-        this.props.sendMessage(
+        this.props.sendTextMessage(
             this.props.currentUser.id,
             this.state.chatRecipient,
             this.state.inputMessage
         );
         this.setState({inputMessage: ''});
+    }
+
+    handleInputImageSubmit(event: any) {
+        const fileToUpload = event.target.files[0];
+        this.props.sendImageMessage(fileToUpload, this.props.currentUser.id, this.state.chatRecipient);
     }
 
     getMessagesWithRecipient() {
@@ -41,6 +49,19 @@ class ChatPage extends React.Component<any, any> {
         return [];
     }
 
+    renderTextMessage(msg: Message) {
+        if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
+            return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+        }
+        else {
+            return (<p key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+        }
+    }
+
+    renderImageMessage(msg: Message) {
+        return <img src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
+    }
+
     render() {
         return (
            <div>
@@ -49,17 +70,22 @@ class ChatPage extends React.Component<any, any> {
                {this.state.chatRecipient}
 
                {this.getMessagesWithRecipient().map((msg: Message) => {
-                   if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
-                       return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+                   if(msg.message_type === MessageType.TEXT) {
+                       return this.renderTextMessage(msg);
                    }
-                   else {
-                       return (<p key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+                   else{
+                       return this.renderImageMessage(msg);
                    }
 
                })}
 
                <input type="text" value={this.state.inputMessage} onChange={this.handleInputMessageChange} />
                <p onClick={this.handleInputMessageSubmit}>SUBMIT</p>
+
+               <form>
+                   <input type="file" name="file" onChange={this.handleInputImageSubmit} />
+               </form>
+
            </div>
         );
     }
@@ -75,12 +101,14 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        sendMessage: (from: string, to: string, text: string) => dispatch(messageSendAction({
+        sendTextMessage: (from: string, to: string, text: string) => dispatch(messageSendAction({
             sender_id: from,
             target_id: to,
             message: text,
-            sent_at: new Date()
+            sent_at: new Date(),
+            message_type: MessageType.TEXT
         })),
+        sendImageMessage: (file: any, sender_id: number, target_id: number) => dispatch(sendImageMessageAction(file, sender_id, target_id))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ChatPage);
