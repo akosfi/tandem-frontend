@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import Cookies from 'js-cookie';
 import {makeRequest} from "../../../util";
 import {connectSocketAction} from "../../socket/actions";
+import {AuthType} from "../models/User";
 
 export function getCurrentUserAction() {
     return function(dispatch: Dispatch<any>) {
@@ -79,6 +80,30 @@ export function loginUserAction(email: string, password: string) {
             });
     };
 }
+
+export function loginUserWithThirdPartyAction(email: string, full_name: string, access_token: string, auth_type: AuthType) {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/user/third-party',
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email, full_name, access_token, auth_type})
+            })
+            .then(data => {
+                dispatch({
+                    type: USER_CURRENT_AUTHENTICATED,
+                    user: data
+                });
+                return dispatch(connectSocketAction());
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
+
 
 export function userPreferencesPostAction(preferences: any) {
     return function(dispatch: Dispatch<any>) {

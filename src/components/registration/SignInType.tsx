@@ -1,6 +1,9 @@
-import React from "react";
+import React, {Dispatch} from "react";
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import {connect} from "react-redux";
+import {loginUserWithThirdPartyAction} from "../../store/user/actions";
+import {AuthType} from "../../store/user/models/User";
 
 class SignInType extends React.Component<any, any> {
     constructor(props: any) {
@@ -38,17 +41,32 @@ class SignInType extends React.Component<any, any> {
     }
 
     loginWithFacebook(response: any){
-        console.log(response.accessToken);
-        console.log(response.name);
-        console.log(response.email);
+        this.props.loginUserWithThirdParty(
+            response.email,
+            response.name,
+            response.accessToken,
+            AuthType.T_FACEBOOK);
     }
 
     loginWithGoogle(response: any) {
-        console.log(response.accessToken);
-        console.log(response.profileObj.name);
-        console.log(response.profileObj.email);
+        this.props.loginUserWithThirdParty(
+            response.profileObj.email,
+            response.profileObj.name,
+            response.accessToken,
+            AuthType.T_GOOGLE);
     }
 
 }
 
-export default SignInType;
+const mapStateToProps = (state: any) => {
+    return {
+
+    };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+    return {
+        loginUserWithThirdParty: (email: string, full_name: string, access_token: string, auth_type: AuthType) => dispatch(loginUserWithThirdPartyAction(email, full_name, access_token, auth_type))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignInType);
