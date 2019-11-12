@@ -11,20 +11,18 @@ export function getCurrentUserAction() {
             let parsedUser = JSON.parse(jwt_user as string);
             parsedUser.id = parsedUser.id.toString();
 
-            dispatch({
+            return dispatch({
                 type: USER_CURRENT_AUTHENTICATED,
                 user: parsedUser
             });
-            return dispatch(connectSocketAction());
         }
 
         makeRequest('/user/me', {})
             .then(data => {
-                dispatch({
+                return dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data.user
                 });
-                return dispatch(connectSocketAction());
             })
             .catch((res) => {
                 return dispatch({
@@ -69,11 +67,10 @@ export function loginUserAction(email: string, password: string) {
                 body: JSON.stringify({email, password})
             })
             .then(data => {
-                dispatch({
+                return dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
-                return dispatch(connectSocketAction());
             })
             .catch(err => {
                 console.log(err)
@@ -116,11 +113,10 @@ export function userPreferencesPostAction(preferences: any) {
                 body: JSON.stringify({...preferences})
             })
             .then(data => {
-                dispatch({
+                return dispatch({
                     type: USER_CURRENT_AUTHENTICATED,
                     user: data
                 });
-                return dispatch(connectSocketAction());
             })
             .catch(err => {
                 console.log(err)

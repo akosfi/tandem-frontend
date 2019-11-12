@@ -14,6 +14,7 @@ import EventsPage from "./pages/EventsPage";
 import EventPage from "./pages/EventPage";
 import {UserStatus} from "./store/user/reducer";
 import EventCreatePage from "./pages/EventCreatePage";
+import {connectSocketAction} from "./store/socket/actions";
 
 
 const history = createBrowserHistory();
@@ -100,6 +101,11 @@ class App extends React.Component<any, any> {
     }
 
     render() {
+
+        if(this.props.registrationFinished === true) {
+            this.props.connectSocketAction();
+        }
+
         return (
             <div className="container">
                 {this.renderBasedOnUserAuthentication()}
@@ -119,6 +125,7 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         getCurrentUser: () => dispatch(getCurrentUserAction()),
+        connectSocketAction: () => dispatch(connectSocketAction())
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

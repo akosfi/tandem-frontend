@@ -1,9 +1,7 @@
 import React, {Dispatch} from "react";
-import {loginUserAction, registerUserAction, userPreferencesPostAction} from "../store/user/actions";
+import {registerUserAction, userPreferencesPostAction} from "../store/user/actions";
 import {connect} from "react-redux";
-import App from "../App";
 import UserBasicData from "../components/registration/UserBasicData";
-import SignInType from "../components/registration/SignInType";
 import LanguageSelect from "../components/registration/LanguageSelect";
 import TagSelect from "../components/registration/TagSelect";
 import {LanguageDifficulty} from "../store/static/models/LanguageDifficulty";
@@ -24,7 +22,6 @@ export interface SelectedTag {
 
 
 enum RegistrationStep {
-    SignInType,
     UserBasicData,
     UserNativeLanguages,
     UserFluentLanguages,
@@ -41,7 +38,7 @@ class RegisterPage extends React.Component<any, any> {
         this.state = {
             currentRegistrationStep: (this.props.registrationFinished === false)
                                         ? RegistrationStep.UserNativeLanguages
-                                        : RegistrationStep.SignInType,
+                                        : RegistrationStep.UserBasicData,
 
             userPreferences: {
                 nativeLanguages: [] as Array<SelectedLanguage>,
@@ -68,18 +65,12 @@ class RegisterPage extends React.Component<any, any> {
     }
 
     submitUserPreferences(){
-        console.log(this.state.userPreferences);
         this.props.setUserPreferences(this.state.userPreferences);
     }
 
     renderRegistrationComponent() {
         switch(this.state.currentRegistrationStep) {
             default:
-            case RegistrationStep.SignInType:
-                return (
-                    <SignInType
-                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserBasicData})} />);
-
             case RegistrationStep.UserBasicData:
                 return (
                     <UserBasicData
