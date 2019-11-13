@@ -30,6 +30,7 @@ class ChatPage extends React.Component<any, any> {
     }
 
     handleInputMessageSubmit() {
+        if(this.state.inputMessage === '') return;
         this.props.sendTextMessage(
             this.props.currentUser.id,
             this.state.chatRecipient,
@@ -55,15 +56,39 @@ class ChatPage extends React.Component<any, any> {
 
     renderTextMessage(msg: Message) {
         if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
-            return (<p style={{textAlign: 'right'}} key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+            return (
+                <div
+                    key={Math.round(Math.random()*100000)}
+                    className={'tan-chat-message tan-chat-message-own'}>
+                    <p className={'tan-chat-message-content'}>
+                        {msg.message}
+                    </p>
+                </div>
+            );
         }
         else {
-            return (<p key={Math.round(Math.random() * 1000)}>{msg.message}</p>)
+            return (
+                <div
+                    key={Math.round(Math.random()*100000)}
+                    className={'tan-chat-message tan-chat-message-recipient'}>
+                    <p className={'tan-chat-message-content'}>
+                        {msg.message}
+                    </p>
+                </div>
+            );
         }
     }
 
     renderImageMessage(msg: Message) {
-        return <img key={msg.message} src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
+        return (
+            <div
+                key={Math.round(Math.random()*100000)}
+                className={'tan-chat-message tan-chat-message-own'}>
+                <img
+                    className={'tan-chat-message-image'}
+                    key={msg.message} src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
+            </div>
+        );
     }
 
     render() {
@@ -73,43 +98,51 @@ class ChatPage extends React.Component<any, any> {
 
                {this.state.chatRecipient}
 
-               {this.getMessagesWithRecipient().map((msg: Message) => {
-                   if(msg.message_type === MessageType.TEXT) {
-                       return this.renderTextMessage(msg);
-                   }
-                   else{
-                       return this.renderImageMessage(msg);
-                   }
+               <div className={"tan-chat-window"}>
+                   <div className={"tan-chat-window-messages"}>
+                       {this.getMessagesWithRecipient().map((msg: Message) => {
+                           if(msg.message_type === MessageType.TEXT) {
+                               return this.renderTextMessage(msg);
+                           }
+                           else{
+                               return this.renderImageMessage(msg);
+                           }
 
-               })}
+                       })}
+                   </div>
 
-               <InputGroup
-                   value={this.state.inputMessage}
-                   onChange={this.handleInputMessageChange}
-                   placeholder="Enter your message..."
-                   rightElement={
-                       (<Button
-                           icon={IconNames.CIRCLE_ARROW_RIGHT}
-                           minimal={true}
-                           onClick={this.handleInputMessageSubmit}
-                       />)
-                   }
-                   onKeyPress={(target) => {
-                       if(target.key === 'Enter'){
-                           return this.handleInputMessageSubmit();
-                       }
-                   }}
-                   type={"text"}
-               />
-
-               <p onClick={this.handleInputMessageSubmit}>SUBMIT</p>
-
-               <label>
-                   <Button icon="media" onClick={() => this.fileInput.click()}/>
-                   <form style={{'display': 'none'}}>
-                       <input ref={element => this.fileInput = element} type="file" name="file" onChange={this.handleInputImageSubmit} />
-                   </form>
-               </label>
+                   <div className={"tan-chat-window-input"}>
+                       <div className={"tan-chat-window-input-imageInput"}>
+                           <label>
+                               <Button icon="media" onClick={() => this.fileInput.click()}/>
+                               <form style={{'display': 'none'}}>
+                                   <input ref={element => this.fileInput = element} type="file" name="file" onChange={this.handleInputImageSubmit} />
+                               </form>
+                           </label>
+                       </div>
+                       <div className={"tan-chat-window-input-textInput"}>
+                           <InputGroup
+                               value={this.state.inputMessage}
+                               onChange={this.handleInputMessageChange}
+                               placeholder="Enter your message..."
+                               rightElement={
+                                   (<Button
+                                       icon={IconNames.CIRCLE_ARROW_RIGHT}
+                                       minimal={true}
+                                       onClick={this.handleInputMessageSubmit}
+                                   />)
+                               }
+                               onKeyPress={(target) => {
+                                   if(target.key === 'Enter'){
+                                       return this.handleInputMessageSubmit();
+                                   }
+                               }
+                               }
+                               type={"text"}
+                           />
+                       </div>
+                   </div>
+               </div>
 
            </div>
         );
