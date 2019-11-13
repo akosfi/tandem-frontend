@@ -5,6 +5,7 @@ import {NavLink, Redirect} from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import {AuthType} from "../store/user/models/User";
+import {Button, Checkbox, InputGroup, Label} from "@blueprintjs/core";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -16,6 +17,7 @@ class LoginPage extends React.Component<any, any> {
         };
 
         this.loginWithFacebook = this.loginWithFacebook.bind(this);
+        this.showFacebookLogin = this.showFacebookLogin.bind(this);
         this.loginWithGoogle = this.loginWithGoogle.bind(this);
 
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
@@ -58,40 +60,70 @@ class LoginPage extends React.Component<any, any> {
         if(this.props.registrationFinished === false) return <Redirect to={'/sign-up'} />
     }
 
+    showFacebookLogin(e: any) {
+        e.click();
+    }
+
+
     render() {
         return (
             <div>
+                <h1 onClick={this.showFacebookLogin}>Sign In</h1>
+
+                <div>
+                    <GoogleLogin
+                        clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
+                        buttonText="LOGIN WITH GOOGLE"
+                        autoLoad={false}
+                        onSuccess={(response) => this.loginWithGoogle(response)}
+                        onFailure={(response) => this.loginWithGoogle(response)}
+                        cookiePolicy={'single_host_origin'}
+                    />
+                </div>
+
+                <div>
+                    <FacebookLogin
+
+                        appId="525980097979784"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        onClick={() => {}}
+                        callback={(response) => this.loginWithFacebook(response)} />
+                </div>
+
                 <form onSubmit={this.handleLoginSubmit}>
-                    <label>
-                        Email:
-                        <input type="email" value={this.state.emailInput} onChange={this.handleEmailInputChange} />
-                    </label>
-                    <label>
-                        Password:
-                        <input type="password" value={this.state.passwordInput} onChange={this.handlePasswordInputChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
+                    <Label>
+                        Email
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            placeholder="Email"
+                            onChange={this.handleEmailInputChange}
+                            value={this.state.emailInput}
+                            type={"email"}
+                        />
+                    </Label>
+                    <Label>
+                        Password
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            placeholder="Password"
+                            onChange={this.handlePasswordInputChange}
+                            value={this.state.passwordInput}
+                            type={"password"}
+                        />
+                    </Label>
+
+                    <Checkbox checked={true} label="I accept the terms and conditions." />
+
+                    <Button icon="refresh" type={"submit"} text={"Sign in"} />
                 </form>
 
-
-                <GoogleLogin
-                    clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
-                    buttonText="LOGIN WITH GOOGLE"
-                    autoLoad={false}
-                    onSuccess={(response) => this.loginWithGoogle(response)}
-                    onFailure={(response) => this.loginWithGoogle(response)}
-                    cookiePolicy={'single_host_origin'}
-                />
-
-                <FacebookLogin
-                    appId="525980097979784"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    onClick={() => {}}
-                    callback={(response) => this.loginWithFacebook(response)} />
-
                 {this.redirectToSignUp()}
-                <NavLink to="/sign-up"> --Sign up! </NavLink>
+
+                <p>Create an account <b><NavLink to="/sign-up">here</NavLink></b>!</p>
+
             </div>
         );
     }

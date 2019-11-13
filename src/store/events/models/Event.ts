@@ -5,5 +5,5 @@ export default interface Event {
     public: boolean;
     location: string;
     details: string;
-    cover_photo: string;
+    cover_photo: File;
 }

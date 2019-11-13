@@ -2,6 +2,8 @@ import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {User} from "../store/user/models/User";
 import {Link, NavLink} from "react-router-dom";
+import {Divider, Icon, IconName, Intent, Tag} from "@blueprintjs/core";
+import {IconNames} from "@blueprintjs/icons";
 
 class ChatsPage extends React.Component<any, any> {
     constructor(props: any){

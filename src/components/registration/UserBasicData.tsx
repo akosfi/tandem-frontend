@@ -2,25 +2,26 @@ import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {registerUserAction} from "../../store/user/actions";
 import {UserCreationStatus} from "../../store/user/reducer";
+import {Button, Checkbox, InputGroup, Label} from "@blueprintjs/core";
 
 class UserBasicData extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
         this.state = {
-            usernameInput: '',
+            fullNameInput: '',
             passwordInput: '',
             emailInput: '',
         };
 
-        this.handleUsernameInputChange = this.handleUsernameInputChange.bind(this);
+        this.handleFullNameInputChange = this.handleFullNameInputChange.bind(this);
         this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
         this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
     }
 
-    handleUsernameInputChange(event: any) {
-        this.setState({usernameInput: event.target.value});
+    handleFullNameInputChange(event: any) {
+        this.setState({fullNameInput: event.target.value});
     }
     handlePasswordInputChange(event: any) {
         this.setState({passwordInput: event.target.value});
@@ -32,7 +33,7 @@ class UserBasicData extends React.Component<any, any> {
     handleRegistrationSubmit(event: any) {
         event.preventDefault();
         this.props.registerUser(
-            this.state.usernameInput,
+            this.state.fullNameInput,
             this.state.emailInput,
             this.state.passwordInput
         );
@@ -40,7 +41,7 @@ class UserBasicData extends React.Component<any, any> {
 
     renderNextButton() {
         if(this.props.userCreationStatus === UserCreationStatus.UserCreated) {
-            return <span onClick={this.props.nextClick}>Continue</span>
+            return this.props.nextClick();
         }
     }
 
@@ -48,19 +49,43 @@ class UserBasicData extends React.Component<any, any> {
         return (
             <div>
                 <form onSubmit={this.handleRegistrationSubmit}>
-                    <label>
-                        Email:
-                        <input type="email" value={this.state.emailInput} onChange={this.handleEmailInputChange} />
-                    </label>
-                    <label>
-                        Username:
-                        <input type="text" value={this.state.usernameInput} onChange={this.handleUsernameInputChange} />
-                    </label>
-                    <label>
-                        Password:
-                        <input type="password" value={this.state.passwordInput} onChange={this.handlePasswordInputChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
+                    <Label>
+                        Email
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            placeholder="Email"
+                            onChange={this.handleEmailInputChange}
+                            value={this.state.emailInput}
+                            type={"email"}
+                        />
+                    </Label>
+                    <Label>
+                        Full Name:
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            placeholder="Full Name"
+                            onChange={this.handleFullNameInputChange}
+                            value={this.state.fullNameInput}
+                            type={"text"}
+                        />
+                    </Label>
+                    <Label>
+                        Password
+                        <InputGroup
+                            disabled={false}
+                            large={false}
+                            placeholder="Password"
+                            onChange={this.handlePasswordInputChange}
+                            value={this.state.passwordInput}
+                            type={"password"}
+                        />
+                    </Label>
+
+                    <Checkbox checked={true} label="I accept the terms and conditions." />
+
+                    <Button icon="refresh" type={"submit"} text={"Sign up"} />
                 </form>
                 {this.renderNextButton()}
             </div>
@@ -76,7 +101,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        registerUser: (username: string, email: string, password: string) => dispatch(registerUserAction(username, email, password))
+        registerUser: (full_name: string, email: string, password: string) => dispatch(registerUserAction(full_name, email, password))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserBasicData);

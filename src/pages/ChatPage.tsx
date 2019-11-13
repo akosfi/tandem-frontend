@@ -4,8 +4,11 @@ import {messageSendAction, sendImageMessageAction} from "../store/message/action
 import {Message, MessageType} from "../store/message/models/Message";
 import _ from 'lodash';
 import {NavLink} from 'react-router-dom'
+import {Button, Label} from "@blueprintjs/core";
 
 class ChatPage extends React.Component<any, any> {
+
+    fileInput: any;
 
     constructor(props: any){
         super(props);
@@ -82,9 +85,12 @@ class ChatPage extends React.Component<any, any> {
                <input type="text" value={this.state.inputMessage} onChange={this.handleInputMessageChange} />
                <p onClick={this.handleInputMessageSubmit}>SUBMIT</p>
 
-               <form>
-                   <input type="file" name="file" onChange={this.handleInputImageSubmit} />
-               </form>
+               <label>
+                   <Button icon="media" onClick={() => this.fileInput.click()}/>
+                   <form style={{'display': 'none'}}>
+                       <input ref={element => this.fileInput = element} type="file" name="file" onChange={this.handleInputImageSubmit} />
+                   </form>
+               </label>
 
            </div>
         );

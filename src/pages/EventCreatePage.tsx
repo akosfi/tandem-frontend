@@ -17,16 +17,15 @@ class EventCreatePage extends React.Component<any, any> {
             public: false as boolean,
             location: "",
             details: "",
-            cover_photo: "",
-
+            cover_photo: {} as File,
         };
 
         this.handleNameInputChange = this.handleNameInputChange.bind(this);
         this.handleEventVisibilityInputChange = this.handleEventVisibilityInputChange.bind(this);
         this.handleLocationInputChange = this.handleLocationInputChange.bind(this);
         this.handleDetailsInputChange = this.handleDetailsInputChange.bind(this);
-
         this.handleEventCreationSubmit = this.handleEventCreationSubmit.bind(this);
+        this.handleCoverInputChange = this.handleCoverInputChange.bind(this);
     }
 
     handleNameInputChange(event: any) {
@@ -41,7 +40,9 @@ class EventCreatePage extends React.Component<any, any> {
     handleDetailsInputChange(event: any) {
         this.setState({details: event.target.value});
     }
-
+    handleCoverInputChange(event: any){
+        this.setState({cover_photo: event.target.files[0]})
+    }
 
     handleEventCreationSubmit(event: any) {
         event.preventDefault();
@@ -58,9 +59,8 @@ class EventCreatePage extends React.Component<any, any> {
     }
 
     redirectIfEventCreated() {
-        console.log(this.props.eventCreationStatus);
+        //console.log(this.props.eventCreationStatus);
         if(this.props.eventCreationStatus && this.props.eventCreationStatus.created){
-
             return <Redirect to={`/event/${this.props.eventCreationStatus.event.id}`} />
         }
     }
@@ -85,6 +85,10 @@ class EventCreatePage extends React.Component<any, any> {
                     <label>
                         Details:
                         <input type="text" value={this.state.details} onChange={this.handleDetailsInputChange} />
+                    </label>
+                    <label>
+                        Cover:
+                        <input type="file" name="file" onChange={this.handleCoverInputChange} />
                     </label>
                     <input type="submit" value="Submit" />
                 </form>

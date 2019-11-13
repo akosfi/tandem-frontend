@@ -1,5 +1,6 @@
 import React from "react";
 import {LanguageDifficulty} from "../../store/static/models/LanguageDifficulty";
+import {Intent, Tag} from "@blueprintjs/core";
 
 class LanguageSelectItem extends React.Component<any, any> {
     constructor(props: any) {
@@ -50,7 +51,13 @@ class LanguageSelectItem extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <span onClick={this.onItemStateChange}>{this.props.language.name}</span>
+                <Tag
+                    onClick={this.onItemStateChange}
+                    large={true}
+                    round={true}
+                    interactive={true}
+                    intent={this.props.isSelected ? Intent.SUCCESS : Intent.NONE}
+                >{this.props.language.name}</Tag>
                 {this.renderSelect()}
             </div>
         );
