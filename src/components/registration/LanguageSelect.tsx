@@ -5,6 +5,7 @@ import {Language} from "../../store/static/models/Language";
 import {SelectedLanguage, SelectedLanguageWithDifficulty} from "../../pages/RegisterPage";
 import LanguageSelectItem from "./LanguageSelectItem";
 import _ from 'lodash';
+import {Button, Intent} from "@blueprintjs/core";
 
 class LanguageSelect extends React.Component<any, any> {
     constructor(props: any) {
@@ -61,7 +62,6 @@ class LanguageSelect extends React.Component<any, any> {
         return this.state.selectedLanguages.findIndex((l: any) => l.id === language.id) !== -1;
     }
     selectLanguage(language: any) {
-        console.log(language);
         this.setState({
             selectedLanguages: [...this.state.selectedLanguages, {...language}]
         });
@@ -80,10 +80,16 @@ class LanguageSelect extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
-                <h1>{this.props.title}</h1>
-                {this.renderLanguages()}
-                <button onClick={() => {this.submitLanguages()}}>Submit</button>
+            <div className={'container'}>
+                <h1 className={'tan-text-center'}>{this.props.title}</h1>
+                <div className={'tan-languages'}>
+                    {this.renderLanguages()}
+                </div>
+                <Button
+                    intent={Intent.PRIMARY}
+                    text={"Continue"}
+                    onClick={() => {this.submitLanguages()}}
+                />
             </div>
         );
     }

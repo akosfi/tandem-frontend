@@ -189,7 +189,13 @@ $mq-breakpoints: (
 
   }
 
-
+  &-languages {
+    &-item {
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: center;
+    }
+  }
 
 }
 

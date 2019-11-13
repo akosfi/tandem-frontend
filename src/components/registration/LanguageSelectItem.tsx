@@ -50,7 +50,7 @@ class LanguageSelectItem extends React.Component<any, any> {
 
     render() {
         return (
-            <div>
+            <div className={'tan-languages-item'}>
                 <Tag
                     onClick={this.onItemStateChange}
                     large={true}
