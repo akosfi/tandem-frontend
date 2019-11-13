@@ -1,9 +1,130 @@
+@import "~normalize.css/normalize.css";
+@import "~sass-mq/mq";
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 
+$mq-breakpoints: (
+        mobile:  320px,
+        tablet:  740px,
+        desktop: 980px,
+        wide:    1300px
+);
 
 .container {
+  @include mq($until: tablet) {
+    width: 100%;
+  }
+  @include mq($from: tablet) {
+    width: 50%;
+  }
   margin: 0 auto;
-  width: 80%;
-  background: lightgray;
 }
+
+.tan {
+
+  &-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-text {
+    &-left {
+      text-align: left;
+    }
+    &-right {
+      text-align: right;
+    }
+    &-center {
+      text-align: center;
+    }
+  }
+
+  &-inputGroup {
+    margin: 0 auto;
+    width: 262px;
+  }
+
+  &-socialButton {
+    margin: 8px auto;
+    width: 128px;
+    height: 48px;
+    background: #3b5998;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px 0px, rgba(0, 0, 0, 0.24) 0px 0px 1px 0px;
+    padding: 0px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+  }
+
+
+  &-chat {
+    &-recommendation {
+
+      display: flex;
+      overflow: auto;
+      padding: 5px;
+
+      &-item {
+        margin: 5px;
+        flex: 0 0 160px;
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), inset 0 -1px 0 rgba(16, 22, 26, 0.1);
+        border-radius: 3px;
+
+        & img {
+          position: absolute;
+          width: auto;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 100%;
+        }
+
+        span {
+          position: absolute;
+          bottom: 8px;
+          left: 8px;
+          background: black;
+          color: white;
+        }
+      }
+    }
+
+    &-active {
+      display: flex;
+      overflow: auto;
+      padding: 5px;
+
+      &-item {
+        margin: 5px;
+        flex: 0 0 48px;
+        height: 48px;
+        position: relative;
+        overflow: hidden;
+
+        & img {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          border-radius: 100%;
+        }
+
+        &-dot {
+          position: absolute;
+          right: 0px;
+          top: 0px;
+          border: 2px solid white;
+          border-radius: 100%;
+          box-sizing: content-box;
+          width: 10px;
+          height: 10px;
+          background: mediumseagreen;
+        }
+
+      }
+    }
+  }
+}
+

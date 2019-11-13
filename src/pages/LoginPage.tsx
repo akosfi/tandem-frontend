@@ -14,15 +14,16 @@ class LoginPage extends React.Component<any, any> {
         this.state = {
             emailInput: '',
             passwordInput: '',
+            termsAccepted: false,
         };
 
         this.loginWithFacebook = this.loginWithFacebook.bind(this);
-        this.showFacebookLogin = this.showFacebookLogin.bind(this);
         this.loginWithGoogle = this.loginWithGoogle.bind(this);
 
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
         this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
         this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+        this.handleAcceptChange = this.handleAcceptChange.bind(this);
     }
 
 
@@ -37,6 +38,12 @@ class LoginPage extends React.Component<any, any> {
     handleLoginSubmit(event: any) {
         event.preventDefault();
         this.props.loginUser(this.state.emailInput, this.state.passwordInput);
+    }
+
+    handleAcceptChange() {
+        this.setState({
+            termsAccepted: !this.state.termsAccepted
+        })
     }
 
     loginWithFacebook(response: any){
@@ -59,70 +66,86 @@ class LoginPage extends React.Component<any, any> {
     redirectToSignUp() {
         if(this.props.registrationFinished === false) return <Redirect to={'/sign-up'} />
     }
-
-    showFacebookLogin(e: any) {
-        e.click();
-    }
-
-
     render() {
         return (
             <div>
-                <h1 onClick={this.showFacebookLogin}>Sign In</h1>
+                <h1
+                    className={"tan-text-center"}>
+                    Sign In</h1>
 
-                <div>
-                    <GoogleLogin
-                        clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
-                        buttonText="LOGIN WITH GOOGLE"
-                        autoLoad={false}
-                        onSuccess={(response) => this.loginWithGoogle(response)}
-                        onFailure={(response) => this.loginWithGoogle(response)}
-                        cookiePolicy={'single_host_origin'}
-                    />
-                </div>
+                <div className={"tan-inputGroup"}>
 
-                <div>
-                    <FacebookLogin
-
-                        appId="525980097979784"
-                        autoLoad={false}
-                        fields="name,email,picture"
-                        onClick={() => {}}
-                        callback={(response) => this.loginWithFacebook(response)} />
-                </div>
-
-                <form onSubmit={this.handleLoginSubmit}>
-                    <Label>
-                        Email
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            placeholder="Email"
-                            onChange={this.handleEmailInputChange}
-                            value={this.state.emailInput}
-                            type={"email"}
+                    <div className={'tan-center'}>
+                        <GoogleLogin
+                            clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
+                            className={'tan-socialButton'}
+                            buttonText={'Google'}
+                            autoLoad={false}
+                            onSuccess={(response) => this.loginWithGoogle(response)}
+                            onFailure={(response) => this.loginWithGoogle(response)}
+                            cookiePolicy={'single_host_origin'}
                         />
-                    </Label>
-                    <Label>
-                        Password
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            placeholder="Password"
-                            onChange={this.handlePasswordInputChange}
-                            value={this.state.passwordInput}
-                            type={"password"}
-                        />
-                    </Label>
+                    </div>
 
-                    <Checkbox checked={true} label="I accept the terms and conditions." />
+                    <div className={'tan-center'}>
+                        <FacebookLogin
+                            appId="525980097979784"
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            icon={"fa-facebook"}
+                            cssClass={'tan-socialButton'}
+                            textButton={' Facebook'}
+                            onClick={() => {}}
+                            callback={(response) => this.loginWithFacebook(response)} />
+                    </div>
 
-                    <Button icon="refresh" type={"submit"} text={"Sign in"} />
-                </form>
+                    <form onSubmit={this.handleLoginSubmit}>
+                        <Label>
+                            Email
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Email"
+                                onChange={this.handleEmailInputChange}
+                                value={this.state.emailInput}
+                                type={"email"}
+                            />
+                        </Label>
+                        <Label>
+                            Password
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Password"
+                                onChange={this.handlePasswordInputChange}
+                                value={this.state.passwordInput}
+                                type={"password"}
+                            />
+                        </Label>
 
-                {this.redirectToSignUp()}
+                        <Checkbox
+                            value={this.state.termsAccepted}
+                            onChange={this.state.handleAcceptChange}
+                            label="I accept the terms and conditions." />
 
-                <p>Create an account <b><NavLink to="/sign-up">here</NavLink></b>!</p>
+
+                        <Button
+                            className={"tan-text-right"}
+                            icon="refresh"
+                            type={"submit"}
+                            text={"Sign in"} />
+                    </form>
+
+                    <p
+                        className={"tan-text-right"}>
+                        Create an account
+                        <b>
+                            <NavLink to="/sign-up"> here</NavLink>
+                        </b>!
+                    </p>
+
+                    {this.redirectToSignUp()}
+                </div>
 
             </div>
         );

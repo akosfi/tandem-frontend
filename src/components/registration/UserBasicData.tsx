@@ -48,45 +48,55 @@ class UserBasicData extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleRegistrationSubmit}>
-                    <Label>
-                        Email
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            placeholder="Email"
-                            onChange={this.handleEmailInputChange}
-                            value={this.state.emailInput}
-                            type={"email"}
-                        />
-                    </Label>
-                    <Label>
-                        Full Name:
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            placeholder="Full Name"
-                            onChange={this.handleFullNameInputChange}
-                            value={this.state.fullNameInput}
-                            type={"text"}
-                        />
-                    </Label>
-                    <Label>
-                        Password
-                        <InputGroup
-                            disabled={false}
-                            large={false}
-                            placeholder="Password"
-                            onChange={this.handlePasswordInputChange}
-                            value={this.state.passwordInput}
-                            type={"password"}
-                        />
-                    </Label>
+                <h1
+                    className={"tan-text-center"}>
+                    Sign Up</h1>
 
-                    <Checkbox checked={true} label="I accept the terms and conditions." />
+                <div className={"tan-inputGroup"}>
 
-                    <Button icon="refresh" type={"submit"} text={"Sign up"} />
-                </form>
+                    <form onSubmit={this.handleRegistrationSubmit}>
+                        <Label>
+                            Email
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Email"
+                                onChange={this.handleEmailInputChange}
+                                value={this.state.emailInput}
+                                type={"email"}
+                            />
+                        </Label>
+                        <Label>
+                            Full Name:
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Full Name"
+                                onChange={this.handleFullNameInputChange}
+                                value={this.state.fullNameInput}
+                                type={"text"}
+                            />
+                        </Label>
+                        <Label>
+                            Password
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Password"
+                                onChange={this.handlePasswordInputChange}
+                                value={this.state.passwordInput}
+                                type={"password"}
+                            />
+                        </Label>
+
+                        <Checkbox checked={true} label="I accept the terms and conditions." />
+
+                        <Button
+                            icon="refresh"
+                            type={"submit"}
+                            text={"Sign up"} />
+                    </form>
+                </div>
                 {this.renderNextButton()}
             </div>
         );

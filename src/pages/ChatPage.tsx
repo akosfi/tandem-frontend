@@ -4,7 +4,8 @@ import {messageSendAction, sendImageMessageAction} from "../store/message/action
 import {Message, MessageType} from "../store/message/models/Message";
 import _ from 'lodash';
 import {NavLink} from 'react-router-dom'
-import {Button, Label} from "@blueprintjs/core";
+import {Button, InputGroup, Intent, Label} from "@blueprintjs/core";
+import {IconNames} from "@blueprintjs/icons";
 
 class ChatPage extends React.Component<any, any> {
 
@@ -28,7 +29,7 @@ class ChatPage extends React.Component<any, any> {
         this.setState({inputMessage: event.target.value});
     }
 
-    handleInputMessageSubmit(event: any) {
+    handleInputMessageSubmit() {
         this.props.sendTextMessage(
             this.props.currentUser.id,
             this.state.chatRecipient,
@@ -62,7 +63,7 @@ class ChatPage extends React.Component<any, any> {
     }
 
     renderImageMessage(msg: Message) {
-        return <img src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
+        return <img key={msg.message} src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
     }
 
     render() {
@@ -82,7 +83,25 @@ class ChatPage extends React.Component<any, any> {
 
                })}
 
-               <input type="text" value={this.state.inputMessage} onChange={this.handleInputMessageChange} />
+               <InputGroup
+                   value={this.state.inputMessage}
+                   onChange={this.handleInputMessageChange}
+                   placeholder="Enter your message..."
+                   rightElement={
+                       (<Button
+                           icon={IconNames.CIRCLE_ARROW_RIGHT}
+                           minimal={true}
+                           onClick={this.handleInputMessageSubmit}
+                       />)
+                   }
+                   onKeyPress={(target) => {
+                       if(target.key === 'Enter'){
+                           return this.handleInputMessageSubmit();
+                       }
+                   }}
+                   type={"text"}
+               />
+
                <p onClick={this.handleInputMessageSubmit}>SUBMIT</p>
 
                <label>
