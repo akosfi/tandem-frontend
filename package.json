@@ -36,6 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-backend": "react-scripts build && rm -r ../tandem-backend/app/main/public/ && cp -r ./build/* ../tandem-backend/app/main/public/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

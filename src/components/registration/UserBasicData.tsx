@@ -89,7 +89,7 @@ class UserBasicData extends React.Component<any, any> {
 
     renderProfilePicturePreview() {
         if(this.state.profilePicturePreviewUrl !== '') {
-            return (<div className={'tan-avatar tan-avatar-large tan-text-center'}>
+            return (<div className={'tan-avatar'}>
                 <img src={this.state.profilePicturePreviewUrl} alt="preview_profile_pic"/>
             </div>);
         }
