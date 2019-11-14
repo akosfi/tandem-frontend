@@ -5,7 +5,9 @@ import {Language} from "../../store/static/models/Language";
 import {SelectedLanguage, SelectedLanguageWithDifficulty} from "../../pages/RegisterPage";
 import LanguageSelectItem from "./LanguageSelectItem";
 import _ from 'lodash';
-import {Button, Intent} from "@blueprintjs/core";
+import {Button, Intent, IToastProps, Position, Toaster} from "@blueprintjs/core";
+import {IToasterProps} from "@blueprintjs/core/lib/esm/components/toast/toaster";
+import ErrorToaster from "../shared/ErrorToaster";
 
 class LanguageSelect extends React.Component<any, any> {
     constructor(props: any) {
@@ -15,11 +17,9 @@ class LanguageSelect extends React.Component<any, any> {
             selectedLanguages:
                 (this.props.withDifficulty) ?
                     ([] as Array<SelectedLanguageWithDifficulty>) :
-                    ([] as Array<SelectedLanguage>)
+                    ([] as Array<SelectedLanguage>),
+            errors: [] as Array<string>,
         };
-
-        console.log("asd");
-
         this.isLanguageSelected = this.isLanguageSelected.bind(this);
         this.submitLanguages = this.submitLanguages.bind(this);
         this.renderLanguages = this.renderLanguages.bind(this);
@@ -38,6 +38,12 @@ class LanguageSelect extends React.Component<any, any> {
     }
 
     submitLanguages() {
+        if(this.state.selectedLanguages.length <= 0){
+            this.setState({
+                errors: [...this.state.errors, "Select at least one language!"]
+            });
+            return;
+        }
         this.state.selectedLanguages.forEach((l: any) => {
             this.props.selectedLanguages.push(l);
         });
@@ -78,6 +84,7 @@ class LanguageSelect extends React.Component<any, any> {
         this.selectLanguage(language);
     }
 
+
     render() {
         return (
             <div className={'container'}>
@@ -85,14 +92,23 @@ class LanguageSelect extends React.Component<any, any> {
                 <div className={'tan-languages'}>
                     {this.renderLanguages()}
                 </div>
-                <Button
-                    intent={Intent.PRIMARY}
-                    text={"Continue"}
-                    onClick={() => {this.submitLanguages()}}
+                <div className={'tan-center'} style={{"marginTop": '32px'}}>
+                    <Button
+                        intent={Intent.SUCCESS}
+                        text={"Continue"}
+                        onClick={() => {this.submitLanguages()}}
+                    />
+                </div>
+
+
+                <ErrorToaster
+                    toasts={this.state.errors}
                 />
             </div>
         );
     }
+
+
 }
 
 

@@ -28,6 +28,11 @@ $mq-breakpoints: (
     justify-content: center;
   }
 
+  &-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &-text {
     &-left {
       text-align: left;
@@ -40,9 +45,34 @@ $mq-breakpoints: (
     }
   }
 
+  &-avatar {
+
+    &-normal {
+      height: 48px;
+      width: 48px;
+    }
+    &-large {
+      height: 64px;
+      width: 64px;
+    }
+
+    img {
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      border-radius: 100%;
+    }
+
+  }
+
   &-inputGroup {
     margin: 0 auto;
     width: 262px;
+  }
+
+  &-socialButtons {
+    display: flex;
+    justify-content: space-between;
   }
 
   &-socialButton {

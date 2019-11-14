@@ -2,7 +2,9 @@ import React, {Dispatch} from "react";
 import {connect} from "react-redux";
 import {registerUserAction} from "../../store/user/actions";
 import {UserCreationStatus} from "../../store/user/reducer";
-import {Button, Checkbox, InputGroup, Label} from "@blueprintjs/core";
+import {Button, Checkbox, FileInput, InputGroup, Intent, Label} from "@blueprintjs/core";
+import {NavLink} from "react-router-dom";
+import ErrorToaster from "../shared/ErrorToaster";
 
 class UserBasicData extends React.Component<any, any> {
     constructor(props: any) {
@@ -11,13 +13,22 @@ class UserBasicData extends React.Component<any, any> {
         this.state = {
             fullNameInput: '',
             passwordInput: '',
+            passwordRepeatInput: '',
             emailInput: '',
+            termsAccepted: false,
+            errors: [] as Array<String>,
+            profilePicture: {},
+            profilePicturePreviewUrl: '' as string
         };
 
         this.handleFullNameInputChange = this.handleFullNameInputChange.bind(this);
         this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
+        this.handlePasswordRepeatInputChange = this.handlePasswordRepeatInputChange.bind(this);
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
+        this.handleAcceptChange = this.handleAcceptChange.bind(this);
+        this.renderProfilePicturePreview = this.renderProfilePicturePreview.bind(this);
         this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
+        this.handleProfilePictureInputChange = this.handleProfilePictureInputChange.bind(this);
     }
 
     handleFullNameInputChange(event: any) {
@@ -26,17 +37,62 @@ class UserBasicData extends React.Component<any, any> {
     handlePasswordInputChange(event: any) {
         this.setState({passwordInput: event.target.value});
     }
+    handlePasswordRepeatInputChange(event: any) {
+        this.setState({passwordRepeatInput: event.target.value});
+    }
     handleEmailInputChange(event: any) {
         this.setState({emailInput: event.target.value});
     }
-
+    handleAcceptChange() {
+        this.setState({
+            termsAccepted: !this.state.termsAccepted
+        });
+    }
+    handleProfilePictureInputChange(event: any) {
+        this.setState({
+            profilePicture: event.target.files[0],
+            profilePicturePreviewUrl: URL.createObjectURL(event.target.files[0])
+        });
+    }
     handleRegistrationSubmit(event: any) {
         event.preventDefault();
+
+        if(this.state.emailInput === ''||
+            this.state.passwordInput === '' ||
+            this.state.passwordRepeatInput === '' ||
+            this.state.fullNameInput === ''){
+            this.setState({
+                errors: [...this.state.errors, "Please fill all fields!"]
+            });
+            return;
+        }
+        if(!this.state.termsAccepted){
+            this.setState({
+                errors: [...this.state.errors, "Please accept Terms and Conditions!"]
+            });
+            return;
+        }
+        if(this.state.passwordInput !== this.state.passwordRepeatInput){
+            this.setState({
+                errors: [...this.state.errors, "Password and Repeat Password field do not match!"]
+            });
+            return;
+        }
+
+
         this.props.registerUser(
             this.state.fullNameInput,
             this.state.emailInput,
             this.state.passwordInput
         );
+    }
+
+    renderProfilePicturePreview() {
+        if(this.state.profilePicturePreviewUrl !== '') {
+            return (<div className={'tan-avatar tan-avatar-large tan-text-center'}>
+                <img src={this.state.profilePicturePreviewUrl} alt="preview_profile_pic"/>
+            </div>);
+        }
     }
 
     renderNextButton() {
@@ -89,14 +145,54 @@ class UserBasicData extends React.Component<any, any> {
                             />
                         </Label>
 
-                        <Checkbox checked={true} label="I accept the terms and conditions." />
+                        <Label>
+                            Repeat password
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Repeat password"
+                                onChange={this.handlePasswordRepeatInputChange}
+                                value={this.state.passwordRepeatInput}
+                                type={"password"}
+                            />
+                        </Label>
 
-                        <Button
-                            icon="refresh"
-                            type={"submit"}
-                            text={"Sign up"} />
+                        <Label>
+                            Select profile picture
+                            <FileInput
+                                text="Choose file..."
+                                onInputChange={this.handleProfilePictureInputChange} />
+                        </Label>
+
+                        {this.renderProfilePicturePreview()}
+
+                        <Checkbox
+                            value={this.state.termsAccepted}
+                            onChange={this.handleAcceptChange}
+                            label="I accept the terms and conditions."
+                        />
+
+                        <div className={'tan-right'}>
+                            <Button
+                                intent={Intent.SUCCESS}
+                                icon="refresh"
+                                type={"submit"}
+                                text={"Sign up"} />
+                        </div>
                     </form>
+
+                    <p
+                        className={"tan-text-right"}>
+                        Already have an account?
+                        <b>
+                            <NavLink to="/sign-in"> Sign in</NavLink>
+                        </b>!
+                    </p>
                 </div>
+
+                <ErrorToaster
+                    toasts={this.state.errors}
+                />
                 {this.renderNextButton()}
             </div>
         );

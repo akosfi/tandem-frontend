@@ -5,7 +5,8 @@ import {NavLink, Redirect} from "react-router-dom";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import {AuthType} from "../store/user/models/User";
-import {Button, Checkbox, InputGroup, Label} from "@blueprintjs/core";
+import {Button, Checkbox, Classes, InputGroup, Intent, Label, Tooltip} from "@blueprintjs/core";
+import ErrorToaster from "../components/shared/ErrorToaster";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any){
@@ -15,11 +16,11 @@ class LoginPage extends React.Component<any, any> {
             emailInput: '',
             passwordInput: '',
             termsAccepted: false,
+            errors: [] as Array<String>,
         };
 
         this.loginWithFacebook = this.loginWithFacebook.bind(this);
         this.loginWithGoogle = this.loginWithGoogle.bind(this);
-
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
         this.handlePasswordInputChange = this.handlePasswordInputChange.bind(this);
         this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
@@ -37,6 +38,19 @@ class LoginPage extends React.Component<any, any> {
 
     handleLoginSubmit(event: any) {
         event.preventDefault();
+
+        if(this.state.emailInput === '' || this.state.passwordInput === ''){
+            this.setState({
+                errors: [...this.state.errors, "Please fill all fields!"]
+            });
+            return;
+        }
+        if(!this.state.termsAccepted){
+            this.setState({
+                errors: [...this.state.errors, "Please accept Terms and Conditions!"]
+            });
+            return;
+        }
         this.props.loginUser(this.state.emailInput, this.state.passwordInput);
     }
 
@@ -55,7 +69,6 @@ class LoginPage extends React.Component<any, any> {
     }
 
     loginWithGoogle(response: any) {
-        console.log(response);
         this.props.loginUserWithThirdParty(
             response.profileObj.email,
             response.profileObj.name,
@@ -75,28 +88,29 @@ class LoginPage extends React.Component<any, any> {
 
                 <div className={"tan-inputGroup"}>
 
-                    <div className={'tan-center'}>
-                        <GoogleLogin
-                            clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
-                            className={'tan-socialButton'}
-                            buttonText={'Google'}
-                            autoLoad={false}
-                            onSuccess={(response) => this.loginWithGoogle(response)}
-                            onFailure={(response) => this.loginWithGoogle(response)}
-                            cookiePolicy={'single_host_origin'}
-                        />
-                    </div>
-
-                    <div className={'tan-center'}>
-                        <FacebookLogin
-                            appId="525980097979784"
-                            autoLoad={false}
-                            fields="name,email,picture"
-                            icon={"fa-facebook"}
-                            cssClass={'tan-socialButton'}
-                            textButton={' Facebook'}
-                            onClick={() => {}}
-                            callback={(response) => this.loginWithFacebook(response)} />
+                    <div className={'tan-socialButtons'}>
+                        <div>
+                            <GoogleLogin
+                                clientId="775882795786-p487jvef6nk648qvdeonepafptpr248b.apps.googleusercontent.com"
+                                className={'tan-socialButton'}
+                                buttonText={'Google'}
+                                autoLoad={false}
+                                onSuccess={(response) => this.loginWithGoogle(response)}
+                                onFailure={(response) => this.loginWithGoogle(response)}
+                                cookiePolicy={'single_host_origin'}
+                            />
+                        </div>
+                        <div>
+                            <FacebookLogin
+                                appId="525980097979784"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                icon={"fa-facebook"}
+                                cssClass={'tan-socialButton'}
+                                textButton={' Facebook'}
+                                onClick={() => {}}
+                                callback={(response) => this.loginWithFacebook(response)} />
+                        </div>
                     </div>
 
                     <form onSubmit={this.handleLoginSubmit}>
@@ -126,14 +140,16 @@ class LoginPage extends React.Component<any, any> {
                         <Checkbox
                             value={this.state.termsAccepted}
                             onChange={this.state.handleAcceptChange}
-                            label="I accept the terms and conditions." />
+                            label="I accept the terms and conditions."
+                        />
 
-
-                        <Button
-                            className={"tan-text-right"}
-                            icon="refresh"
-                            type={"submit"}
-                            text={"Sign in"} />
+                        <div className={'tan-right'}>
+                            <Button
+                                intent={Intent.SUCCESS}
+                                icon="refresh"
+                                type={"submit"}
+                                text={"Sign in"} />
+                        </div>
                     </form>
 
                     <p
@@ -144,6 +160,9 @@ class LoginPage extends React.Component<any, any> {
                         </b>!
                     </p>
 
+                    <ErrorToaster
+                        toasts={this.state.errors}
+                    />
                     {this.redirectToSignUp()}
                 </div>
 
