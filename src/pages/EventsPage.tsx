@@ -17,26 +17,34 @@ class EventsPage extends React.Component<any, any> {
 
     renderAllEvents() {
         if(this.props.events) {
-            return (this.props.events.map((event: Event) => {
-                return <p>{event.name}</p>
-            }));
+            return (
+                <div className={'tan-events'}>
+                    {this.props.events.map((event: Event) => {
+                        return this.renderEvent(event);
+                    })}
+                </div>
+            );
         }
+    }
+
+    renderEvent(event: Event) {
+        return (
+            <NavLink to={`/event/${event.id}`}>
+                <div className={'tan-events-item'}>
+                    <span className={'tan-events-item-title'}><b>{event.name}</b></span>
+                    <span className={'tan-events-item-date'}>2019. 11. 11.</span>
+                    <span className={'tan-events-item-peopleGoing'}>29 People going</span>
+                </div>
+            </NavLink>
+        );
     }
 
     renderUserCreatedEvents() {
         if(this.props.eventsUserCreated && this.props.eventsUserCreated.length > 0) {
             return (
                 <div className={'tan-events'}>
-                    {this.props.events.map((event: Event) => {
-                      return (
-                          <NavLink to={`/event/${event.id}`}>
-                              <div className={'tan-events-item'}>
-                                  <span className={'tan-events-item-title'}><b>{event.name}</b></span>
-                                  <span className={'tan-events-item-date'}>2019. 11. 11.</span>
-                                  <span className={'tan-events-item-peopleGoing'}>29 People going</span>
-                              </div>
-                          </NavLink>
-                      );
+                    {this.props.eventsUserCreated.map((event: Event) => {
+                      return this.renderEvent(event);
                     })}
                 </div>
             );
@@ -50,13 +58,8 @@ class EventsPage extends React.Component<any, any> {
         }
     }
 
-    renderUserGoingEvents() {
-        if(this.props.eventsUserGoing) {
-            return (this.props.eventsUserGoing.map((event: Event) => {
-                return <p>{event.name}</p>
-            }));
-        }
-    }
+
+
 
     render() {
         return (
@@ -72,10 +75,6 @@ class EventsPage extends React.Component<any, any> {
 
                 <h1>Upcoming Events</h1>
                 {this.renderAllEvents()}
-
-
-                <NavLink to="/chat"> --Chats </NavLink>
-                <NavLink to="/event"> --Events </NavLink>
             </div>
         );
     }
