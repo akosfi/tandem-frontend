@@ -53,7 +53,6 @@ class EventPage extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <NavLink to="/event"> --Events </NavLink>
                 {this.renderEvent()}
             </div>
         )

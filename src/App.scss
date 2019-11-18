@@ -9,6 +9,10 @@ $mq-breakpoints: (
         desktop: 980px,
         wide:    1300px
 );
+/*
+.bp3-navbar {
+  box-shadow: none;
+}*/
 
 .container {
   @include mq($until: tablet) {

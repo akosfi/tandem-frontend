@@ -54,10 +54,6 @@ class ChatsPage extends React.Component<any, any> {
                 </div>
                 
                 {this.renderActiveUsers()}
-
-
-                <NavLink to="/chat"> --Chats </NavLink>
-                <NavLink to="/event"> --Events </NavLink>
             </div>
         );
     }

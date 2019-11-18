@@ -15,6 +15,8 @@ import EventPage from "./pages/EventPage";
 import {UserStatus} from "./store/user/reducer";
 import EventCreatePage from "./pages/EventCreatePage";
 import {connectSocketAction} from "./store/socket/actions";
+import {Alignment, Button, Classes, Navbar, NavbarDivider, NavbarGroup, NavbarHeading} from "@blueprintjs/core";
+import {NavLink} from "react-router-dom";
 
 
 const history = createBrowserHistory();
@@ -33,11 +35,13 @@ class App extends React.Component<any, any> {
         return this.props.isUserLoggedIn === UserStatus.LoggedIn && this.props.registrationFinished;
     }
 
-    renderBasedOnUserAuthentication() {
+    renderPageBasedOnUserAuthentication() {
         if(this.props.isUserLoggedIn === UserStatus.Initial) return;
 
         return (
             <Router history={history}>
+
+                {this.renderNavBar()}
 
                 <ProtectedRoute
                     exact path="/chat"
@@ -100,6 +104,27 @@ class App extends React.Component<any, any> {
         );
     }
 
+    renderNavBar() {
+        if(this.isUserAuthenticated()){
+            return (
+                <Navbar>
+                    <NavbarGroup align={Alignment.LEFT}>
+                        <NavbarHeading>Tandem-BME</NavbarHeading>
+                        <NavbarDivider />
+                    </NavbarGroup>
+                    <NavbarGroup align={Alignment.RIGHT}>
+                        <NavLink to="/chat">
+                            <Button className={Classes.MINIMAL} icon="chat" text="Chats" />
+                        </NavLink>
+                        <NavLink to="/event">
+                            <Button className={Classes.MINIMAL} icon="timeline-events" text="Events" />
+                        </NavLink>
+                    </NavbarGroup>
+                </Navbar>
+            );
+        }
+    }
+
     render() {
 
         if(this.props.registrationFinished === true) {
@@ -108,7 +133,7 @@ class App extends React.Component<any, any> {
 
         return (
             <div className="container">
-                {this.renderBasedOnUserAuthentication()}
+                {this.renderPageBasedOnUserAuthentication()}
             </div>
         );
     }

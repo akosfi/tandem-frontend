@@ -68,7 +68,6 @@ class EventCreatePage extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <NavLink to="/event"> --Events </NavLink>
                 <form onSubmit={this.handleEventCreationSubmit}>
                     <label>
                         Name:
