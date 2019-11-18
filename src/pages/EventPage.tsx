@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {eventGetAction, userJoinEventAction} from "../store/events/actions";
 import Event from "../store/events/models/Event";
 import {NavLink} from "react-router-dom";
+import {Button, Intent} from "@blueprintjs/core";
 
 class EventPage extends React.Component<any, any> {
     constructor(props: any){
@@ -18,10 +19,31 @@ class EventPage extends React.Component<any, any> {
 
     renderEvent() {
         if(this.props.event) {
-            return (<div>
-                <p>{this.props.event.name}</p>
-                <h4 onClick={() => this.props.joinEvent(this.props.event.id)}>JOIN</h4>
-            </div>)
+            return (
+                <div className={"tan-event"}>
+                    <span className={"tan-event-date"}>2019. 11. 12.</span>
+                    <h1 className={"tan-event-title"}>{this.props.event.name}</h1>
+                    <span className={"tan-event-peopleGoing"}>43 people going</span>
+                    <div className={"tan-event-cover"}>
+                        <img
+                            src="https://cdn.nwmgroups.hu/s/img/i/1705/20170531gyor-felujitott-varosresz.jpg?w=645&h=441" alt="asd"/>
+                    </div>
+                    <h2>Details</h2>
+                    <p className={"tan-event-details"}>{this.props.event.details}</p>
+                    <Button
+                        className={"tan-event-joinButton"}
+                        intent={Intent.SUCCESS}
+                        text={"Join event"}
+                        onClick={() => this.props.joinEvent(this.props.event.id)}
+                    />
+                    <Button
+                        className={"tan-event-joinButton"}
+                        intent={Intent.DANGER}
+                        text={"Leave event"}
+                        onClick={() => this.props.joinEvent(this.props.event.id)}
+                    />
+                </div>
+            );
         }
         else {
             return <p>Loading...</p>

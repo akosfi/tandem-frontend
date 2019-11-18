@@ -54,6 +54,19 @@ class ChatPage extends React.Component<any, any> {
         return [];
     }
 
+    chatWindow: any;
+    scrollToBottom() {
+        this.chatWindow.scrollTop = this.chatWindow.scrollHeight;
+    }
+
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
     renderTextMessage(msg: Message) {
         if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
             return (
@@ -94,12 +107,15 @@ class ChatPage extends React.Component<any, any> {
     render() {
         return (
            <div>
-               <NavLink to="/chat"> --Chats </NavLink>
-
-               {this.state.chatRecipient}
-
                <div className={"tan-chat-window"}>
-                   <div className={"tan-chat-window-messages"}>
+                   <div>
+                       user
+                   </div>
+
+                   <div
+                       className={"tan-chat-window-messages"}
+                       ref={(el) => { this.chatWindow = el; }}>
+
                        {this.getMessagesWithRecipient().map((msg: Message) => {
                            if(msg.message_type === MessageType.TEXT) {
                                return this.renderTextMessage(msg);

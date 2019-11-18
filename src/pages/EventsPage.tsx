@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import Event from "../store/events/models/Event";
 import {eventsGetAction, eventsUserCreatedGetAction, eventsUserGoingGetAction} from "../store/events/actions";
 import {NavLink} from "react-router-dom";
+import {Button, Intent} from "@blueprintjs/core";
 
 class EventsPage extends React.Component<any, any> {
     constructor(props: any){
@@ -23,10 +24,29 @@ class EventsPage extends React.Component<any, any> {
     }
 
     renderUserCreatedEvents() {
-        if(this.props.events) {
-            return (this.props.events.map((event: Event) => {
-                return <p>{event.name}</p>
-            }));
+        if(this.props.eventsUserCreated && this.props.eventsUserCreated.length > 0) {
+            return (
+                <div className={'tan-events'}>
+                    {this.props.events.map((event: Event) => {
+                      return (
+                          <NavLink to={`/event/${event.id}`}>
+                              <div className={'tan-events-item'}>
+                                  <span className={'tan-events-item-title'}><b>{event.name}</b></span>
+                                  <span className={'tan-events-item-date'}>2019. 11. 11.</span>
+                                  <span className={'tan-events-item-peopleGoing'}>29 People going</span>
+                              </div>
+                          </NavLink>
+                      );
+                    })}
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <p>You don't have any event!</p>
+                </div>
+            );
         }
     }
 
@@ -41,11 +61,16 @@ class EventsPage extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <h3>User created events</h3>
+                <h1>Your events</h1>
                 {this.renderUserCreatedEvents()}
-                <h3>User going events</h3>
-                {this.renderUserGoingEvents()}
-                <h3>Events</h3>
+                <NavLink to="/event-create">
+                    <Button
+                        intent={Intent.SUCCESS}
+                        icon="refresh"
+                        text={"Create an event"} />
+                </NavLink>
+
+                <h1>Upcoming Events</h1>
                 {this.renderAllEvents()}
 
 
