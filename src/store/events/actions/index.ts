@@ -8,6 +8,8 @@ export const EVENTS_GET = 'EVENTS_GET';
 export const EVENTS_USER_GOING_GET = 'EVENTS_USER_GOING_GET';
 export const EVENTS_USER_CREATED_GET = 'EVENTS_USER_CREATED_GET';
 export const EVENT_CREATED = 'EVENT_CREATED';
+export const EVENT_JOINED_BY_USER = 'EVENT_JOINED_BY_USER';
+export const EVENT_LEFT_BY_USER = 'EVENT_LEFT_BY_USER';
 
 export function eventsGetAction() {
     return function(dispatch: Dispatch<any>) {
@@ -72,11 +74,26 @@ export function eventsUserGoingGetAction() {
 export function userJoinEventAction(eventId: number) {
     return function(dispatch: Dispatch<any>) {
         makeRequest(`/event/${eventId}/join`,{})
-            .then(event => {
-                /*return dispatch({
-                    type: EVENTS_USER_GOING_GET,
-                    events
-                });*/
+            .then(() => {
+                return dispatch({
+                    type: EVENT_JOINED_BY_USER,
+                    eventId: eventId
+                });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
+
+export function userLeaveEventAction(eventId: number) {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest(`/event/${eventId}/leave`,{})
+            .then(() => {
+                return dispatch({
+                    type: EVENT_LEFT_BY_USER,
+                    eventId: eventId
+                });
             })
             .catch(err => {
                 console.log(err)

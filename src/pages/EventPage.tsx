@@ -1,6 +1,6 @@
 import React, {Dispatch} from "react";
 import {connect} from "react-redux";
-import {eventGetAction, userJoinEventAction} from "../store/events/actions";
+import {eventGetAction, userJoinEventAction, userLeaveEventAction} from "../store/events/actions";
 import Event from "../store/events/models/Event";
 import {NavLink} from "react-router-dom";
 import {Button, Intent} from "@blueprintjs/core";
@@ -30,23 +30,37 @@ class EventPage extends React.Component<any, any> {
                     </div>
                     <h2>Details</h2>
                     <p className={"tan-event-details"}>{this.props.event.details}</p>
-                    <Button
-                        className={"tan-event-joinButton"}
-                        intent={Intent.SUCCESS}
-                        text={"Join event"}
-                        onClick={() => this.props.joinEvent(this.props.event.id)}
-                    />
-                    <Button
-                        className={"tan-event-joinButton"}
-                        intent={Intent.DANGER}
-                        text={"Leave event"}
-                        onClick={() => this.props.joinEvent(this.props.event.id)}
-                    />
+
+                    {this.renderJoinButton()}
+
                 </div>
             );
         }
         else {
             return <p>Loading...</p>
+        }
+    }
+
+    renderJoinButton() {
+        if(!this.props.event.user_joined) {
+            return (
+                <Button
+                    className={"tan-event-joinButton"}
+                    intent={Intent.SUCCESS}
+                    text={"Join event"}
+                    onClick={() => this.props.joinEvent(this.props.event.id)}
+                />
+            );
+        }
+        else {
+            return (
+                <Button
+                    className={"tan-event-joinButton"}
+                    intent={Intent.DANGER}
+                    text={"Leave event"}
+                    onClick={() => this.props.leaveEvent(this.props.event.id)}
+                />
+            );
         }
     }
 
@@ -61,14 +75,15 @@ class EventPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any, ownProps: any) => {
     return {
-        event: state.events.events.find((e: Event) => e.id === Number(ownProps.match.params.id))
+        event: state.events.current
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
         loadEvent: (id: number) => dispatch(eventGetAction(id)),
-        joinEvent: (eventId: number) => dispatch(userJoinEventAction(eventId))
+        joinEvent: (eventId: number) => dispatch(userJoinEventAction(eventId)),
+        leaveEvent: (eventId: number) => dispatch(userLeaveEventAction(eventId)),
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EventPage);

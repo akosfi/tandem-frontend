@@ -1,8 +1,17 @@
-import {EVENT_CREATED, EVENT_GET, EVENTS_GET, EVENTS_USER_CREATED_GET, EVENTS_USER_GOING_GET} from "../actions";
+import {
+    EVENT_CREATED,
+    EVENT_GET,
+    EVENT_JOINED_BY_USER, EVENT_LEFT_BY_USER,
+    EVENTS_GET,
+    EVENTS_USER_CREATED_GET,
+    EVENTS_USER_GOING_GET
+} from "../actions";
 
 import Event from "../models/Event";
+import EventDetailed from "../models/EventDetailed";
 
 const INITIAL_STATE = {
+    current: {} as EventDetailed,
     events: [] as Array<Event>,
     eventsUserGoing: [] as Array<Event>,
     eventsUserCreated: [] as Array<Event>,
@@ -13,14 +22,35 @@ function eventsReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type)
     {
+        case EVENT_JOINED_BY_USER:
+            reduced = {
+                ...state,
+                current: {
+                    ...state.current,
+                    user_joined: true
+                }
+            };
+            break;
+
+        case EVENT_LEFT_BY_USER:
+            reduced = {
+                ...state,
+                current: {
+                    ...state.current,
+                    user_joined: false
+                }
+            };
+            break;
+
         case EVENTS_GET:
             reduced = {...state, events: action.events};
             break;
 
         case EVENT_GET:
-            const events = state.events;
+            reduced = {...state, current: action.event};
+            //const events = state.events;
 
-            let index = events.findIndex((e: Event) => e.id === action.event.id);
+            /*let index = events.findIndex((e: Event) => e.id === action.event.id);
             if(index === -1) {
                 reduced = {
                     ...state,
@@ -33,7 +63,7 @@ function eventsReducer(state=INITIAL_STATE, action: any) {
                     ...state,
                     events: [...events]
                 };
-            }
+            }*/
             break;
 
         case EVENTS_USER_GOING_GET:

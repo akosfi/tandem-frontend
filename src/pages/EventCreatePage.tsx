@@ -6,6 +6,7 @@ import {eventCreateAction} from "../store/events/actions";
 import Event from '../store/events/models/Event';
 import {loginUserAction} from "../store/user/actions";
 import {NavLink} from "react-router-dom";
+import {Alignment, Button, Checkbox, FileInput, InputGroup, Intent, Label, TextArea} from "@blueprintjs/core";
 
 class EventCreatePage extends React.Component<any, any> {
     constructor(props: any){
@@ -59,7 +60,6 @@ class EventCreatePage extends React.Component<any, any> {
     }
 
     redirectIfEventCreated() {
-        //console.log(this.props.eventCreationStatus);
         if(this.props.eventCreationStatus && this.props.eventCreationStatus.created){
             return <Redirect to={`/event/${this.props.eventCreationStatus.event.id}`} />
         }
@@ -68,31 +68,73 @@ class EventCreatePage extends React.Component<any, any> {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleEventCreationSubmit}>
-                    <label>
-                        Name:
-                        <input type="text" value={this.state.name} onChange={this.handleNameInputChange} />
-                    </label>
-                    <label>
-                        Public:
-                        <input type="checkbox" checked={this.state.public} onChange={this.handleEventVisibilityInputChange} />
-                    </label>
-                    <label>
-                        Location:
-                        <input type="text" value={this.state.location} onChange={this.handleLocationInputChange} />
-                    </label>
-                    <label>
-                        Details:
-                        <input type="text" value={this.state.details} onChange={this.handleDetailsInputChange} />
-                    </label>
-                    <label>
-                        Cover:
-                        <input type="file" name="file" onChange={this.handleCoverInputChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                </form>
+                <h1
+                    className={"tan-text-center"}>
+                    Create an event</h1>
+
+                <div className={"tan-inputGroup"}>
+                    <form onSubmit={this.handleEventCreationSubmit}>
+                        <Label>
+                            Name
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Email"
+                                onChange={this.handleNameInputChange}
+                                value={this.state.name}
+                                type={"text"}
+                            />
+                        </Label>
+                        <Checkbox
+                            checked={this.state.public}
+                            label="Public"
+                            alignIndicator={Alignment.RIGHT}
+                            inline={false}
+                            large={false}
+                            onChange={this.handleEventVisibilityInputChange}
+                        />
+                        <Label>
+                            Location
+                            <InputGroup
+                                disabled={false}
+                                large={false}
+                                placeholder="Email"
+                                onChange={this.handleLocationInputChange}
+                                value={this.state.location}
+                                type={"text"}
+                            />
+                        </Label>
+                        <Label>
+                            Details
+                            <TextArea
+                                growVertically={true}
+                                intent={Intent.PRIMARY}
+                                onChange={this.handleDetailsInputChange}
+                                value={this.state.details}
+                                placeholder={'Details'}
+                            />
+                        </Label>
+
+                        <Label>
+                            Cover Photo
+                            <FileInput
+                                text="Choose file..."
+                                onInputChange={this.handleCoverInputChange} />
+                        </Label>
+
+
+                        <div className={'tan-right'}>
+                            <Button
+                                intent={Intent.SUCCESS}
+                                icon="refresh"
+                                type={"submit"}
+                                text={"Create"} />
+                        </div>
+
+                    </form>
 
                 {this.redirectIfEventCreated()}
+                </div>
             </div>
         );
     }
