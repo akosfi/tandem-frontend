@@ -68,35 +68,30 @@ class ChatPage extends React.Component<any, any> {
     }
 
     renderTextMessage(msg: Message) {
-        if(msg.sender_id.toString() === this.props.currentUser.id.toString()) {
-            return (
-                <div
-                    key={Math.round(Math.random()*100000)}
-                    className={'tan-chat-message tan-chat-message-own'}>
-                    <p className={'tan-chat-message-content'}>
-                        {msg.message}
-                    </p>
-                </div>
-            );
-        }
-        else {
-            return (
-                <div
-                    key={Math.round(Math.random()*100000)}
-                    className={'tan-chat-message tan-chat-message-recipient'}>
-                    <p className={'tan-chat-message-content'}>
-                        {msg.message}
-                    </p>
-                </div>
-            );
-        }
+        return (
+            <div
+                key={Math.round(Math.random()*100000)}
+                className={
+                    (msg.sender_id.toString() === this.props.currentUser.id.toString())
+                        ? 'tan-chat-message tan-chat-message-own'
+                        : 'tan-chat-message tan-chat-message-recipient'
+                }>
+                <p className={'tan-chat-message-content'}>
+                    {msg.message}
+                </p>
+            </div>
+        );
     }
 
     renderImageMessage(msg: Message) {
         return (
             <div
                 key={Math.round(Math.random()*100000)}
-                className={'tan-chat-message tan-chat-message-own'}>
+                className={
+                    (msg.sender_id.toString() === this.props.currentUser.id.toString())
+                        ? 'tan-chat-message tan-chat-message-own'
+                        : 'tan-chat-message'
+                }>
                 <img
                     className={'tan-chat-message-image'}
                     key={msg.message} src={`http://127.0.0.1:5000/img/${msg.message}`} alt=""/>
