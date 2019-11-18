@@ -33,7 +33,6 @@ class EventsPage extends React.Component<any, any> {
                 <div className={'tan-events-item'}>
                     <span className={'tan-events-item-title'}><b>{event.name}</b></span>
                     <span className={'tan-events-item-date'}>2019. 11. 11.</span>
-                    <span className={'tan-events-item-peopleGoing'}>29 People going</span>
                 </div>
             </NavLink>
         );

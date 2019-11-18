@@ -99,7 +99,7 @@ class ChatPage extends React.Component<any, any> {
                 className={'tan-chat-message tan-chat-message-own'}>
                 <img
                     className={'tan-chat-message-image'}
-                    key={msg.message} src={`http://127.0.0.1:5000/static/img/${msg.message}`} alt=""/>
+                    key={msg.message} src={`http://127.0.0.1:5000/img/${msg.message}`} alt=""/>
             </div>
         );
     }

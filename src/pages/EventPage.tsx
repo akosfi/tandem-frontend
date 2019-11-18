@@ -23,7 +23,7 @@ class EventPage extends React.Component<any, any> {
                 <div className={"tan-event"}>
                     <span className={"tan-event-date"}>2019. 11. 12.</span>
                     <h1 className={"tan-event-title"}>{this.props.event.name}</h1>
-                    <span className={"tan-event-peopleGoing"}>43 people going</span>
+                    <span className={"tan-event-peopleGoing"}>{this.props.event.people_going} people going</span>
                     <div className={"tan-event-cover"}>
                         <img
                             src="https://cdn.nwmgroups.hu/s/img/i/1705/20170531gyor-felujitott-varosresz.jpg?w=645&h=441" alt="asd"/>
