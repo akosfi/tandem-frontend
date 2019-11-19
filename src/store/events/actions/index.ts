@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {makeRequest} from "../../../util";
 import Event from "../models/Event";
+import {USER_PICTURE_UPDATED} from "../../user/actions";
 
 
 export const EVENT_GET = 'EVENT_GET';
@@ -40,6 +41,7 @@ export function eventGetAction(id: number) {
             });
     };
 }
+
 
 export function eventsUserCreatedGetAction(){
     return function(dispatch: Dispatch<any>) {
@@ -101,7 +103,33 @@ export function userLeaveEventAction(eventId: number) {
     };
 }
 
-export function eventCreateAction(event: Event) {
+
+/*
+export function uploadEventCover(eventId: number, file: any) {
+
+    const data = new FormData();
+    data.append('file', file);
+
+    return function(dispatch: Dispatch<any>) {
+        makeRequest(`/event/${eventId}/picture/`,{
+            method: "POST",
+            body: data
+        })
+            .then(response => {
+                //response data
+                return dispatch({
+                    type: USER_PICTURE_UPDATED,
+                    picture: response.data
+                });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}*/
+
+
+export function eventCreateAction(event: Event, file: any) {
     return function(dispatch: Dispatch<any>) {
         makeRequest('/event/',
             {
@@ -112,9 +140,19 @@ export function eventCreateAction(event: Event) {
                 body: JSON.stringify(event)
             })
             .then(response => {
-                return dispatch({
-                    type: EVENT_CREATED,
-                    event: response.data
+
+                const data = new FormData();
+                data.append('file', file);
+
+                makeRequest(`/event/${response.data.id}/picture/`,{
+                    method: "POST",
+                    body: data
+                })
+                .then(() => {
+                    return dispatch({
+                        type: EVENT_CREATED,
+                        event: response.data
+                    });
                 });
             })
             .catch(error => console.log(error))

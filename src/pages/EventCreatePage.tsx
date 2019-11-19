@@ -54,9 +54,9 @@ class EventCreatePage extends React.Component<any, any> {
             date: this.state.date,
             public: this.state.public,
             location: this.state.location,
-            details: this.state.details,
-            cover_photo: this.state.cover_photo
-        });
+            details: this.state.details
+        },
+        this.state.cover_photo);
     }
 
     redirectIfEventCreated() {
@@ -150,7 +150,7 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     return {
-        createEvent: (event: Event) => dispatch(eventCreateAction(event))
+        createEvent: (event: Event, file: any) => dispatch(eventCreateAction(event, file))
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(EventCreatePage);
