@@ -44,7 +44,7 @@ class RegisterPage extends React.Component<any, any> {
             registrationStep = RegistrationStep.UserProfilePicture;
         }
         else {
-            registrationStep = RegistrationStep.UserGoalLanguages;
+            registrationStep = RegistrationStep.UserNativeLanguages;
         }
 
 
