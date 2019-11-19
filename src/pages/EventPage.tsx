@@ -14,7 +14,6 @@ class EventPage extends React.Component<any, any> {
         };
 
         this.props.loadEvent(Number(this.props.match.params.id));
-//load detailed event here with user_Created boolean user_joined boolean
     }
 
     renderEvent() {
@@ -26,7 +25,7 @@ class EventPage extends React.Component<any, any> {
                     <span className={"tan-event-peopleGoing"}>{this.props.event.people_going} people going</span>
                     <div className={"tan-event-cover"}>
                         <img
-                            src="https://cdn.nwmgroups.hu/s/img/i/1705/20170531gyor-felujitott-varosresz.jpg?w=645&h=441" alt="asd"/>
+                            src={`http://127.0.0.1:5000/img/${this.props.event.cover_photo}`} alt="asd"/>
                     </div>
                     <h2>Details</h2>
                     <p className={"tan-event-details"}>{this.props.event.details}</p>
