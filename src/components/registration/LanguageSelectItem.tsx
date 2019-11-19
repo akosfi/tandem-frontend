@@ -19,7 +19,10 @@ class LanguageSelectItem extends React.Component<any, any> {
         this.setState({
             selectValue: event.target.value
         });
-        this.props.updateLanguageDifficulty(event.target.value);
+        this.props.updateLanguageDifficulty({
+            d: event.target.value,
+            id: this.props.language.id
+        });
     }
 
     onItemStateChange() {

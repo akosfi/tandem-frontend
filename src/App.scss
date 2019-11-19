@@ -369,5 +369,13 @@ $mq-breakpoints: (
     }
   }
 
+  &-tags {
+    margin: 0 auto;
+    width: 90%;
+    &-tag{
+      margin: 0 10px 10px 0;
+    }
+  }
+
 }
 

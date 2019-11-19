@@ -86,6 +86,7 @@ class LanguageSelect extends React.Component<any, any> {
 
 
     render() {
+        console.log(this.state.selectedLanguages);
         return (
             <div className={'container'}>
                 <h1 className={'tan-text-center'}>{this.props.title}</h1>
