@@ -4,7 +4,11 @@ import {
     USER_CURRENT_AUTHENTICATED,
     USERS_ACTIVE_RECEIVED,
     USERS_KNOWN_RECEIVED,
-    USERS_RECOMMENDED_RECEIVED, USER_LOGIN_STATUS_CHANGED, USER_REGISTRATION_STATUS_CHANGED, USER_CREATED
+    USERS_RECOMMENDED_RECEIVED,
+    USER_LOGIN_STATUS_CHANGED,
+    USER_REGISTRATION_STATUS_CHANGED,
+    USER_CREATED,
+    USER_PICTURE_UPDATED
 } from "../actions";
 
 export enum UserStatus {
@@ -31,7 +35,12 @@ function userReducer(state=INITIAL_STATE, action: any) {
     let reduced;
     switch (action.type){
         case USER_CURRENT_AUTHENTICATED:
-            reduced = {...state, current: action.user, currentUserAuthenticated: UserStatus.LoggedIn};
+            //check for profile picture
+            reduced = {
+                ...state,
+                current: action.user,
+                currentUserAuthenticated: UserStatus.LoggedIn
+            };
             break;
         case USER_CURRENT_NOT_AUTHENTICATED:
             reduced = {...state, currentUserAuthenticated: UserStatus.NotLoggedIn };
@@ -48,11 +57,21 @@ function userReducer(state=INITIAL_STATE, action: any) {
         case USER_LOGIN_STATUS_CHANGED:
             reduced = {...state, userLoginStatus: action.status};
             break;
-        /*case USER_REGISTRATION_STATUS_CHANGED:
-            reduced = {...state, newUserCreationStatus: action.status};
-            break;*/
+        case USER_PICTURE_UPDATED:
+            reduced = {
+                ...state,
+                current: {
+                    ...state.current,
+                    profile_pic_url: action.picture
+                }
+            };
+            break;
         case USER_CREATED:
-            reduced = {...state, userCreationStatus: UserCreationStatus.UserCreated};
+            reduced = {
+                ...state,
+                userCreationStatus: UserCreationStatus.UserCreated,
+                current: action.user
+            };
             break;
         default:
             reduced = state;

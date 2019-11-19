@@ -26,9 +26,7 @@ class UserBasicData extends React.Component<any, any> {
         this.handlePasswordRepeatInputChange = this.handlePasswordRepeatInputChange.bind(this);
         this.handleEmailInputChange = this.handleEmailInputChange.bind(this);
         this.handleAcceptChange = this.handleAcceptChange.bind(this);
-        this.renderProfilePicturePreview = this.renderProfilePicturePreview.bind(this);
         this.handleRegistrationSubmit = this.handleRegistrationSubmit.bind(this);
-        this.handleProfilePictureInputChange = this.handleProfilePictureInputChange.bind(this);
     }
 
     handleFullNameInputChange(event: any) {
@@ -46,12 +44,6 @@ class UserBasicData extends React.Component<any, any> {
     handleAcceptChange() {
         this.setState({
             termsAccepted: !this.state.termsAccepted
-        });
-    }
-    handleProfilePictureInputChange(event: any) {
-        this.setState({
-            profilePicture: event.target.files[0],
-            profilePicturePreviewUrl: URL.createObjectURL(event.target.files[0])
         });
     }
     handleRegistrationSubmit(event: any) {
@@ -87,13 +79,6 @@ class UserBasicData extends React.Component<any, any> {
         );
     }
 
-    renderProfilePicturePreview() {
-        if(this.state.profilePicturePreviewUrl !== '') {
-            return (<div className={'tan-avatar'}>
-                <img src={this.state.profilePicturePreviewUrl} alt="preview_profile_pic"/>
-            </div>);
-        }
-    }
 
     renderNextButton() {
         if(this.props.userCreationStatus === UserCreationStatus.UserCreated) {
@@ -156,15 +141,6 @@ class UserBasicData extends React.Component<any, any> {
                                 type={"password"}
                             />
                         </Label>
-
-                        <Label>
-                            Select profile picture
-                            <FileInput
-                                text="Choose file..."
-                                onInputChange={this.handleProfilePictureInputChange} />
-                        </Label>
-
-                        {this.renderProfilePicturePreview()}
 
                         <Checkbox
                             value={this.state.termsAccepted}

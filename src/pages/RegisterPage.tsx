@@ -7,6 +7,7 @@ import TagSelect from "../components/registration/TagSelect";
 import {LanguageDifficulty} from "../store/static/models/LanguageDifficulty";
 import {LearningGoal} from "../store/static/models/LearningGoal";
 import {languagesGetAction, learningGoalsGetAction, topicsGetAction} from "../store/static/actions";
+import UserProfilePicture from "../components/registration/UserProfilePicture";
 
 export interface SelectedLanguage {
     id: number;
@@ -23,6 +24,7 @@ export interface SelectedTag {
 
 enum RegistrationStep {
     UserBasicData,
+    UserProfilePicture,
     UserNativeLanguages,
     UserFluentLanguages,
     UserGoalLanguages,
@@ -34,12 +36,21 @@ class RegisterPage extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
+        let registrationStep = {} as RegistrationStep;
+        if(!this.props.user.id) {
+            registrationStep = RegistrationStep.UserBasicData;
+        }
+        else if(this.props.user && !this.props.user.profile_pic_url) {
+            registrationStep = RegistrationStep.UserProfilePicture;
+        }
+        else {
+            registrationStep = RegistrationStep.UserNativeLanguages;
+        }
+
+
         //registrationFinished is ready, since we only load this page if we know that the user is registered or not
         this.state = {
-            currentRegistrationStep: (this.props.registrationFinished === false)
-                                        ? RegistrationStep.UserNativeLanguages
-                                        : RegistrationStep.UserBasicData,
-
+            currentRegistrationStep: registrationStep as RegistrationStep,
             userPreferences: {
                 nativeLanguages: [] as Array<SelectedLanguage>,
                 fluentLanguages: [] as Array<SelectedLanguage>,
@@ -74,8 +85,14 @@ class RegisterPage extends React.Component<any, any> {
             case RegistrationStep.UserBasicData:
                 return (
                     <UserBasicData
-                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserNativeLanguages})}
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserProfilePicture})}
                         handleUserBasicDataSubmission={this.submitUserBasicData}/>);
+
+            case RegistrationStep.UserProfilePicture:
+                return (
+                    <UserProfilePicture
+                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserNativeLanguages})}
+                        />);
 
             case RegistrationStep.UserNativeLanguages:
                 return (
@@ -128,7 +145,7 @@ class RegisterPage extends React.Component<any, any> {
 
 const mapStateToProps = (state: any) => {
     return {
-        registrationFinished: state.users.current.registration_finished,
+        user: state.users.current,
         languages: state.static.languages,
         topics: state.static.topics,
         learning_goals: state.static.learning_goals,

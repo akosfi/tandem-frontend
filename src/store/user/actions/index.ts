@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import {makeRequest} from "../../../util";
 import {connectSocketAction} from "../../socket/actions";
 import {AuthType} from "../models/User";
+import {MessageType} from "../../message/models/Message";
+import {messageSendAction} from "../../message/actions";
 
 export function getCurrentUserAction() {
     return function(dispatch: Dispatch<any>) {
@@ -45,7 +47,7 @@ export function registerUserAction(full_name: string, email: string, password: s
             .then(data => {
                 return dispatch({
                     type: USER_CREATED,
-                    status: data
+                    user: data.data
                 });
             })
             .catch(data => {
@@ -122,7 +124,28 @@ export function userPreferencesPostAction(preferences: any) {
     };
 }
 
+export function uploadProfilePicture(file: any) {
 
+    const data = new FormData();
+    data.append('file', file);
+
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/user/picture',{
+            method: "POST",
+            body: data
+        })
+            .then(response => {
+                //response data
+                return dispatch({
+                    type: USER_PICTURE_UPDATED,
+                    picture: response.data
+                });
+            })
+            .catch(err => {
+                console.log(err)
+            });
+    };
+}
 
 export function getActiveUsersList() {
     return function(dispatch: Dispatch<any>) {
@@ -171,3 +194,4 @@ export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';
 export const USER_REGISTRATION_STATUS_CHANGED = 'USER_REGISTRATION_STATUS_CHANGED';
 export const USER_LOGIN_STATUS_CHANGED = 'USER_LOGIN_STATUS_CHANGED';
 export const USER_CREATED = 'USER_CREATED';
+export const USER_PICTURE_UPDATED = 'USER_PICTURE_UPDATED';
