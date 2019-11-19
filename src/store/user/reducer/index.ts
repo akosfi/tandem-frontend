@@ -3,8 +3,8 @@ import {
     USER_CURRENT_NOT_AUTHENTICATED,
     USER_CURRENT_AUTHENTICATED,
     USERS_ACTIVE_RECEIVED,
-    USERS_KNOWN_RECEIVED,
-    USERS_RECOMMENDED_RECEIVED,
+    USERS_KNOWN_GET,
+    USERS_RECOMMENDED_GET,
     USER_LOGIN_STATUS_CHANGED,
     USER_REGISTRATION_STATUS_CHANGED,
     USER_CREATED,
@@ -48,10 +48,10 @@ function userReducer(state=INITIAL_STATE, action: any) {
         case USERS_ACTIVE_RECEIVED:
             reduced = {...state, activeUsers: action.users};
             break;
-        case USERS_KNOWN_RECEIVED:
+        case USERS_KNOWN_GET:
             reduced = {...state, knownUsers: action.users};
             break;
-        case USERS_RECOMMENDED_RECEIVED:
+        case USERS_RECOMMENDED_GET:
             reduced = {...state, recommendedUsers: action.users};
             break;
         case USER_LOGIN_STATUS_CHANGED:

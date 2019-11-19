@@ -160,26 +160,36 @@ export function getActiveUsersList() {
     }
 }
 
-export function getKnownUsersList() {
+export function connectWithUser(id: number) {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/getKnowUsers/', {})
-            .then(users => {
+        makeRequest(`/user/${id}/add`, {})
+            .then(response => {
+                console.log(response)
+            })
+            .catch(err => console.log("Err adding known users"));
+    }
+}
+
+export function getUsersKnownList() {
+    return function(dispatch: Dispatch<any>) {
+        makeRequest('/user/known', {})
+            .then(response => {
                 return dispatch({
-                    type: USERS_KNOWN_RECEIVED,
-                    users
+                    type: USERS_KNOWN_GET,
+                    users: response.users
                 })
             })
             .catch(err => console.log("Err fetching known users"));
     }
 }
 
-export function getRecommendedUsersList() {
+export function getUsersRecommendedList() {
     return function(dispatch: Dispatch<any>) {
-        makeRequest('/getRecommendedUsers/', {})
-            .then(users => {
+        makeRequest('/user/recommended', {})
+            .then(response => {
                 return dispatch({
-                    type: USERS_KNOWN_RECEIVED,
-                    users
+                    type: USERS_RECOMMENDED_GET,
+                    users: response.users
                 })
             })
             .catch(err => console.log("Err fetching recommended users"));
@@ -189,8 +199,9 @@ export function getRecommendedUsersList() {
 export const USER_CURRENT_AUTHENTICATED = 'USER_CURRENT_AUTHENTICATED';
 export const USER_CURRENT_NOT_AUTHENTICATED = 'USER_CURRENT_NOT_AUTHENTICATED';
 export const USERS_ACTIVE_RECEIVED = 'USERS_ACTIVE_RECEIVED';
-export const USERS_KNOWN_RECEIVED = 'USERS_KNOWN_RECEIVED';
-export const USERS_RECOMMENDED_RECEIVED = 'USERS_RECOMMENDED_RECEIVED';
+export const USERS_KNOWN_GET = 'USERS_KNOWN_GET';
+export const USER_ADD_KNOWN = 'USER_ADD_KNOWN';
+export const USERS_RECOMMENDED_GET = 'USERS_RECOMMENDED_GET';
 export const USER_REGISTRATION_STATUS_CHANGED = 'USER_REGISTRATION_STATUS_CHANGED';
 export const USER_LOGIN_STATUS_CHANGED = 'USER_LOGIN_STATUS_CHANGED';
 export const USER_CREATED = 'USER_CREATED';
