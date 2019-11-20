@@ -7,6 +7,9 @@ import Event from '../store/events/models/Event';
 import {loginUserAction} from "../store/user/actions";
 import {NavLink} from "react-router-dom";
 import {Alignment, Button, Checkbox, FileInput, InputGroup, Intent, Label, TextArea} from "@blueprintjs/core";
+import {DateInput} from "@blueprintjs/datetime";
+import {Position} from "@blueprintjs/core/lib/esm/common/position";
+
 
 class EventCreatePage extends React.Component<any, any> {
     constructor(props: any){
@@ -25,10 +28,13 @@ class EventCreatePage extends React.Component<any, any> {
         this.handleEventVisibilityInputChange = this.handleEventVisibilityInputChange.bind(this);
         this.handleLocationInputChange = this.handleLocationInputChange.bind(this);
         this.handleDetailsInputChange = this.handleDetailsInputChange.bind(this);
+        this.handleDateInputChange = this.handleDateInputChange.bind(this);
         this.handleEventCreationSubmit = this.handleEventCreationSubmit.bind(this);
         this.handleCoverInputChange = this.handleCoverInputChange.bind(this);
     }
-
+    handleDateInputChange(date: Date) {
+        this.setState({date: date});
+    }
     handleNameInputChange(event: any) {
         this.setState({name: event.target.value});
     }
@@ -114,6 +120,21 @@ class EventCreatePage extends React.Component<any, any> {
                                 placeholder={'Details'}
                             />
                         </Label>
+
+                        <Label>
+                            Date
+                            <DateInput
+                                defaultValue={this.state.date}
+                                onChange={this.handleDateInputChange}
+                                formatDate={date => (date == null ? "" : date.toLocaleDateString())}
+                                parseDate={str => new Date(Date.parse(str))}
+                                placeholder={"JS Date"}
+                                timePrecision={'minute'}
+                                popoverProps={{ position: Position.TOP }}
+                            />
+                        </Label>
+
+
 
                         <Label>
                             Cover Photo

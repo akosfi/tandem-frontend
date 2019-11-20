@@ -20,7 +20,9 @@ class EventPage extends React.Component<any, any> {
         if(this.props.event) {
             return (
                 <div className={"tan-event"}>
-                    <span className={"tan-event-date"}>2019. 11. 12.</span>
+                    <span className={"tan-event-date"}>
+                        {(this.props.event.date) ? (new Date(this.props.event.date).toDateString()) : ''}
+                    </span>
                     <h1 className={"tan-event-title"}>{this.props.event.name}</h1>
                     <span className={"tan-event-peopleGoing"}>{this.props.event.people_going} people going</span>
                     <div className={"tan-event-cover"}>
