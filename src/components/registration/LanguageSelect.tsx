@@ -51,18 +51,20 @@ class LanguageSelect extends React.Component<any, any> {
     }
 
     renderLanguages() {
-        return this.props.languages.map((language: Language) => {
-            return <LanguageSelectItem
-                        key={language.id}
-                        language={language}
-                        withDifficulty={this.props.withDifficulty}
-                        updateLanguageDifficulty={this.updateDifficulty}
-                        addLanguage={this.selectLanguage}
-                        removeLanguage={this.removeLanguage}
-                        isSelected={this.isLanguageSelected(language)}
-                    />
 
-        });
+        return _.sortBy(this.props.languages, (l: Language) => l.name)
+                .map((language: Language) => {
+                    return <LanguageSelectItem
+                                key={language.id}
+                                language={language}
+                                withDifficulty={this.props.withDifficulty}
+                                updateLanguageDifficulty={this.updateDifficulty}
+                                addLanguage={this.selectLanguage}
+                                removeLanguage={this.removeLanguage}
+                                isSelected={this.isLanguageSelected(language)}
+                            />
+
+                });
     }
     isLanguageSelected(language: any) {
         return this.state.selectedLanguages.findIndex((l: any) => l.id === language.id) !== -1;

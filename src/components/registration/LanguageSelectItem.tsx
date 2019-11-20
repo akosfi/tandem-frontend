@@ -42,7 +42,11 @@ class LanguageSelectItem extends React.Component<any, any> {
     renderSelect() {
         if(this.props.withDifficulty && this.props.isSelected) {
             return (
-                <select onChange={this.onSelectChange} value={this.state.selectValue}>
+                <select
+                    onChange={this.onSelectChange}
+                    value={this.state.selectValue}
+                    style={{'marginLeft': '16px', 'background': '#0f9960', 'color': '#ffffff', 'borderRadius': '30px', 'paddingRight': '12px', 'paddingLeft': '12px'}}
+                >
                     <option value={LanguageDifficulty.Beginner}>Beginner</option>
                     <option value={LanguageDifficulty.Advanced}>Advanced</option>
                     <option value={LanguageDifficulty.Expert}>Expert</option>

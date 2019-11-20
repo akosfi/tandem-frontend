@@ -35,20 +35,21 @@ class TagSelect extends React.Component<any, any> {
     }
 
     renderTags() {
-        return this.props.tags.map((tag: any) => {
-            return (
-                <Tag
-                    key={tag.id}
-                    className={'tan-tags-tag'}
-                    onClick={() => this.selectTag(tag.id)}
-                    large={true}
-                    round={true}
-                    interactive={true}
-                    rightIcon={this.isTagSelected(tag.id) ? 'delete' : 'circle'}
-                    intent={this.isTagSelected(tag.id) ? Intent.SUCCESS : Intent.NONE}
-                >{tag.name}</Tag>
-            );
-        });
+        return _.sortBy(this.props.tags, (t: any) => t.name)
+                .map((tag: any) => {
+                    return (
+                        <Tag
+                            key={tag.id}
+                            className={'tan-tags-tag'}
+                            onClick={() => this.selectTag(tag.id)}
+                            large={true}
+                            round={true}
+                            interactive={true}
+                            rightIcon={this.isTagSelected(tag.id) ? 'delete' : 'circle'}
+                            intent={this.isTagSelected(tag.id) ? Intent.SUCCESS : Intent.NONE}
+                        >{tag.name}</Tag>
+                    );
+                });
     }
 
     selectTag(id: number) {
