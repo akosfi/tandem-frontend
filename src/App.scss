@@ -136,8 +136,8 @@ html{
 
       &-item {
         margin: 5px;
-        flex: 0 0 48px;
-        height: 48px;
+        flex: 0 0 64px;
+        height: 64px;
         position: relative;
         overflow: hidden;
 
@@ -166,7 +166,7 @@ html{
 
     &-window {
       display: grid;
-      grid-template-rows: 10vh 85vh 5vh;
+      grid-template-rows: 0 90vh 5vh;
 
 
       &-input {

@@ -42,7 +42,7 @@ class ChatsPage extends React.Component<any, any> {
                                 <Link
                                     to={'/chat/' + u.id}>
                                     <img
-                                        src="https://assets.teenvogue.com/photos/5d7bedd9eb2d250008cbc0c6/master/pass/tout.jpg"
+                                        src={'http://127.0.0.1:5000/img/' + u.profile_pic_url}
                                         alt="r_photo"/>
 
                                     <span>{u.full_name}</span>
@@ -72,7 +72,7 @@ class ChatsPage extends React.Component<any, any> {
                                     key={u.id}
                                     to={'/chat/' + u.id}>
                                     <img
-                                        src="https://assets.teenvogue.com/photos/5d7bedd9eb2d250008cbc0c6/master/pass/tout.jpg"
+                                        src={'http://127.0.0.1:5000/img/' + u.profile_pic_url}
                                         alt="r_photo"/>
                                 </Link>
                                 <span className={"tan-chat-active-item-dot"}> </span>
@@ -101,7 +101,7 @@ class ChatsPage extends React.Component<any, any> {
                             >
                                 <div className={'tan-chat-conversation-item-avatar'}>
                                     <img
-                                        src="https://assets.teenvogue.com/photos/5d7bedd9eb2d250008cbc0c6/master/pass/tout.jpg"
+                                        src={'http://127.0.0.1:5000/img/' + u.profile_pic_url}
                                         alt="r_photo"/>
                                 </div>
                                 <div className={'tan-chat-conversation-item-content'}>

@@ -15,7 +15,7 @@ class LoginPage extends React.Component<any, any> {
         this.state = {
             emailInput: '',
             passwordInput: '',
-            termsAccepted: false,
+            termsAccepted: true,
             errors: [] as Array<String>,
         };
 
@@ -61,6 +61,7 @@ class LoginPage extends React.Component<any, any> {
     }
 
     loginWithFacebook(response: any){
+        console.log(response)
         this.props.loginUserWithThirdParty(
             response.email,
             response.name,

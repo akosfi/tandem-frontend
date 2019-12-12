@@ -3,9 +3,7 @@ import {registerUserAction, userPreferencesPostAction} from "../store/user/actio
 import {connect} from "react-redux";
 import UserBasicData from "../components/registration/UserBasicData";
 import LanguageSelect from "../components/registration/LanguageSelect";
-import TagSelect from "../components/registration/TagSelect";
 import {LanguageDifficulty} from "../store/static/models/LanguageDifficulty";
-import {LearningGoal} from "../store/static/models/LearningGoal";
 import {languagesGetAction, learningGoalsGetAction, topicsGetAction} from "../store/static/actions";
 import UserProfilePicture from "../components/registration/UserProfilePicture";
 
@@ -28,8 +26,6 @@ enum RegistrationStep {
     UserNativeLanguages,
     UserFluentLanguages,
     UserGoalLanguages,
-    UserTopicsLiked,
-    UserGoals,
 }
 
 class RegisterPage extends React.Component<any, any> {
@@ -44,7 +40,7 @@ class RegisterPage extends React.Component<any, any> {
             registrationStep = RegistrationStep.UserProfilePicture;
         }
         else {
-            registrationStep = RegistrationStep.UserGoalLanguages;
+            registrationStep = RegistrationStep.UserNativeLanguages;
         }
 
 
@@ -55,8 +51,6 @@ class RegisterPage extends React.Component<any, any> {
                 nativeLanguages: [] as Array<SelectedLanguage>,
                 fluentLanguages: [] as Array<SelectedLanguage>,
                 goalLanguages: [] as Array<SelectedLanguageWithDifficulty>,
-                topicsLiked: [] as Array<SelectedTag>,
-                learningGoals: [] as Array<LearningGoal>,
             }
         };
 
@@ -117,23 +111,9 @@ class RegisterPage extends React.Component<any, any> {
                         title="Select the languages  you want to learn"
                         withDifficulty={true}
                         selectedLanguages={this.state.userPreferences.goalLanguages}
-                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserTopicsLiked})}/>);
+                        nextClick={this.submitUserPreferences}/>);
 
-            case RegistrationStep.UserTopicsLiked:
-                return (
-                    <TagSelect
-                        title="Select the topics  you interested in."
-                        tags={this.props.topics}
-                        selectedTags={this.state.userPreferences.topicsLiked}
-                        nextClick={() => this.setState({currentRegistrationStep: RegistrationStep.UserGoals})}/>);
 
-            case RegistrationStep.UserGoals:
-                return (
-                    <TagSelect
-                        title="Select your language learning goals."
-                        tags={this.props.learning_goals}
-                        selectedTags={this.state.userPreferences.learningGoals}
-                        nextClick={this.submitUserPreferences}  />);
         }
     }
 

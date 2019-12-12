@@ -7,6 +7,8 @@ import userReducer from "./user/reducer";
 import staticReducer from "./static/reducer";
 import eventsReducer from "./events/reducer";
 
+
+
 const rootReducer = combineReducers({
     messages: messagesReducer,
     socket: socketReducer,

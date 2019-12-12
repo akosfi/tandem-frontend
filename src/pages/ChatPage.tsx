@@ -104,7 +104,6 @@ class ChatPage extends React.Component<any, any> {
            <div>
                <div className={"tan-chat-window"}>
                    <div>
-                       user
                    </div>
 
                    <div
